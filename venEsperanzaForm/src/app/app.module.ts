@@ -1,16 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule  } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatRadioModule} from '@angular/material/radio';
+//import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import { AppComponent } from './app.component';
+import { FormComponent } from './form/form.component';
+
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FormComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,BrowserAnimationsModule, 
+    MatFormFieldModule,MatStepperModule, 
+    FormsModule, ReactiveFormsModule, MatInputModule,
+    MatButtonModule, MatRadioModule
+
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [FormComponent]
 })
 export class AppModule { }
