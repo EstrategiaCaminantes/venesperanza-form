@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+
 @Component({
   selector: 'app-root',
   templateUrl: './form.component.html',
@@ -11,8 +12,16 @@ export class FormComponent implements OnInit  {
   isLinear = true;
 
   //myGroup: FormGroup;
+
+  termnsandconditions = true;
+  titleheader = true;
+  quentionaccepttermns = true;
+  thanksmessage = false;
+  buttonsConfirm = true;
+
+  formPrincipal = false;
   
-  firstFormGroup: FormGroup;
+  //firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup; 
   fourFormGroup: FormGroup;
@@ -29,15 +38,18 @@ export class FormComponent implements OnInit  {
 
   ngOnInit() {
 
-    /*this.myGroup = new FormGroup({
-      completed: new FormControl()
-    });*/
-     
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-      
+    /*
 
+    this.myGroup = new FormGroup({
+      accept: new FormControl()
     });
+     
+   
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['true', Validators.required]
+  
+    });
+    */
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
       secondNameSecondtCtrl: ['', Validators.required],
@@ -80,6 +92,25 @@ export class FormComponent implements OnInit  {
     
 
   }
+
+
+termsAccept($event: any) {
+  console.log($event);
+  
+  this.termnsandconditions = false;
+  this.quentionaccepttermns = false;
+  this.buttonsConfirm = false;
+
+  if($event == false){
+    this.titleheader = false;
+    this.formPrincipal = false;
+    this.thanksmessage = true;
+
+  }else if($event == true){
+    this.formPrincipal = true;
+    
+  }
+}
 
 /*
   autorizacion(valor){
