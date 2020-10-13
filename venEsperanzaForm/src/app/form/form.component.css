@@ -25,3 +25,15 @@
   .mat-radio-button ~ .mat-radio-button {
     margin-left: 16px;
   }
+
+  .flexcolumn{
+    margin: 20px 40px 20px 40px;
+  }
+
+  .titleheader{
+    text-align: center;
+  }
+
+  .termnsandconditions{
+    text-align: justify;
+  }

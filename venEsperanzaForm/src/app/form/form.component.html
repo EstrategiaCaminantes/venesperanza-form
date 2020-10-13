@@ -1,426 +1,256 @@
-<!--<mat-grid-list cols="3" style="height:100vh" >
-  <mat-grid-tile >1</mat-grid-tile>
-  <mat-grid-tile  >
-
-    <div>
-
-    
-      <H2>FORMULARIO PARA PILOTO ENCUESTA DE PRESELECCIÓN IMMAP
-      </H2>
-
-    
-    
-      <P>
-        Este proceso no genera ningún costo o cobro asociado.
-Su participación es voluntaria y puede decidir no participar o retirar su consentimiento en cualquier momento.
-La información recogida no tendrá ninguna implicación en su condición migratoria.
-El objetivo de esta encuesta es valorar si es posible que usted sea elegido para ingresar a programas de asistencia humanitaria, estos programas pueden incluir asistencia financiera, servicios de protección y otros servicios humanitarios. Responder a estas preguntas no quiere decir que usted y su familia serán automáticamente seleccionados. Si usted es preseleccionado, será contactado por la organización para continuar con el proceso.
-Su información es confidencial, sin embargo, nuestra organización podría tener que compartir parte de sus datos, de manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG nacionales e internacionales, cuando haya posibles casos duplicados, de fraude o para referir su hogar a servicios adicionales, y contribuir en iniciativas de investigación conjuntas.
-La organización no retendrá su información personal durante más tiempo que el periodo de duración del programa y también borrará su información, si usted lo requiere. Pero, sin su información personal no se podrán lograr los objetivos del programa.
-Esta encuesta incluye preguntas sobre su situación actual. Tenga en cuenta, que todos los datos que usted entregue a continuación serán verificados por la organización, por favor responda con sus datos reales.
-
-      </P>
-
-    </div>
-
-    
-
-   
 
 
-
-  </mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
-  <mat-grid-tile>
-
-    <div [formGroup]="myGroup">
-      <div>
-            <label >¿Está usted de acuerdo con las condiciones expuestas anteriormente? </label>
-  
-          </div>
-          <mat-radio-group aria-label="Select an option"  formControlName="accept" >
-            <mat-radio-button [value]="true">Si </mat-radio-button>
-            <mat-radio-button [value]="false"> No</mat-radio-button>
-          </mat-radio-group>
-      </div>
-
-    
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">6</mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">7</mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    
-
-    <div class="card-container" *ngIf="myGroup.value.accept == true">
-      <mat-vertical-stepper [(linear)]="isLinear" #stepper>
-        
-        <mat-step [stepControl]="secondFormGroup">
-          <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
-            <mat-form-field class="col-lg-12">
-              <mat-label>Primer Nombre</mat-label>
-              <input matInput placeholder=" Primer Nombre" formControlName="secondCtrl" required>
-              
-            </mat-form-field>
-            <mat-form-field class="col-lg-12">
-              <mat-label>Segundo Nombre</mat-label>
-              <input matInput placeholder="Segundo Nombre" formControlName="secondNameSecondtCtrl" required>
-            </mat-form-field>
-            
-            <mat-form-field class="col-lg-12">
-              <mat-label>Primer Apellido</mat-label>
-              <input matInput placeholder="Apellidos" formControlName="secondLastNameCtrl" required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="thirdFormGroup">
-          <form [formGroup]="thirdFormGroup">
-            <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="thirdCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="fourFormGroup">
-          <form [formGroup]="fourFormGroup">
-            <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="fourCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="fiveFormGroup">
-          <form [formGroup]="fiveFormGroup">
-            <ng-template matStepLabel>SALUD</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="fiverCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="sixFormGroup">
-          <form [formGroup]="sixFormGroup">
-            <ng-template matStepLabel>ALIMENTOS</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="sixCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="sevenFormGroup">
-          <form [formGroup]="sevenFormGroup">
-            <ng-template matStepLabel>NECESIDADES BASICAS</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="sevenCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="eightFormGroup">
-          <form [formGroup]="eightFormGroup">
-            <ng-template matStepLabel>ALOJAMIENTO Y VIVIENDA</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="eightCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="nineFormGroup">
-          <form [formGroup]="nineFormGroup">
-            <ng-template matStepLabel>ECONOMICO</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="nineCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step [stepControl]="tenFormGroup">
-          <form [formGroup]="tenFormGroup">
-            <ng-template matStepLabel>VALIDACION DE IDENTIDAD</ng-template>
-            <mat-form-field>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName="tenCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                    required>
-            </mat-form-field>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
-          <p>You are now done.</p>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-          </div>
-        </mat-step>
-      </mat-vertical-stepper>
-
-  
-  </div>
-  </mat-grid-tile>
-  <mat-grid-tile >
-    9
-  </mat-grid-tile>
-</mat-grid-list> -->
-
-
-
-
-<div class="container">
-
- 
-  
-
-    
-      <div class="col-lg-4">
-      
-      </div>
-      <div class="col-lg-4">
-
-        <div class="card-container">
-        <H2 *ngIf="  titleheader == true">FORMULARIO PARA PILOTO ENCUESTA DE PRESELECCIÓN IMMAP
-        </H2>
-        <H2 *ngIf="thanksmessage"> Gracias por participar!</H2>
-  
-      
-      <div>
-        <P *ngIf="termnsandconditions">
-          Este proceso no genera ningún costo o cobro asociado.
-  Su participación es voluntaria y puede decidir no participar o retirar su consentimiento en cualquier momento.
-  La información recogida no tendrá ninguna implicación en su condición migratoria.
-  El objetivo de esta encuesta es valorar si es posible que usted sea elegido para ingresar a programas de asistencia humanitaria, estos programas pueden incluir asistencia financiera, servicios de protección y otros servicios humanitarios. Responder a estas preguntas no quiere decir que usted y su familia serán automáticamente seleccionados. Si usted es preseleccionado, será contactado por la organización para continuar con el proceso.
-  Su información es confidencial, sin embargo, nuestra organización podría tener que compartir parte de sus datos, de manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG nacionales e internacionales, cuando haya posibles casos duplicados, de fraude o para referir su hogar a servicios adicionales, y contribuir en iniciativas de investigación conjuntas.
-  La organización no retendrá su información personal durante más tiempo que el periodo de duración del programa y también borrará su información, si usted lo requiere. Pero, sin su información personal no se podrán lograr los objetivos del programa.
-  Esta encuesta incluye preguntas sobre su situación actual. Tenga en cuenta, que todos los datos que usted entregue a continuación serán verificados por la organización, por favor responda con sus datos reales.
-  
-        </P>
-      </div>
-
-        <div *ngIf="quentionaccepttermns">
-          <div>
-                <label >¿Está usted de acuerdo con las condiciones expuestas anteriormente? </label>
-      
-              </div>
-              <div *ngIf="buttonsConfirm">
-
-                <button mat-stroked-button color="primary" (click)="termsAccept(true)">SI</button>
-                <button mat-stroked-button  (click)="termsAccept(false)">NO</button>
-            
-              </div>
-            
-          </div>
-
-        </div>
+      <div fxLayout="column" fxLayoutAlign="center center" class="flexcolumn" >
 
          
+          <div class="titleheader">
+              <H2 *ngIf="titleheader" >
+                  FORMULARIO PARA PILOTO ENCUESTA DE PRESELECCIÓN IMMAP
+              </H2>
+              <H2 *ngIf="thanksmessage" >Gracias por participar!</H2>
+          </div>
+        
+
+        <div class="termnsandconditions">
+          <P *ngIf="termnsandconditions">
+            Este proceso no genera ningún costo o cobro asociado.
+    Su participación es voluntaria y puede decidir no participar o retirar su consentimiento en cualquier momento.
+    La información recogida no tendrá ninguna implicación en su condición migratoria.
+    El objetivo de esta encuesta es valorar si es posible que usted sea elegido para ingresar a programas de asistencia humanitaria, estos programas pueden incluir asistencia financiera, servicios de protección y otros servicios humanitarios. Responder a estas preguntas no quiere decir que usted y su familia serán automáticamente seleccionados. Si usted es preseleccionado, será contactado por la organización para continuar con el proceso.
+    Su información es confidencial, sin embargo, nuestra organización podría tener que compartir parte de sus datos, de manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG nacionales e internacionales, cuando haya posibles casos duplicados, de fraude o para referir su hogar a servicios adicionales, y contribuir en iniciativas de investigación conjuntas.
+    La organización no retendrá su información personal durante más tiempo que el periodo de duración del programa y también borrará su información, si usted lo requiere. Pero, sin su información personal no se podrán lograr los objetivos del programa.
+    Esta encuesta incluye preguntas sobre su situación actual. Tenga en cuenta, que todos los datos que usted entregue a continuación serán verificados por la organización, por favor responda con sus datos reales.
+  
+          </P>
       </div>
-      <div class="col-lg-4">
-      
-      </div>
+        
 
-    <div class="col-lg-4">
-
-    </div>
-    <div class="col-lg-4">
-
-      <div class="card-container" *ngIf="formPrincipal">
-        <mat-vertical-stepper [(linear)]="isLinear" #stepper>
-          
-          <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-              <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
-              <mat-form-field class="col-lg-12">
-                <mat-label>Primer Nombre</mat-label>
-                <input matInput placeholder=" Primer Nombre" formControlName="secondCtrl" required>
-                
-              </mat-form-field>
-              <mat-form-field class="col-lg-12">
-                <mat-label>Segundo Nombre</mat-label>
-                <input matInput placeholder="Segundo Nombre" formControlName="secondNameSecondtCtrl" required>
-              </mat-form-field>
-              
-              <mat-form-field class="col-lg-12">
-                <mat-label>Primer Apellido</mat-label>
-                <input matInput placeholder="Apellidos" formControlName="secondLastNameCtrl" required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="thirdFormGroup">
-            <form [formGroup]="thirdFormGroup">
-              <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="thirdCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="fourFormGroup">
-            <form [formGroup]="fourFormGroup">
-              <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="fourCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="fiveFormGroup">
-            <form [formGroup]="fiveFormGroup">
-              <ng-template matStepLabel>SALUD</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="fiverCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="sixFormGroup">
-            <form [formGroup]="sixFormGroup">
-              <ng-template matStepLabel>ALIMENTOS</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="sixCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="sevenFormGroup">
-            <form [formGroup]="sevenFormGroup">
-              <ng-template matStepLabel>NECESIDADES BASICAS</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="sevenCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="eightFormGroup">
-            <form [formGroup]="eightFormGroup">
-              <ng-template matStepLabel>ALOJAMIENTO Y VIVIENDA</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="eightCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="nineFormGroup">
-            <form [formGroup]="nineFormGroup">
-              <ng-template matStepLabel>ECONOMICO</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="nineCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step [stepControl]="tenFormGroup">
-            <form [formGroup]="tenFormGroup">
-              <ng-template matStepLabel>VALIDACION DE IDENTIDAD</ng-template>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="tenCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                      required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
-            <p>You are now done.</p>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
+      <div *ngIf="quentionaccepttermns">
+        <div>
+              <label >¿Está usted de acuerdo con las condiciones expuestas anteriormente? </label>
+    
             </div>
-          </mat-step>
-        </mat-vertical-stepper>
-  
-    </div>
-      
-    </div>
-    <div class="col-lg-4">
-      
-    </div>
+            <div *ngIf="buttonsConfirm">
+
+              <button mat-stroked-button color="primary" (click)="termsAccept(true)">SI</button>
+              <button mat-stroked-button  (click)="termsAccept(false)">NO</button>
+          
+            </div>
+          
+        </div>
+
+        <div class="card-container" *ngIf="formPrincipal">
+          <mat-vertical-stepper [(linear)]="isLinear" #stepper>
+            
+            <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Primer Nombre</mat-label>
+                  <input matInput placeholder=" Primer Nombre" formControlName="secondCtrl" required>
+                  
+                </mat-form-field>
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Segundo Nombre</mat-label>
+                  <input matInput placeholder="Segundo Nombre" formControlName="secondNameCtrl" >
+                </mat-form-field>
+                
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Primer Apellido</mat-label>
+                  <input matInput placeholder="Primer Apellido" formControlName="lastNameCtrl" required>
+                </mat-form-field>
+
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Segundo Apellido</mat-label>
+                  <input matInput placeholder="Segundo apellido" formControlName="secondLastNameCtrl" >
+                </mat-form-field>
+
+
+                
+                <div class="col-lg-12">
+                  
+                
+                    <label>Sexo: </label>
+                    <mat-radio-group aria-label="Seleccione una opcion" formControlName
+                    ="sexoCtrl">
+                      <mat-radio-button [value]="mujer">Mujer</mat-radio-button>
+                      <mat-radio-button [value]="hombre">Hombre</mat-radio-button>
+
+                    </mat-radio-group>
+                </div>
+
+              
+
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Fecha de Nacimiento</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="fechaNacimientoCtrl">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Nacionalidad: </mat-label>
+                  <mat-select  formControlName="nacionalidadCtrl" required>
+                    <mat-option *ngFor="let nacionalidad of nacionalidades" [value]="nacionalidad">
+                      {{nacionalidad.name}}
+                      
+                    </mat-option>
+                   
+                   </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="col-lg-12">
+                  <mat-label>Tipo de Documento: </mat-label>
+                  <mat-select  formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumento($event)" required>
+                    <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento">
+                      {{documento.name}}
+                    </mat-option>
+                    
+                   </mat-select>
+                </mat-form-field>
+
+                {{tipoDocumentoCtrl}}
+
+                <mat-form-field class="col-lg-12" *ngIf="otroTipoDocumento">
+                  <mat-label>¿Cuál? *(Indicar tipo, ejemplo: pasaporte)*</mat-label>
+                  <input matInput placeholder="Ejemplo: Pasaporte" formControlName="otroTipoDocumentoCtrl" required >
+
+                </mat-form-field>
+
+                <mat-form-field class="col-lg-12" *ngIf="numeroDocumento">
+                  <mat-label>Número de Documento</mat-label>
+                  <input matInput placeholder="Número de Documento" type="number" formControlName="numeroDocumentoCtrl" required >
+                </mat-form-field>
+
+                <div>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+              <form [formGroup]="thirdFormGroup">
+                <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="thirdCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="fourFormGroup">
+              <form [formGroup]="fourFormGroup">
+                <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="fourCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="fiveFormGroup">
+              <form [formGroup]="fiveFormGroup">
+                <ng-template matStepLabel>SALUD</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="fiverCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="sixFormGroup">
+              <form [formGroup]="sixFormGroup">
+                <ng-template matStepLabel>ALIMENTOS</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="sixCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="sevenFormGroup">
+              <form [formGroup]="sevenFormGroup">
+                <ng-template matStepLabel>NECESIDADES BASICAS</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="sevenCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="eightFormGroup">
+              <form [formGroup]="eightFormGroup">
+                <ng-template matStepLabel>ALOJAMIENTO Y VIVIENDA</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="eightCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="nineFormGroup">
+              <form [formGroup]="nineFormGroup">
+                <ng-template matStepLabel>ECONOMICO</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="nineCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="tenFormGroup">
+              <form [formGroup]="tenFormGroup">
+                <ng-template matStepLabel>VALIDACION DE IDENTIDAD</ng-template>
+                <mat-form-field>
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="tenCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                        required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Done</ng-template>
+              <p>You are now done.</p>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="stepper.reset()">Reset</button>
+              </div>
+            </mat-step>
+          </mat-vertical-stepper>
+    
+      </div>
   
 
 
-</div>
+      

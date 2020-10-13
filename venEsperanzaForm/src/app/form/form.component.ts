@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
@@ -7,6 +7,7 @@ import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit  {
+
   title = 'venEsperanzaForm';
 
   isLinear = true;
@@ -19,7 +20,10 @@ export class FormComponent implements OnInit  {
   thanksmessage = false;
   buttonsConfirm = true;
 
+  otroTipoDocumento = false;
+
   formPrincipal = false;
+  numeroDocumento = true;
   
   //firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -33,6 +37,20 @@ export class FormComponent implements OnInit  {
   tenFormGroup: FormGroup;
 
   public autorizacionSeleccionada: number;
+
+  nacionalidades=[
+    {name:'Colombiana'},
+    {name: 'Venezolana'},
+    {name: 'Otro'}
+  ];
+
+  tipoDocumentos=[
+    {name:'Acta de Nacimiento'},
+    {name:'Cédula de Identidad (venezonala)'},
+    {name: 'Cédula de ciudadania (colombiana)'},
+    {name:'Indocumentado'},
+    {name: 'Otro'}
+  ];
 
   constructor(private _formBuilder: FormBuilder) {}
 
@@ -52,9 +70,18 @@ export class FormComponent implements OnInit  {
     */
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
-      secondNameSecondtCtrl: ['', Validators.required],
-      secondLastNameCtrl: ['', Validators.required]
+      secondNameCtrl: [''],
+      lastNameCtrl: ['', Validators.required],
+      secondLastNameCtrl: [''],
+      sexoCtrl:[''],
+      fechaNacimientoCtrl:[''],
+      nacionalidadCtrl:['',Validators.required],
+      tipoDocumentoCtrl:['',Validators.required],
+      numeroDocumentoCtrl:['',Validators.required]
     });
+
+
+
     this.thirdFormGroup = this._formBuilder.group({
       thirdCtrl: ['', Validators.required]
     });
@@ -110,6 +137,31 @@ termsAccept($event: any) {
     this.formPrincipal = true;
     
   }
+}
+
+selectTipoDocumento($event: any){
+  console.log("ENTRO A OTRO",$event.value.name);
+  if($event.value.name == 'Otro'){
+    console.log("ES OTRO");
+    this.otroTipoDocumento = true;
+    this.secondFormGroup.addControl('otroTipoDocumentoCtrl',new FormControl('',Validators.required));
+
+  }else if($event.value.name != 'Otro' && this.secondFormGroup.contains('otroTipoDocumentoCtrl')){
+    console.log("NO ES OTRO");
+    this.otroTipoDocumento = false;
+    this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
+  
+
+  }else if($event.value.name == 'Indocumentado'){
+    this.secondFormGroup.removeControl('numeroDocumentoCtrl');
+    this.numeroDocumento = false;
+
+  }else if($event.value.name != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl') ){
+    this.secondFormGroup.addControl('numeroDocumentoCtrl',new FormControl('',Validators.required));
+    this.numeroDocumento = true;
+
+  }
+  
 }
 
 /*
