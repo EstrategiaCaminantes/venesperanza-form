@@ -1,5 +1,5 @@
 import {Component, OnInit,ViewChild} from '@angular/core';
-import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,9 @@ export class FormComponent implements OnInit  {
 
   formPrincipal = false;
   numeroDocumento = true;
+
+  contactoAlternativoInput = false;
+  lineacontactoWhatsappInput = false;
   
   //firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -51,6 +54,51 @@ export class FormComponent implements OnInit  {
     {name:'Indocumentado'},
     {name: 'Otro'}
   ];
+
+  
+  departamentosList = [
+    {id:'1',name:'Antioquia'},
+    {id:'2',name:'Bogota'},
+    {id:'3',name:'Santander'}
+
+  ];
+
+  municipiosList = [
+    {id:'1',id_departamento:'1',name:'Medellin'},
+    {id:'2',id_departamento:'1',name:'Envidado'},
+    {id:'3',id_departamento:'2',name:'Bogota'},
+    {id:'4',id_departamento:'3',name:'Bucaramanga'},
+    {id:'5',id_departamento:'3',name:'Floridablanca'}
+  ]
+
+  municipiosFilter = this.municipiosList;
+
+  necesidadesList = [
+    {
+      name: "Alojamiento",
+      value: "alojamiento"
+    },
+    {
+      name: "Comida",
+      value: "comida"
+      
+    },
+    {
+      name: "Empleo",
+      value: "empleo"
+    },
+    {
+      name: "Salud",
+      value: "salud"
+    },
+    {
+      name: "Educación",
+      value: "educacion"
+    },
+    {
+      name: "Agua",
+      value: "agua"
+    }];
 
   constructor(private _formBuilder: FormBuilder) {}
 
@@ -83,20 +131,53 @@ export class FormComponent implements OnInit  {
 
 
     this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required]
+      departamentoCtrl: ['', Validators.required],
+      municipioCtrl: ['', Validators.required],
+      barrioCtrl:['',Validators.required],
+      direccionCtrl:[''],
+      numeroContactoCtrl:['',Validators.required],
+      lineaContactoPropiaCtrl:['',Validators.required],
+      correoCtrl:[''],
+      comentarioAdicionalCtrl:['']
     });
+
+
     this.fourFormGroup = this._formBuilder.group({
-      fourCtrl: ['', Validators.required]
+      miembroFamiliaPrimerNombreCtrl: ['', Validators.required],
+      miembroFamiliaSegundoNombreCtrl:[''],
+      miembroFamiliaPrimerApellidoCtrl:['',Validators.required],
+      miembroFamiliaSegundoApellidoCtrl:[''],
+      miembroFamiliaSexoCtrl:['',Validators.required],
+      miembroFamiliaFechaNacimientoCtrl:['',Validators.required]
+
     });
+
+
     this.fiveFormGroup = this._formBuilder.group({
-      fiverCtrl: ['', Validators.required]
+      mujeresEmbarazadasCtrl: [''],
+      mujeresLactantesCtrl:[''],
+      personasDiscapacidadCtrl: [''],
+      personasEnfermedadesCronicasCtrl:['']
     });
+
+
     this.sixFormGroup = this._formBuilder.group({
-      sixCtrl: ['', Validators.required]
+      alimentos11Ctrl: [''],
+      alimentos12Ctrl: [''],
+      alimentos13Ctrl: [''],
+      alimentos14Ctrl: [''],
+      alimentos15Ctrl: [''],
+      alimentos16Ctrl: ['']
+
+
     });
     this.sevenFormGroup = this._formBuilder.group({
-      sevenCtrl: ['', Validators.required]
+      necesidades17Ctrl: ['', Validators.required],
+      necesidades22Ctrl: ['']
     });
+
+
+
     this.eightFormGroup = this._formBuilder.group({
       eightCtrl: ['', Validators.required]
     });
@@ -152,7 +233,8 @@ selectTipoDocumento($event: any){
     this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
   
 
-  }else if($event.value.name == 'Indocumentado'){
+  }
+  if($event.value.name == 'Indocumentado'){
     this.secondFormGroup.removeControl('numeroDocumentoCtrl');
     this.numeroDocumento = false;
 
@@ -164,6 +246,73 @@ selectTipoDocumento($event: any){
   
 }
 
+
+selectDepartamento($event:any){
+
+  this.municipiosFilter = this.municipiosList;
+
+  const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value.id);
+
+
+  this.municipiosFilter = municipiosnuevo;
+
+  console.log("MUNICIPIOS: ",this.municipiosFilter);
+  this.thirdFormGroup.controls['municipioCtrl'].setValue(null); 
+  console.log("MUNICIPIO ACTUAL: ", this.thirdFormGroup.controls['municipioCtrl'].value);
+
+
+  
+}
+
+selectMunicipio($event: any){
+  console.log("MUNICIPIO SELECCIONADO: ", $event.value);
+}
+
+lineaContactoPropia($event: any){
+  console.log("LINEA EVENTO: ", $event);
+  console.log("LINEA EVENTO: ", $event.value);
+  console.log("LINEA EVENTO: ", $event.value.toString());
+
+  console.log("LINEA DE CONTACTO: ", this.thirdFormGroup.controls['lineaContactoPropiaCtrl'].value );
+  console.log("LINEA EVENTO: ", this.thirdFormGroup.controls['lineaContactoPropiaCtrl']);
+  if($event.value === "si"){
+
+    this.contactoAlternativoInput = false;
+    this.lineacontactoWhatsappInput = true;
+
+    
+    this.thirdFormGroup.addControl('lineaContactoAsociadaAWhatsappCtrl',new FormControl('',Validators.required));
+
+    if(this.thirdFormGroup.contains('contactoAlternativoCtrl')){
+      this.thirdFormGroup.removeControl('contactoAlternativoCtrl');
+    }
+    
+
+  }else if($event.value === "no"){
+
+    this.contactoAlternativoInput = true;
+    this.lineacontactoWhatsappInput = false;
+    this.thirdFormGroup.addControl('contactoAlternativoCtrl',new FormControl('',Validators.required));
+    
+
+    if(this.thirdFormGroup.contains('contactoAlternativoCtrl')){
+      this.thirdFormGroup.removeControl('lineaContactoAsociadaAWhatsappCtrl');
+    }
+
+   
+
+  }
+  
+}
+
+
+setNecedidadesBasicas(necesidad:any){
+
+  console.log("NECESIDAD: ", necesidad);
+  console.log("CONTROLADOR: ", this.sevenFormGroup.controls['necesidades22Ctrl']);
+  console.log("CONTROLADOR VALUE: ", this.sevenFormGroup.controls['necesidades22Ctrl'].value);
+
+}
 /*
   autorizacion(valor){
     if(valor == 1){
