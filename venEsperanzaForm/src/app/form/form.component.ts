@@ -98,6 +98,10 @@ export class FormComponent implements OnInit  {
     {
       name: "Agua",
       value: "agua"
+    },
+    {
+      name: "Conectividad",
+      value: "conectividad"
     }];
 
   constructor(private _formBuilder: FormBuilder) {}
@@ -173,16 +177,19 @@ export class FormComponent implements OnInit  {
     });
     this.sevenFormGroup = this._formBuilder.group({
       necesidades17Ctrl: ['', Validators.required],
-      necesidades22Ctrl: ['']
+      necesidades22Ctrl: ['', Validators.required]
     });
 
 
 
     this.eightFormGroup = this._formBuilder.group({
-      eightCtrl: ['', Validators.required]
+      alojamientoViviendaCtrl: [''],
     });
+
     this.nineFormGroup = this._formBuilder.group({
-      nineCtrl: ['', Validators.required]
+      economicoCtrl: [''],
+      gastoHogar7diasCtrl:[''] 
+
     });
     
     this.tenFormGroup = this._formBuilder.group({
