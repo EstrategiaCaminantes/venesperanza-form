@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "venEsperanzaForm"
+  "defaultProject": "venEsperanzaForm",
+  "cli": {
+    "analytics": false
+  }
 }
