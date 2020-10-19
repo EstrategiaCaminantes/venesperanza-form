@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CommonModule } from '@angular/common';  
+import { HttpClientModule  } from '@angular/common/http';
 
 import { NgModule } from '@angular/core';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -34,7 +35,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FormsModule, ReactiveFormsModule, MatInputModule,
     MatButtonModule, MatRadioModule,MatGridListModule, FlexLayoutModule,
     CommonModule,MatDatepickerModule,MatNativeDateModule,
-    MatSelectModule, MatCheckboxModule
+    MatSelectModule, MatCheckboxModule,
+    HttpClientModule
 
   ],
   providers: [MatDatepickerModule,MatNativeDateModule],

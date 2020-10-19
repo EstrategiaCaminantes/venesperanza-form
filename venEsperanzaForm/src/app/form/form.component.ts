@@ -1,12 +1,16 @@
 import {Component, OnInit,ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 
+import { FormService } from '../services/form.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit  {
+
+  id = null;
 
   title = 'venEsperanzaForm';
 
@@ -55,7 +59,7 @@ export class FormComponent implements OnInit  {
     {name: 'Otro'}
   ];
 
-  
+  /*
   departamentosList = [
     {id:'1',name:'Antioquia'},
     {id:'2',name:'Bogota'},
@@ -69,11 +73,15 @@ export class FormComponent implements OnInit  {
     {id:'3',id_departamento:'2',name:'Bogota'},
     {id:'4',id_departamento:'3',name:'Bucaramanga'},
     {id:'5',id_departamento:'3',name:'Floridablanca'}
-  ]
+  ]*/
 
-  municipiosFilter = this.municipiosList;
+  departamentosList = [];
 
-  necesidadesList = [
+  municipiosList = [];
+
+  municipiosFilter = [];
+  necesidadesList = [];
+  /*necesidadesList = [
     {
       name: "Alojamiento",
       value: "alojamiento"
@@ -103,10 +111,29 @@ export class FormComponent implements OnInit  {
       name: "Conectividad",
       value: "conectividad"
     }];
-
-  constructor(private _formBuilder: FormBuilder) {}
+*/
+  constructor(private _formBuilder: FormBuilder, private formService: FormService) {}
 
   ngOnInit() {
+
+    this.formService.getDepartamentos()
+    .subscribe((data: any[]) => {
+      this.departamentosList = data;
+      console.log("DEPARTAMENTOS: ",data);
+    });
+
+    this.formService.getMunicipios()
+    .subscribe((data: any[]) => {
+      this.municipiosList = data;
+      this.municipiosFilter = this.municipiosList
+      console.log("MUNICIPIOS: ",data);
+    });
+
+    this.formService.getNecesidadesBasicas()
+    .subscribe((data: any[]) => {
+      this.necesidadesList = data;
+      
+    })
 
     /*
 
@@ -121,7 +148,8 @@ export class FormComponent implements OnInit  {
     });
     */
     this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
+      
+      firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
       lastNameCtrl: ['', Validators.required],
       secondLastNameCtrl: [''],
@@ -228,24 +256,24 @@ termsAccept($event: any) {
 }
 
 selectTipoDocumento($event: any){
-  console.log("ENTRO A OTRO",$event.value.name);
-  if($event.value.name == 'Otro'){
+  console.log("ENTRO A OTRO",$event.value);
+  if($event.value == 'Otro'){
     console.log("ES OTRO");
     this.otroTipoDocumento = true;
     this.secondFormGroup.addControl('otroTipoDocumentoCtrl',new FormControl('',Validators.required));
 
-  }else if($event.value.name != 'Otro' && this.secondFormGroup.contains('otroTipoDocumentoCtrl')){
+  }else if($event.value != 'Otro' && this.secondFormGroup.contains('otroTipoDocumentoCtrl')){
     console.log("NO ES OTRO");
     this.otroTipoDocumento = false;
     this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
   
 
   }
-  if($event.value.name == 'Indocumentado'){
+  if($event.value == 'Indocumentado'){
     this.secondFormGroup.removeControl('numeroDocumentoCtrl');
     this.numeroDocumento = false;
 
-  }else if($event.value.name != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl') ){
+  }else if($event.value != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl') ){
     this.secondFormGroup.addControl('numeroDocumentoCtrl',new FormControl('',Validators.required));
     this.numeroDocumento = true;
 
@@ -256,23 +284,25 @@ selectTipoDocumento($event: any){
 
 selectDepartamento($event:any){
 
+  console.log("DEPARTAMENTO : ", $event)
+
   this.municipiosFilter = this.municipiosList;
 
-  const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value.id);
+  const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
 
 
   this.municipiosFilter = municipiosnuevo;
 
   console.log("MUNICIPIOS: ",this.municipiosFilter);
   this.thirdFormGroup.controls['municipioCtrl'].setValue(null); 
-  console.log("MUNICIPIO ACTUAL: ", this.thirdFormGroup.controls['municipioCtrl'].value);
+  console.log("MUNICIPIO ACTUAL: ", this.thirdFormGroup.controls['municipioCtrl']);
 
 
   
 }
 
 selectMunicipio($event: any){
-  console.log("MUNICIPIO SELECCIONADO: ", $event.value);
+  console.log("MUNICIPIO SELECCIONADO: ", $event);
 }
 
 lineaContactoPropia($event: any){
@@ -318,6 +348,42 @@ setNecedidadesBasicas(necesidad:any){
   console.log("NECESIDAD: ", necesidad);
   console.log("CONTROLADOR: ", this.sevenFormGroup.controls['necesidades22Ctrl']);
   console.log("CONTROLADOR VALUE: ", this.sevenFormGroup.controls['necesidades22Ctrl'].value);
+
+}
+
+enviarInfo(grupo,paso){
+  console.log("EL PASO ES: ",paso);
+
+      console.log("EL GRUPO ES: ",grupo);
+
+
+      let data = {
+        'paso': paso,
+        'infoencuesta': grupo.value,
+      }
+
+      if(this.id == null){
+
+          this.formService.postForm(data).subscribe(res=>{
+            console.log("RESPUESTA: ",res);
+            this.id = res['id'];
+
+          });
+      }else{
+        console.log("VOY A ACTUALIZAR");
+        
+
+        this.formService.updateForm(this.id,data).subscribe( res=>{
+          console.log("RESPUESTA: ",res);
+          this.id = res['id'];
+
+        });
+        
+      }
+          
+
+    
+ 
 
 }
 /*
