@@ -112,6 +112,23 @@ export class FormComponent implements OnInit  {
       value: "conectividad"
     }];
 */
+
+  otrosmiembros = [
+    {
+      'primer_nombre':'',
+      'segundo_nombre':'',
+      'primer_apellido':'',
+      'segundo_apellido':'',
+      'sexo':'',
+      'fecha_nacimiento':''
+
+    }
+  ];
+  
+  //miembrosFamilia = new FormArray([]);
+  miembrosFamilia: any;
+
+
   constructor(private _formBuilder: FormBuilder, private formService: FormService) {}
 
   ngOnInit() {
@@ -147,6 +164,7 @@ export class FormComponent implements OnInit  {
   
     });
     */
+
     this.secondFormGroup = this._formBuilder.group({
       
       firstNameCtrl: ['', Validators.required],
@@ -172,17 +190,48 @@ export class FormComponent implements OnInit  {
       correoCtrl:[''],
       comentarioAdicionalCtrl:['']
     });
+    
+
+    
 
 
     this.fourFormGroup = this._formBuilder.group({
-      miembroFamiliaPrimerNombreCtrl: ['', Validators.required],
+     /* miembroFamiliaPrimerNombreCtrl: ['', Validators.required],
       miembroFamiliaSegundoNombreCtrl:[''],
       miembroFamiliaPrimerApellidoCtrl:['',Validators.required],
       miembroFamiliaSegundoApellidoCtrl:[''],
       miembroFamiliaSexoCtrl:['',Validators.required],
-      miembroFamiliaFechaNacimientoCtrl:['',Validators.required]
+      miembroFamiliaFechaNacimientoCtrl:['',Validators.required],*/
+
+      miembrosFamilia: new FormArray([])
+
+     // miembrosFamilia: this._formBuilder.array([], Validators.required)
+      /*miembrosFamilia: new FormArray([
+        new FormGroup({
+          primernombreCtrl: new FormControl(''),
+          segundonombreCtrl: new FormControl(''),
+          primerapellidoCtrl: new FormControl(''),
+              segundoapellidoCtrl: new FormControl('')
+        })
+        
+      ])*/
+
+     
 
     });
+    this.miembrosFamilia = this.fourFormGroup.get("miembrosFamilia") as FormArray;
+/*
+    const control = new FormGroup({
+      primernombreCtrl: new FormControl(''),
+      segundonombreCtrl: new FormControl(''),
+      primerapellidoCtrl: new FormControl(''),
+          segundoapellidoCtrl: new FormControl('')
+    });
+
+    
+  const checkArray: FormArray = this.fourFormGroup.controls['miembrosFamilia'] as FormArray;
+  checkArray.push(control);*/
+
 
 
     this.fiveFormGroup = this._formBuilder.group({
@@ -205,7 +254,7 @@ export class FormComponent implements OnInit  {
     });
     this.sevenFormGroup = this._formBuilder.group({
       necesidades17Ctrl: ['', Validators.required],
-      necesidades22Ctrl: ['', Validators.required]
+      necesidades22Ctrl: this._formBuilder.array([], Validators.required)
     });
 
 
@@ -343,12 +392,71 @@ lineaContactoPropia($event: any){
 }
 
 
-setNecedidadesBasicas(necesidad:any){
+setNecedidadesBasicas($event){
 
-  console.log("NECESIDAD: ", necesidad);
+  console.log("NECESIDAD: ", $event);
+
+  
   console.log("CONTROLADOR: ", this.sevenFormGroup.controls['necesidades22Ctrl']);
   console.log("CONTROLADOR VALUE: ", this.sevenFormGroup.controls['necesidades22Ctrl'].value);
+  const checkArray: FormArray = this.sevenFormGroup.controls['necesidades22Ctrl'] as FormArray;
 
+  if($event.target.checked){
+    checkArray.push(new FormControl($event.target.value));
+
+  }else {
+    let i: number = 0;
+    checkArray.controls.forEach((item: FormControl) => {
+      if (item.value == $event.target.value) {
+        checkArray.removeAt(i);
+        return;
+      }
+      i++;
+    });
+  }
+
+  console.log("CONTROLADOR: ", this.sevenFormGroup.controls['necesidades22Ctrl']);
+  console.log("ARRAYCHECK", checkArray);
+
+}
+
+agregarNuevoMiembro(){
+
+  console.log("AGREGO GRUPO AL ARRAY DE MIEMBROS FAMILIA:");
+
+  const chekgroup: FormArray = this.fourFormGroup.controls['miembrosFamilia'] as FormArray;
+
+  
+
+  
+
+
+  //this.miembrosFamilia = this.fourFormGroup.get("miembrosFamilia") as FormArray;
+
+    const controle = new FormGroup({
+      primernombreCtrl: new FormControl('',Validators.required),
+      segundonombreCtrl: new FormControl(''),
+      primerapellidoCtrl: new FormControl('',Validators.required),
+          segundoapellidoCtrl: new FormControl(''),
+          sexoCtrl: new FormControl('',Validators.required),
+          fechaCtrl: new FormControl('',Validators.required)
+    });
+
+    chekgroup.push(controle);
+
+    console.log("CHECK",chekgroup);
+    console.log("THIS--",this.fourFormGroup);
+
+  
+  
+}
+
+EliminarMiembro(index){
+
+  
+    this.miembrosFamilia.removeAt(index);
+    console.log("DESPUES DE ELIMINAR",this.fourFormGroup);
+   
 }
 
 enviarInfo(grupo,paso){
@@ -364,6 +472,8 @@ enviarInfo(grupo,paso){
 
       if(this.id == null){
 
+        console.log("VALOR DE ID ",this.id);
+
           this.formService.postForm(data).subscribe(res=>{
             console.log("RESPUESTA: ",res);
             this.id = res['id'];
@@ -371,12 +481,28 @@ enviarInfo(grupo,paso){
           });
       }else{
         console.log("VOY A ACTUALIZAR");
+
+        
+        if(data.paso == 'paso8'){
+
+          let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length+1//miembro principal;
+        //console.log(this.fourFormGroup.controls.miembrosFamilia.value.length);
+
+        //console.log("CANTIDAD MIEMBROS FAMILIA: ",cantidad_miembros);
+
+          data['infoencuesta']['cantidad_miembros'] = cantidad_miembros;
+          
+        }
         
 
         this.formService.updateForm(this.id,data).subscribe( res=>{
-          console.log("RESPUESTA: ",res);
-          this.id = res['id'];
+          //console.log("RESPUESTA: ",res);
 
+           
+
+        },error=>{
+          console.log("ERROR");
+          console.log(error);
         });
         
       }

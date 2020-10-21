@@ -65,7 +65,7 @@
 
           <mat-form-field class="col-lg-12">
             <mat-label>Primer Nombre</mat-label>
-            <input matInput placeholder=" Primer Nombre" formControlName="firstNameCtrl" required>
+            <input matInput placeholder=" Primer Nombre" formControlName="firstNameCtrl" required >
 
           </mat-form-field>
           <mat-form-field class="col-lg-12">
@@ -75,7 +75,7 @@
 
           <mat-form-field class="col-lg-12">
             <mat-label>Primer Apellido</mat-label>
-            <input matInput placeholder="Primer Apellido" formControlName="lastNameCtrl" required>
+            <input matInput placeholder="Primer Apellido" formControlName="lastNameCtrl" required >
           </mat-form-field>
 
           <mat-form-field class="col-lg-12">
@@ -117,7 +117,7 @@
 
           <mat-form-field class="col-lg-12">
             <mat-label>Tipo de Documento:</mat-label>
-            <mat-select formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumento($event)" required>
+            <mat-select formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumento($event)" required >
               <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
                 {{documento.name}}
               </mat-option>
@@ -202,7 +202,7 @@
 
           <mat-form-field class="contactoAlternativo" *ngIf='contactoAlternativoInput'>
             <mat-label> ¿Por quién preguntar en caso de llamar?:</mat-label>
-            <input matInput formControlName="contactoAlternativoCtrl" placeholder="" required>
+            <input matInput formControlName="contactoAlternativoCtrl" placeholder="" >
           </mat-form-field>
 
           <div class="col-lg-12 margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
@@ -231,7 +231,7 @@
           </mat-form-field>
 
 
-          <div>
+          <div *ngIf="thirdFormGroup.status == 'VALID'">
             <button mat-button matStepperNext  (click)="enviarInfo(thirdFormGroup,'paso2')">Siguiente</button>
           </div>
         </form>
@@ -244,6 +244,8 @@
 
           <p> *A continuación, se deben agregar los datos personales de cada miembro del hogar*</p>
 
+          <!--
+          <div *ngFor="let otromiembro of otrosmiembros; let i = index">
           <mat-form-field class="col-lg-12">
             <mat-label>Primer Nombre</mat-label>
             <input matInput placeholder="Primer Nombre" formControlName="miembroFamiliaPrimerNombreCtrl" required>
@@ -284,12 +286,100 @@
 
           <mat-form-field class="col-lg-12">
             <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput [matDatepicker]="pickertwo" formControlName="miembroFamiliaFechaNacimientoCtrl" required>
-            <mat-datepicker-toggle matSuffix [for]="pickertwo"></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="pickertwo[i]" formControlName="miembroFamiliaFechaNacimientoCtrl" required>
+            <mat-datepicker-toggle matSuffix [for]="pickertwo[i]"></mat-datepicker-toggle>
             <mat-datepicker #pickertwo></mat-datepicker>
           </mat-form-field>
+
+
+          </div>
+
           <div>
-            <button mat-button matStepperNext>Siguiente</button>
+            <label>Agregar un otro miembro</label>
+          <button mat-fab color="primary" aria-label="Otro miembro" (click)="agregarNuevoMiembro()">
+            <mat-icon>add</mat-icon>
+          </button>
+           </div>
+          -->
+            <div  formArrayName="miembrosFamilia">
+
+                <div  *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;">
+
+
+                   <div  [formGroup]="miembroinfo" >
+
+                            <div>
+
+                            <label>Otro miembro del hogar #{{i+1}}</label>
+                            </div>
+                          
+                          
+                          <mat-form-field class="col-lg-12">
+                            <mat-label>Primer Nombre</mat-label>
+                            <input matInput placeholder="Primer Nombre" formControlName="primernombreCtrl" required>
+                
+                          </mat-form-field>
+                
+                          <mat-form-field class="col-lg-12">
+                            <mat-label>Segundo Nombre</mat-label>
+                            <input matInput placeholder="Segundo Nombre" formControlName="segundonombreCtrl">
+                
+                          </mat-form-field>
+                
+                          <mat-form-field class="col-lg-12">
+                            <mat-label>Primer Apellido</mat-label>
+                            <input matInput placeholder="Primer Apellido" formControlName="primerapellidoCtrl" required>
+                
+                          </mat-form-field>
+                
+                          <mat-form-field class="col-lg-12">
+                            <mat-label>Segundo Apellido</mat-label>
+                            <input matInput placeholder="Segundo Apellido" formControlName="segundoapellidoCtrl" >
+                
+                          </mat-form-field>
+                
+                          <div class="col-lg-12">
+                
+                
+                            <label>Sexo:* </label>
+                            <mat-radio-group aria-label="Seleccione una opcion" formControlName="sexoCtrl" required>
+                              <div>
+                              <mat-radio-button value="mujer">Mujer</mat-radio-button>
+                              <mat-radio-button value="hombre">Hombre</mat-radio-button>
+                              </div>
+                
+                            </mat-radio-group>
+                          </div>
+                
+                          <mat-form-field class="col-lg-12">
+                            <mat-label>Fecha de Nacimiento</mat-label>
+                            <input matInput [matDatepicker]="pickertres_i" formControlName="fechaCtrl" required>
+                            <mat-datepicker-toggle matSuffix [for]="pickertres_i"></mat-datepicker-toggle>
+                            <mat-datepicker #pickertres_i></mat-datepicker>
+                          </mat-form-field>
+
+                    </div>
+
+                    <button mat-mini-fab color="warn" aria-label="Eliminar miembro" (click)="EliminarMiembro(i)">
+                      <mat-icon>Eliminar</mat-icon>
+                    </button>
+      
+                </div>
+
+            </div>
+              
+            
+    
+            <div>
+              <label>Añade un miembro del hogar</label>
+            <button mat-fab color="primary" aria-label="Otro miembro" (click)="agregarNuevoMiembro()">
+              <mat-icon>Añadir</mat-icon>
+            </button>
+             </div>
+             
+
+          <div *ngIf="fourFormGroup.status == 'VALID'">
+            <button mat-button matStepperNext (click)="enviarInfo(fourFormGroup,'paso3')">Siguiente</button>
           </div>
         </form>
       </mat-step>
@@ -305,8 +395,8 @@
             <label>¿En el hogar hay mujeres embarazadas?: </label>
             <mat-radio-group aria-label="Seleccione una opcion" formControlName="mujeresEmbarazadasCtrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
             </mat-radio-group>
@@ -318,8 +408,8 @@
             <label>¿En el hogar hay mujeres lactantes?: </label>
             <mat-radio-group aria-label="Seleccione una opcion" formControlName="mujeresLactantesCtrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
 
@@ -331,8 +421,8 @@
             <label>¿En el hogar hay personas en situación de discapacidad?: </label>
             <mat-radio-group aria-label="Seleccione una opcion" formControlName="personasDiscapacidadCtrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
             </mat-radio-group>
@@ -345,16 +435,16 @@
             <mat-radio-group aria-label="Seleccione una opcion" formControlName
               ="personasEnfermedadesCronicasCtrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
             </mat-radio-group>
           </div>
 
 
-          <div>
-            <button mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="fiveFormGroup.status == 'VALID'">
+            <button mat-button matStepperNext (click)="enviarInfo(fiveFormGroup,'paso4')">Siguiente</button>
           </div>
         </form>
       </mat-step>
@@ -371,8 +461,8 @@
             <mat-radio-group aria-label="Seleccione una opcion" formControlName
               ="alimentos11Ctrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
             </mat-radio-group>
@@ -400,8 +490,8 @@
             <mat-radio-group aria-label="Seleccione una opcion" formControlName
               ="alimentos13Ctrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
             </mat-radio-group>
@@ -428,8 +518,8 @@
             <mat-radio-group aria-label="Seleccione una opcion" formControlName
               ="alimentos15Ctrl">
               <div>
-              <mat-radio-button value="si">Si</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="1">Si</mat-radio-button>
+              <mat-radio-button value="0">No</mat-radio-button>
               </div>
 
             </mat-radio-group>
@@ -450,11 +540,13 @@
           </div>
 
 
-          <div>
-            <button mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="sixFormGroup.status == 'VALID'">
+            <button mat-button matStepperNext (click)="enviarInfo(sixFormGroup,'paso5')">Siguiente</button>
           </div>
         </form>
       </mat-step>
+
+      
       <mat-step [stepControl]="sevenFormGroup">
         <form [formGroup]="sevenFormGroup">
           <ng-template matStepLabel>NECESIDADES BASICAS</ng-template>
@@ -466,10 +558,10 @@
             <mat-radio-group aria-label="Seleccione una opcion" formControlName
               ="necesidades17Ctrl" required>
               <div>
-              <mat-radio-button value="algunas2">Algunas</mat-radio-button>
-              <mat-radio-button value="lamayoria1">La mayoria</mat-radio-button>
-              <mat-radio-button value="todas0">Todas</mat-radio-button>
-              <mat-radio-button value="ninguna3">Ninguna</mat-radio-button>
+              <mat-radio-button value="algunas">Algunas</mat-radio-button>
+              <mat-radio-button value="lamayoria">La mayoria</mat-radio-button>
+              <mat-radio-button value="todas">Todas</mat-radio-button>
+              <mat-radio-button value="ninguna">Ninguna</mat-radio-button>
               </div>
             </mat-radio-group>
           </div>
@@ -481,15 +573,14 @@
 
             <div *ngFor="let necesidad of necesidadesList; let i=index;"
                  class="flex-container  align-center multi-checkbox">
-              <input type="checkbox" formControlName="necesidades22Ctrl"
-                     (change)="setNecedidadesBasicas(necesidad, necesidadesList[i].nombre);" required>
+              <input type="checkbox"  [value]="necesidad.id"
+                     (change)="setNecedidadesBasicas($event);" required>
               {{necesidadesList[i].nombre}}
             </div>
           </div>
 
-
-          <div>
-            <button mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="sevenFormGroup.status == 'VALID'">
+            <button mat-button matStepperNext (click)="enviarInfo(sevenFormGroup,'paso6')">Siguiente</button>
           </div>
         </form>
       </mat-step>
@@ -522,8 +613,8 @@
 
           
 
-          <div>
-            <button mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="eightFormGroup.status == 'VALID'">
+            <button mat-button matStepperNext (click)="enviarInfo(eightFormGroup,'paso7')">Siguiente</button>
           </div>
         </form>
       </mat-step>
@@ -554,8 +645,8 @@
             <input matInput type="number" formControlName="gastoHogar7diasCtrl" placeholder="" >
           </mat-form-field>
 
-          <div>
-            <button mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="nineFormGroup.status == 'VALID'">
+            <button mat-button matStepperNext (click)="enviarInfo(nineFormGroup,'paso8')">Siguiente</button>
           </div>
         </form>
       </mat-step>
