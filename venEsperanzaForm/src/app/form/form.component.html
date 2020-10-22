@@ -57,7 +57,7 @@
   </div>
 
   <div class="card-container" *ngIf="formPrincipal">
-    <mat-vertical-stepper [(linear)]="isLinear" #stepper>
+    <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper>
 
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
@@ -139,11 +139,18 @@
           </mat-form-field>
 
           <div *ngIf="secondFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(secondFormGroup,'paso1')">Siguiente</button>
+            <button mat-button  (click)="enviarInfo(secondFormGroup,'paso1',stepper,true,stepper)">Siguiente</button>
+            
+            <div>
+              *Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+              </div>
           </div>
+
+          <!--matStepperNext-->
         </form>
       </mat-step>
-      <mat-step [stepControl]="thirdFormGroup">
+      
+      <mat-step [stepControl]="thirdFormGroup"  >
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
           <!--<mat-form-field>
@@ -232,7 +239,11 @@
 
 
           <div *ngIf="thirdFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext  (click)="enviarInfo(thirdFormGroup,'paso2')">Siguiente</button>
+            <button mat-button   (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">Siguiente</button>
+            <!--matStepperNext-->
+            <div>
+              *Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            </div>
           </div>
         </form>
       </mat-step>
@@ -244,63 +255,6 @@
 
           <p> *A continuación, se deben agregar los datos personales de cada miembro del hogar*</p>
 
-          <!--
-          <div *ngFor="let otromiembro of otrosmiembros; let i = index">
-          <mat-form-field class="col-lg-12">
-            <mat-label>Primer Nombre</mat-label>
-            <input matInput placeholder="Primer Nombre" formControlName="miembroFamiliaPrimerNombreCtrl" required>
-
-          </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
-            <mat-label>Segundo Nombre</mat-label>
-            <input matInput placeholder="Segundo Nombre" formControlName="miembroFamiliaSegundoNombreCtrl">
-
-          </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
-            <mat-label>Primer Apellido</mat-label>
-            <input matInput placeholder="Primer Apellido" formControlName="miembroFamiliaPrimerApellidoCtrl" required>
-
-          </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
-            <mat-label>Segundo Apellido</mat-label>
-            <input matInput placeholder="Segundo Apellido" formControlName="miembroFamiliaSegundoApellidoCtrl">
-
-          </mat-form-field>
-
-          <div class="col-lg-12">
-
-
-            <label>Sexo:* </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="miembroFamiliaSexoCtrl" required>
-              <div>
-              <mat-radio-button value="mujer">Mujer</mat-radio-button>
-              <mat-radio-button value="hombre">Hombre</mat-radio-button>
-              </div>
-
-            </mat-radio-group>
-          </div>
-
-          <mat-form-field class="col-lg-12">
-            <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput [matDatepicker]="pickertwo[i]" formControlName="miembroFamiliaFechaNacimientoCtrl" required>
-            <mat-datepicker-toggle matSuffix [for]="pickertwo[i]"></mat-datepicker-toggle>
-            <mat-datepicker #pickertwo></mat-datepicker>
-          </mat-form-field>
-
-
-          </div>
-
-          <div>
-            <label>Agregar un otro miembro</label>
-          <button mat-fab color="primary" aria-label="Otro miembro" (click)="agregarNuevoMiembro()">
-            <mat-icon>add</mat-icon>
-          </button>
-           </div>
-          -->
             <div  formArrayName="miembrosFamilia">
 
                 <div  *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;">
@@ -379,13 +333,16 @@
              
 
           <div *ngIf="fourFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(fourFormGroup,'paso3')">Siguiente</button>
+            <button mat-button  (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">Siguiente</button>
+            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <!--matSteppperNext-->
+            </div>
           </div>
         </form>
       </mat-step>
 
 
-      <mat-step [stepControl]="fiveFormGroup">
+      <mat-step [stepControl]="fiveFormGroup" >
         <form [formGroup]="fiveFormGroup">
           <ng-template matStepLabel>SALUD</ng-template>
 
@@ -444,13 +401,16 @@
 
 
           <div *ngIf="fiveFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(fiveFormGroup,'paso4')">Siguiente</button>
+            <button mat-button  (click)="enviarInfo(fiveFormGroup,'paso4',stepper,true,stepper)">Siguiente</button>
+            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <!--matSteppperNext-->
+            </div>
           </div>
         </form>
       </mat-step>
 
 
-      <mat-step [stepControl]="sixFormGroup">
+      <mat-step [stepControl]="sixFormGroup" >
         <form [formGroup]="sixFormGroup">
           <ng-template matStepLabel>ALIMENTOS</ng-template>
 
@@ -541,13 +501,16 @@
 
 
           <div *ngIf="sixFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(sixFormGroup,'paso5')">Siguiente</button>
+            <button mat-button (click)="enviarInfo(sixFormGroup,'paso5',stepper,true,stepper)">Siguiente</button>
+            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <!--matSteppperNext-->
+            </div>
           </div>
         </form>
       </mat-step>
 
       
-      <mat-step [stepControl]="sevenFormGroup">
+      <mat-step [stepControl]="sevenFormGroup" >
         <form [formGroup]="sevenFormGroup">
           <ng-template matStepLabel>NECESIDADES BASICAS</ng-template>
 
@@ -580,11 +543,15 @@
           </div>
 
           <div *ngIf="sevenFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(sevenFormGroup,'paso6')">Siguiente</button>
+            <button mat-button  (click)="enviarInfo(sevenFormGroup,'paso6',stepper,true,stepper)">Siguiente</button>
+            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <!--matSteppperNext-->
+            </div>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="eightFormGroup">
+
+      <mat-step [stepControl]="eightFormGroup" >
         <form [formGroup]="eightFormGroup">
           <ng-template matStepLabel>ALOJAMIENTO Y VIVIENDA</ng-template>
 
@@ -614,11 +581,16 @@
           
 
           <div *ngIf="eightFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(eightFormGroup,'paso7')">Siguiente</button>
+            <button mat-button  (click)="enviarInfo(eightFormGroup,'paso7',stepper,true,stepper)">Siguiente</button>
+            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <!--matSteppperNext-->
+            </div>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="nineFormGroup">
+
+
+      <mat-step [stepControl]="nineFormGroup" >
         <form [formGroup]="nineFormGroup">
           <ng-template matStepLabel>ECONOMICO</ng-template>
           
@@ -646,11 +618,16 @@
           </mat-form-field>
 
           <div *ngIf="nineFormGroup.status == 'VALID'">
-            <button mat-button matStepperNext (click)="enviarInfo(nineFormGroup,'paso8')">Siguiente</button>
+            <button mat-button  (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">Siguiente</button>
+            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <!--matSteppperNext-->
+            </div>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="tenFormGroup">
+
+
+      <mat-step [stepControl]="tenFormGroup" >
         <form [formGroup]="tenFormGroup">
           <ng-template matStepLabel>VALIDACION DE IDENTIDAD</ng-template>
           <mat-form-field>
@@ -663,7 +640,8 @@
           </div>
         </form>
       </mat-step>
-      <mat-step>
+
+      <mat-step >
         <ng-template matStepLabel>Hecho!</ng-template>
         <p>Gracias por completar el formulario.</p>
         <div>

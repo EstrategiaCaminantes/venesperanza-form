@@ -3,6 +3,9 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 
 import { FormService } from '../services/form.service';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatStepper } from '@angular/material/stepper';
+
 @Component({
   selector: 'app-root',
   templateUrl: './form.component.html',
@@ -127,9 +130,13 @@ export class FormComponent implements OnInit  {
   
   //miembrosFamilia = new FormArray([]);
   miembrosFamilia: any;
+ 
+  error = false;
+
+  @ViewChild('stepper') stepper: MatStepper;
 
 
-  constructor(private _formBuilder: FormBuilder, private formService: FormService) {}
+  constructor(private _formBuilder: FormBuilder, private formService: FormService, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
 
@@ -459,10 +466,30 @@ EliminarMiembro(index){
    
 }
 
-enviarInfo(grupo,paso){
+stepChange(e, stepper){
+ console.log(e);
+ console.log("ERROR VALOR: ",this.error);
+ if(e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null){
+   console.log("envio cuando es 0");
+  this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
+
+ }else if(e.previouslySelectedIndex != 0 ){
+   console.log("envio cuando es diferente 0");
+  this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
+    this.error = false;
+ }
+ this.error = false;
+}
+
+enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
+
+  console.log("PASO PREVIO: ", pasoquellama);
+
   console.log("EL PASO ES: ",paso);
 
       console.log("EL GRUPO ES: ",grupo);
+      console.log("EL next ES: ",next);
+     
 
 
       let data = {
@@ -470,40 +497,149 @@ enviarInfo(grupo,paso){
         'infoencuesta': grupo.value,
       }
 
-      if(this.id == null){
+      //Guarda por primera vez, no se ha creado la encuesta, id es null
+      if(this.id == null && data.paso== "paso1"){
 
         console.log("VALOR DE ID ",this.id);
 
           this.formService.postForm(data).subscribe(res=>{
             console.log("RESPUESTA: ",res);
             this.id = res['id'];
+            
 
+            
+
+            
+            console.log("VALRO NEXT",next);
+          
+            
+            if(next){
+             /* this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+                duration:2000
+              });*/
+              
+              
+              console.log("PASO ASIGUIENTE?", this.error);
+              stepper.next();
+            }else{
+              this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+                duration:2000
+              });
+
+            }
+            
+
+          },error=>{
+            //grupo.status = 'INVALID';
+            console.log("GRUPO STATUS DESPUES:",grupo.status);
+            
+            
+
+            console.log(stepper);
+            
+
+            if(!next){
+              this._snackBar.open("Error al almacenar información en "+paso+". Vuelva a intentarlo",'X',{
+                duration:2000,
+                
+              });
+
+              stepper.previous();
+
+            }else{
+              this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+                duration:2000
+              });
+            }
+      
+            
           });
-      }else{
+      }else if(this.id == null && data.paso != "paso1"){
+
+        /*
+        for (let index = 1; index <= data.paso; index++) {
+          const element = this.stepper.steps['_results'][index];
+          element.stepControl.status = "INVALID";
+          
+        }*/
+        this._snackBar.open("Verifique que la información en Paso 1 se haya guardado","X",{
+           duration:2000
+        });
+        stepper.selectedIndex= 1;
+
+
+      }else if(this.id != null){
+         //cuando ya el formulario está creado y tengo el id, voy a actualizar
         console.log("VOY A ACTUALIZAR");
 
         
-        if(data.paso == 'paso8'){
+          if(data.paso == 'paso8'){
 
-          let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length+1//miembro principal;
-        //console.log(this.fourFormGroup.controls.miembrosFamilia.value.length);
+            let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length+1//miembro principal;
+          //console.log(this.fourFormGroup.controls.miembrosFamilia.value.length);
 
-        //console.log("CANTIDAD MIEMBROS FAMILIA: ",cantidad_miembros);
+          //console.log("CANTIDAD MIEMBROS FAMILIA: ",cantidad_miembros);
 
-          data['infoencuesta']['cantidad_miembros'] = cantidad_miembros;
-          
-        }
+            data['infoencuesta']['cantidad_miembros'] = cantidad_miembros;
+            
+          }
+
         
+          this.formService.updateForm(this.id,data).subscribe( res=>{
 
-        this.formService.updateForm(this.id,data).subscribe( res=>{
-          //console.log("RESPUESTA: ",res);
+            
+            
+            
+            if(next){
+              /*this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+                duration:2000
+              });*/
+              
+              
+              console.log("PASO ASIGUIENTE?");
+              stepper.next();
+            }else{
 
-           
+              this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+                duration:2000
+              });
 
-        },error=>{
-          console.log("ERROR");
-          console.log(error);
-        });
+            }
+
+            
+
+            //stepper.next();
+            //console.log("RESPUESTA: ",res);
+
+            
+
+          },error=>{
+              
+              //this.error = true;
+              if(!next){
+                this._snackBar.open("Error al almacenar información en "+paso,'X',{
+                  duration:2000,
+                  
+                });
+
+                console.log("EN EL STEPPER QUE ESTOY: ",stepper);
+                console.log("THSI STEPPER: ",this.stepper);
+                console.log("THIS ",this.stepper.selectedIndex);
+                
+                stepper.selectedIndex = pasoquellama;
+  
+                //stepper.selectedIndex = 0;
+
+              //stepper.previous();
+
+            }else{
+              this._snackBar.open("Error al almacenar información en "+paso,'X',{
+                duration:2000,
+                
+              });
+            }
+          });
+      
         
       }
           
