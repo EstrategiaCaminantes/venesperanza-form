@@ -13,14 +13,19 @@ import { MatStepper } from '@angular/material/stepper';
 })
 export class FormComponent implements OnInit  {
 
-  id = null;
+   mati :any= document.createElement('mati-button'); //boton mati
+    
+
+  infoencuesta = {}; //datos de la encuesta
+
+  id = null; //id del formulario
 
   title = 'venEsperanzaForm';
 
-  isLinear = true;
+  isLinear = true; //paso a paso lineal
 
-  //myGroup: FormGroup;
-
+ 
+  //banderas
   termnsandconditions = true;
   titleheader = true;
   quentionaccepttermns = true;
@@ -62,60 +67,14 @@ export class FormComponent implements OnInit  {
     {name: 'Otro'}
   ];
 
-  /*
-  departamentosList = [
-    {id:'1',name:'Antioquia'},
-    {id:'2',name:'Bogota'},
-    {id:'3',name:'Santander'}
-
-  ];
-
-  municipiosList = [
-    {id:'1',id_departamento:'1',name:'Medellin'},
-    {id:'2',id_departamento:'1',name:'Envidado'},
-    {id:'3',id_departamento:'2',name:'Bogota'},
-    {id:'4',id_departamento:'3',name:'Bucaramanga'},
-    {id:'5',id_departamento:'3',name:'Floridablanca'}
-  ]*/
 
   departamentosList = [];
-
   municipiosList = [];
-
   municipiosFilter = [];
   necesidadesList = [];
-  /*necesidadesList = [
-    {
-      name: "Alojamiento",
-      value: "alojamiento"
-    },
-    {
-      name: "Comida",
-      value: "comida"
-      
-    },
-    {
-      name: "Empleo",
-      value: "empleo"
-    },
-    {
-      name: "Salud",
-      value: "salud"
-    },
-    {
-      name: "Educación",
-      value: "educacion"
-    },
-    {
-      name: "Agua",
-      value: "agua"
-    },
-    {
-      name: "Conectividad",
-      value: "conectividad"
-    }];
-*/
+  
 
+//esto no se usa
   otrosmiembros = [
     {
       'primer_nombre':'',
@@ -128,10 +87,10 @@ export class FormComponent implements OnInit  {
     }
   ];
   
-  //miembrosFamilia = new FormArray([]);
-  miembrosFamilia: any;
+  
+  miembrosFamilia: any; //variable que se le asigna al grupo familiar
  
-  error = false;
+  error = false; //bandera para no intentar guardar 2 veces al hacer click en siguiente de cada paso
 
   @ViewChild('stepper') stepper: MatStepper;
 
@@ -139,6 +98,8 @@ export class FormComponent implements OnInit  {
   constructor(private _formBuilder: FormBuilder, private formService: FormService, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
+
+    //llamados para valores de los selects
 
     this.formService.getDepartamentos()
     .subscribe((data: any[]) => {
@@ -159,18 +120,8 @@ export class FormComponent implements OnInit  {
       
     })
 
-    /*
+    //crea los formsGroup
 
-    this.myGroup = new FormGroup({
-      accept: new FormControl()
-    });
-     
-   
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['true', Validators.required]
-  
-    });
-    */
 
     this.secondFormGroup = this._formBuilder.group({
       
@@ -199,45 +150,14 @@ export class FormComponent implements OnInit  {
     });
     
 
-    
-
-
     this.fourFormGroup = this._formBuilder.group({
-     /* miembroFamiliaPrimerNombreCtrl: ['', Validators.required],
-      miembroFamiliaSegundoNombreCtrl:[''],
-      miembroFamiliaPrimerApellidoCtrl:['',Validators.required],
-      miembroFamiliaSegundoApellidoCtrl:[''],
-      miembroFamiliaSexoCtrl:['',Validators.required],
-      miembroFamiliaFechaNacimientoCtrl:['',Validators.required],*/
-
-      miembrosFamilia: new FormArray([])
-
-     // miembrosFamilia: this._formBuilder.array([], Validators.required)
-      /*miembrosFamilia: new FormArray([
-        new FormGroup({
-          primernombreCtrl: new FormControl(''),
-          segundonombreCtrl: new FormControl(''),
-          primerapellidoCtrl: new FormControl(''),
-              segundoapellidoCtrl: new FormControl('')
-        })
-        
-      ])*/
-
      
+      miembrosFamilia: new FormArray([]) 
 
     });
+
+    //asigna a la variable global de miembrosFamilia el controlador de tipo array
     this.miembrosFamilia = this.fourFormGroup.get("miembrosFamilia") as FormArray;
-/*
-    const control = new FormGroup({
-      primernombreCtrl: new FormControl(''),
-      segundonombreCtrl: new FormControl(''),
-      primerapellidoCtrl: new FormControl(''),
-          segundoapellidoCtrl: new FormControl('')
-    });
-
-    
-  const checkArray: FormArray = this.fourFormGroup.controls['miembrosFamilia'] as FormArray;
-  checkArray.push(control);*/
 
 
 
@@ -280,19 +200,11 @@ export class FormComponent implements OnInit  {
       tenCtrl: ['', Validators.required]
     });
 
-    /*
-    if(this.autorizacionSeleccionada == 1){
-      this.isLinear = true;
-    }else{
-      this.isLinear = false;
-    }*/
-    
-
-    
+   
 
   }
 
-
+//Primer paso aceptar terminos
 termsAccept($event: any) {
   console.log($event);
   
@@ -311,25 +223,28 @@ termsAccept($event: any) {
   }
 }
 
+//validacion tipo documento
 selectTipoDocumento($event: any){
   console.log("ENTRO A OTRO",$event.value);
-  if($event.value == 'Otro'){
+  if($event.value == 'Otro'){ //si es Otro agrega el controlador
     console.log("ES OTRO");
     this.otroTipoDocumento = true;
     this.secondFormGroup.addControl('otroTipoDocumentoCtrl',new FormControl('',Validators.required));
 
   }else if($event.value != 'Otro' && this.secondFormGroup.contains('otroTipoDocumentoCtrl')){
+    //si es diferente de Otro y ya contien otro, elimina el controlador de Otro
     console.log("NO ES OTRO");
     this.otroTipoDocumento = false;
     this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
   
-
   }
-  if($event.value == 'Indocumentado'){
+
+  if($event.value == 'Indocumentado'){ //Si es indocumentado elimina controlador de numero documento
     this.secondFormGroup.removeControl('numeroDocumentoCtrl');
     this.numeroDocumento = false;
 
   }else if($event.value != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl') ){
+    //si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
     this.secondFormGroup.addControl('numeroDocumentoCtrl',new FormControl('',Validators.required));
     this.numeroDocumento = true;
 
@@ -337,7 +252,7 @@ selectTipoDocumento($event: any){
   
 }
 
-
+//selecciona departamento y filtra lso municipios
 selectDepartamento($event:any){
 
   console.log("DEPARTAMENTO : ", $event)
@@ -353,7 +268,6 @@ selectDepartamento($event:any){
   this.thirdFormGroup.controls['municipioCtrl'].setValue(null); 
   console.log("MUNICIPIO ACTUAL: ", this.thirdFormGroup.controls['municipioCtrl']);
 
-
   
 }
 
@@ -361,6 +275,7 @@ selectMunicipio($event: any){
   console.log("MUNICIPIO SELECCIONADO: ", $event);
 }
 
+//validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
 lineaContactoPropia($event: any){
   console.log("LINEA EVENTO: ", $event);
   console.log("LINEA EVENTO: ", $event.value);
@@ -368,50 +283,49 @@ lineaContactoPropia($event: any){
 
   console.log("LINEA DE CONTACTO: ", this.thirdFormGroup.controls['lineaContactoPropiaCtrl'].value );
   console.log("LINEA EVENTO: ", this.thirdFormGroup.controls['lineaContactoPropiaCtrl']);
-  if($event.value === "si"){
+  if($event.value === "si"){ //si la linea de contacto es propia, oculta contacto alternativo y muestra linea whatsapp
 
     this.contactoAlternativoInput = false;
     this.lineacontactoWhatsappInput = true;
 
-    
+    //crea controlador de lineacontactowhatsapp
     this.thirdFormGroup.addControl('lineaContactoAsociadaAWhatsappCtrl',new FormControl('',Validators.required));
 
     if(this.thirdFormGroup.contains('contactoAlternativoCtrl')){
+      //elimina controlador si existe
       this.thirdFormGroup.removeControl('contactoAlternativoCtrl');
     }
     
 
-  }else if($event.value === "no"){
+  }else if($event.value === "no"){ //si linea de contacto no es propia
 
-    this.contactoAlternativoInput = true;
-    this.lineacontactoWhatsappInput = false;
-    this.thirdFormGroup.addControl('contactoAlternativoCtrl',new FormControl('',Validators.required));
-    
+    this.contactoAlternativoInput = true;  //muestra contacto alternativo
+    this.lineacontactoWhatsappInput = false; //oculta linea contacto whatsapp
+    this.thirdFormGroup.addControl('contactoAlternativoCtrl',new FormControl('',Validators.required)); //crea controlador para contactoalternativo
 
-    if(this.thirdFormGroup.contains('contactoAlternativoCtrl')){
+    if(this.thirdFormGroup.contains('contactoAlternativoCtrl')){ //si ya existe contacto alternativo elimina linea whatsapp
       this.thirdFormGroup.removeControl('lineaContactoAsociadaAWhatsappCtrl');
     }
-
-   
 
   }
   
 }
 
-
+//Seleccion de necesidades basicas
 setNecedidadesBasicas($event){
 
   console.log("NECESIDAD: ", $event);
-
-  
   console.log("CONTROLADOR: ", this.sevenFormGroup.controls['necesidades22Ctrl']);
   console.log("CONTROLADOR VALUE: ", this.sevenFormGroup.controls['necesidades22Ctrl'].value);
+  //Crea un formgroup par el controlador de necesidades basicas
   const checkArray: FormArray = this.sevenFormGroup.controls['necesidades22Ctrl'] as FormArray;
 
+  //si esta seleccionado lo agrega al array 
   if($event.target.checked){
     checkArray.push(new FormControl($event.target.value));
 
   }else {
+    //si no esta checkeado lo busca y lo elimina
     let i: number = 0;
     checkArray.controls.forEach((item: FormControl) => {
       if (item.value == $event.target.value) {
@@ -427,18 +341,12 @@ setNecedidadesBasicas($event){
 
 }
 
+//Agrega miembro del hogar
 agregarNuevoMiembro(){
 
   console.log("AGREGO GRUPO AL ARRAY DE MIEMBROS FAMILIA:");
-
+  //Crea un form array de los controles del miembro familiar y agrega un formgroup para cada nuevo miembro
   const chekgroup: FormArray = this.fourFormGroup.controls['miembrosFamilia'] as FormArray;
-
-  
-
-  
-
-
-  //this.miembrosFamilia = this.fourFormGroup.get("miembrosFamilia") as FormArray;
 
     const controle = new FormGroup({
       primernombreCtrl: new FormControl('',Validators.required),
@@ -453,22 +361,21 @@ agregarNuevoMiembro(){
 
     console.log("CHECK",chekgroup);
     console.log("THIS--",this.fourFormGroup);
-
-  
   
 }
 
+//elimina miembro del hogar
 EliminarMiembro(index){
 
-  
     this.miembrosFamilia.removeAt(index);
     console.log("DESPUES DE ELIMINAR",this.fourFormGroup);
    
 }
 
+//funcion para cambiar de paso
 stepChange(e, stepper){
 
-    if(!this.error){
+    if(!this.error){ //si bandera error es false me deja guardar al pasar a otro step
       console.log(e);
       console.log("ERROR VALOR: ",this.error);
       if(e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null){
@@ -479,16 +386,30 @@ stepChange(e, stepper){
         console.log("envio cuando es diferente 0");
         this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
       }
-    }else{
+    }else{ //cuando deja guardar info al pasar a otro step, esto para que no se ejecute 2 cuando oprimo boton siguiente y ejecuta next()
 
-      this.error = false;
-      
-      
+      this.error = false; //habilita la bandera para que se pueda pasar oprimienod en el cabezado del siguiente paso
 
     }
     
 }
 
+//creo boton mati con parametros
+botonMati(){
+  console.log("EN BOTON MATI: ", this.id);
+
+  this.mati.setAttribute("clientid", "5f91a78600ef73001be85cf4");
+    this.mati.setAttribute("metadata", JSON.stringify({"user_id":this.id}));
+    document.getElementById('mati').appendChild(this.mati);
+  /*const mati = document.createElement('mati-button');
+    mati.setAttribute("clientid", "5f91a78600ef73001be85cf4");
+    mati.setAttribute("metadata", JSON.stringify({"user_id":this.id}));
+    document.getElementById('mati').appendChild(mati);*/
+
+}
+
+
+//Guardo información
 enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
 
   console.log("PASO PREVIO: ", pasoquellama);
@@ -513,42 +434,36 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
           this.formService.postForm(data).subscribe(res=>{
             console.log("RESPUESTA: ",res);
             this.id = res['id'];
+
+            this.botonMati(); //Llamo a función para agregar bloque botón mati
+
+            this.infoencuesta = res; //Toda la info de la encuesta
+            console.log("INFO ENCUESTA:",this.infoencuesta);
             
 
-            
-
-            
             console.log("VALRO NEXT",next);
-          
-            
-            if(next){
-             /* this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
-                duration:2000
-              });*/
 
-              this.error = true;
+            this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+              duration:2000
+            });
+
+            
+            if(next){ //cuando oprimo boton "siguiente"
+            
+              this.error = true; //bandera para que no se ejecute stepChange al cambiar de step1 a step2
               
               
               console.log("PASO ASIGUIENTE?", this.error);
               stepper.next();
-            }else{
-              this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
-                duration:2000
-              });
-
             }
             
 
           },error=>{
-            //grupo.status = 'INVALID';
             console.log("GRUPO STATUS DESPUES:",grupo.status);
             
-            
-
             console.log(stepper);
-            
 
-            if(!next){
+            if(!next){ //si cambie de step1 a step2 oprimiendo el encabezado llamando a stepChange
               this._snackBar.open("Error al almacenar información en "+paso+". Vuelva a intentarlo",'X',{
                 duration:2000,
                 
@@ -556,7 +471,7 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
 
               stepper.previous();
 
-            }else{
+            }else{ //si oprimí siguiente
               this._snackBar.open("Error al almacenar información en "+paso+". Vuelva a intentarlo","X",{
                 duration:2000
               });
@@ -564,32 +479,23 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
       
             
           });
-      }else if(this.id == null && data.paso != "paso1"){
-
-        /*
-        for (let index = 1; index <= data.paso; index++) {
-          const element = this.stepper.steps['_results'][index];
-          element.stepControl.status = "INVALID";
-          
-        }*/
+      }else if(this.id == null && data.paso != "paso1"){ //Si intento ir a paso2 pero hubo error en paso1
+        
         this._snackBar.open("Verifique que la información en Paso 1 se haya guardado","X",{
            duration:2000
         });
-        stepper.selectedIndex= 1;
+        stepper.selectedIndex= 1; 
 
 
       }else if(this.id != null){
-         //cuando ya el formulario está creado y tengo el id, voy a actualizar
+         //cuando ya el formulario está creado y tengo el id, voy a actualizar cualquier paso
         console.log("VOY A ACTUALIZAR");
 
-        
           if(data.paso == 'paso8'){
+            //Determino la cantidad de miembros agregado, sumando 1 que es la persona que responde el formulario
 
-            let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length+1//miembro principal;
-          //console.log(this.fourFormGroup.controls.miembrosFamilia.value.length);
-
-          //console.log("CANTIDAD MIEMBROS FAMILIA: ",cantidad_miembros);
-
+            let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length+1;
+        
             data['infoencuesta']['cantidad_miembros'] = cantidad_miembros;
             
           }
@@ -597,19 +503,18 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
         
           this.formService.updateForm(this.id,data).subscribe( res=>{
 
-            
-            
-            
-            if(next){
-              /*this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+            this.infoencuesta = res;
+         
+            if(next){ //cuando selecciono botón siguiente
+              this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
                 duration:2000
-              });*/
-              this.error = true;
+              });
+              this.error = true; //bandera para que no se ejecute el llamado a stepChange por cambiar de paso
               
               
               console.log("PASO ASIGUIENTE?");
               stepper.next();
-            }else{
+            }else{ //cuando selecciono el encabezado del siguiente paso directamente y se ejecuta stepChange
 
               this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
                 duration:2000
@@ -617,17 +522,11 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
 
             }
 
-            
-
-            //stepper.next();
-            //console.log("RESPUESTA: ",res);
-
-            
-
           },error=>{
               
-              this.error = true;
-              if(!next){
+            this.error = true; //bandera para llamar solamente a stepChange para el paso en el que estaba inicialmente
+            //bloquea el llamado del segundo step al que intento ir pero que me devuelve porq en el paso inicial hubo error
+            if(!next){ //cuando cambio de step y llamo a stepChange
                 this._snackBar.open("Error al almacenar información en "+paso,'X',{
                   duration:2000,
                   
@@ -637,14 +536,12 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
                 console.log("THSI STEPPER: ",this.stepper);
                 console.log("THIS ",this.stepper.selectedIndex);
                 
-                stepper.selectedIndex = pasoquellama;
+                stepper.selectedIndex = pasoquellama; //paso en el que estoy antes de llamar al nuevo paso
   
-                //stepper.selectedIndex = 0;
 
-              //stepper.previous();
-
-            }else{
-              this.error = false;
+            }else{ //cuando se oprime botón siguiente
+              this.error = false; //cuando oprimo siguiente no intenta pasar al siguiente step entonces habilito la  bandera
+              //y cuando intente ir a otro paso oprimiendo el step, me permite intentar ir a ese step.
               this._snackBar.open("Error al almacenar información en "+paso,'X',{
                 duration:2000,
                 
@@ -656,16 +553,6 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
       }
           
 
-    
- 
-
 }
-/*
-  autorizacion(valor){
-    if(valor == 1){
-      this.isLinear= true;
-    }else if(valor==2){
-      this.isLinear = false;
-    }
-  }*/
+
 }

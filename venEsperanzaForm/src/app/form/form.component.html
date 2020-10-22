@@ -63,6 +63,8 @@
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
 
+          
+
           <mat-form-field class="col-lg-12">
             <mat-label>Primer Nombre</mat-label>
             <input matInput placeholder=" Primer Nombre" formControlName="firstNameCtrl" required >
@@ -630,11 +632,13 @@
       <mat-step [stepControl]="tenFormGroup" >
         <form [formGroup]="tenFormGroup">
           <ng-template matStepLabel>VALIDACION DE IDENTIDAD</ng-template>
-          <mat-form-field>
-            <mat-label>Mati</mat-label>
-            <input matInput formControlName="tenCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                   required>
-          </mat-form-field>
+         
+            <div id="mati">
+              
+            </div>
+
+            
+
           <div>
             <button mat-button matStepperNext>Siguiente</button>
           </div>
