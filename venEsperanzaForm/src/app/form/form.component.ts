@@ -467,18 +467,26 @@ EliminarMiembro(index){
 }
 
 stepChange(e, stepper){
- console.log(e);
- console.log("ERROR VALOR: ",this.error);
- if(e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null){
-   console.log("envio cuando es 0");
-  this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
 
- }else if(e.previouslySelectedIndex != 0 ){
-   console.log("envio cuando es diferente 0");
-  this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
-    this.error = false;
- }
- this.error = false;
+    if(!this.error){
+      console.log(e);
+      console.log("ERROR VALOR: ",this.error);
+      if(e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null){
+        console.log("envio cuando es 0");
+        this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
+
+      }else if(e.previouslySelectedIndex != 0 ){
+        console.log("envio cuando es diferente 0");
+        this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso'+(e.previouslySelectedIndex+1), stepper, false, e.previouslySelectedIndex);
+      }
+    }else{
+
+      this.error = false;
+      
+      
+
+    }
+    
 }
 
 enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
@@ -547,7 +555,7 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
               stepper.previous();
 
             }else{
-              this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
+              this._snackBar.open("Error al almacenar información en "+paso+". Vuelva a intentarlo","X",{
                 duration:2000
               });
             }
@@ -615,7 +623,7 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
 
           },error=>{
               
-              //this.error = true;
+              this.error = true;
               if(!next){
                 this._snackBar.open("Error al almacenar información en "+paso,'X',{
                   duration:2000,
@@ -633,6 +641,7 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
               //stepper.previous();
 
             }else{
+              this.error = false;
               this._snackBar.open("Error al almacenar información en "+paso,'X',{
                 duration:2000,
                 
