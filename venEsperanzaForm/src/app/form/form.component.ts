@@ -525,6 +525,8 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
              /* this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
                 duration:2000
               });*/
+
+              this.error = true;
               
               
               console.log("PASO ASIGUIENTE?", this.error);
@@ -602,6 +604,7 @@ enviarInfo(grupo, paso, stepper:MatStepper, next:boolean, pasoquellama){
               /*this._snackBar.open("Información de "+paso+" almacenada correctamente","X",{
                 duration:2000
               });*/
+              this.error = true;
               
               
               console.log("PASO ASIGUIENTE?");
