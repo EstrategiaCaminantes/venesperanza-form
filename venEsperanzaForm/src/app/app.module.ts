@@ -23,7 +23,8 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatButtonModule, MatRadioModule,MatGridListModule, FlexLayoutModule,
     CommonModule,MatDatepickerModule,MatNativeDateModule,
     MatSelectModule, MatCheckboxModule,
-    HttpClientModule, MatSnackBarModule
+    HttpClientModule, MatSnackBarModule,MatProgressSpinnerModule,MatCardModule
 
   ],
   providers: [MatDatepickerModule,MatNativeDateModule],

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient ,HttpClientModule  } from '@angular/common/http';
 
 @Injectable({
@@ -7,6 +7,11 @@ import { HttpClient ,HttpClientModule  } from '@angular/common/http';
 export class FormService {
   SERVER_URL = "http://127.0.0.1:8000/api/"; //local
   //SERVER_URL = "" //prod
+
+  //idvalidacion = null;
+  //@Output() change: EventEmitter<any> = new EventEmitter();
+  
+
   constructor(private httpClient: HttpClient) { }
 
 
@@ -18,6 +23,26 @@ export class FormService {
       (err) => console.log(err)
     );
   }*/
+  public getIp(){
+    return this.httpClient.get("http://jsonip.appspot.com/");
+  }
+
+  public getValidation(params){
+    return this.httpClient.post(this.SERVER_URL+'validation',params); 
+  }
+
+/*
+  public validationId(valor) {
+    this.idvalidacion = valor;
+    console.log("CHANGE VAL- ", this.idvalidacion);
+    this.change.emit(this.idvalidacion);
+  }
+
+  public getValidacionId(){
+    
+    return this.idvalidacion;
+  }*/
+  
   public postForm(data){
       return this.httpClient.post(this.SERVER_URL+'encuestas',data);
   }

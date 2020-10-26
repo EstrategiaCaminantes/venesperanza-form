@@ -7,7 +7,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({
-  selector: 'app-root',
+ // selector: 'form-encuesta',
+ selector: 'app-root',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
