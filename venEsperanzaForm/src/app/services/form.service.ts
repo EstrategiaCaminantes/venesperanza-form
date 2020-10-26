@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient ,HttpClientModule  } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormService {
-  SERVER_URL = "http://127.0.0.1:8000/api/"; //local
-  //SERVER_URL = "" //prod
+  SERVER_URL = environment.server;
   constructor(private httpClient: HttpClient) { }
 
 
@@ -23,7 +23,7 @@ export class FormService {
   }
 
 
- 
+
   public updateForm(id,data){
     return this.httpClient.put<any>(this.SERVER_URL+ 'encuestas/' + id,data);
   }
@@ -44,5 +44,5 @@ export class FormService {
     return this.httpClient.delete<any>(this.SERVER_URL + '/' + benID);
   }
 
-  
+
 }
