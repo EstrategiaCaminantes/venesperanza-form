@@ -101,9 +101,11 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
 
-    //llamados para valores de los selects
+    this.formService.Login().subscribe(res =>{
+      console.log("RESPUESTA LOGIN", res);
 
-    this.formService.getDepartamentos()
+      this.formService.setLocal(res,false);
+      this.formService.getDepartamentos()
       .subscribe((data: any[]) => {
         this.departamentosList = data;
         console.log('DEPARTAMENTOS: ', data);
@@ -121,6 +123,14 @@ export class FormComponent implements OnInit {
         this.necesidadesList = data;
 
       });
+      
+    },error=>{
+
+    }); 
+
+    //llamados para valores de los selects
+
+   
 
     //crea los formsGroup
 
