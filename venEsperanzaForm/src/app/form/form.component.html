@@ -1,152 +1,122 @@
-<div fxLayout="column" fxLayoutAlign="center center" class="flexcolumn">
-
-
+<div fxLayout="column" fxLayoutAlign="center" class="flexcolumn">
   <div class="titleheader">
-    <H2 *ngIf="titleheader">
-      FORMULARIO PARA PILOTO ENCUESTA DE PRESELECCIÓN IMMAP
-    </H2>
-    <H2 *ngIf="thanksmessage">Gracias por participar!</H2>
+    <h2 *ngIf="titleheader">
+      Encuesta de preselección
+    </h2>
+    <H2 *ngIf="thanksmessage">¡Gracias por participar!</H2>
   </div>
-
-
-  <div class="termnsandconditions" *ngIf="termnsandconditions">
-    <p class="text-bold">
-      Este proceso no genera ningún costo o cobro asociado.
-    </p>
-    <p class="text-bold">
-      Su participación es voluntaria y puede decidir no participar o retirar su consentimiento en cualquier momento.
-    </p>
-    <p class="text-bold">
-      La información recogida no tendrá ninguna implicación en su condición migratoria.
-    </p>
-    <p>
-      El objetivo de esta encuesta es valorar si es posible que usted sea elegido para ingresar a programas de
-      asistencia humanitaria, estos programas pueden incluir asistencia financiera, servicios de protección y otros
-      servicios humanitarios. Responder a estas preguntas no quiere decir que usted y su familia serán automáticamente
-      seleccionados. Si usted es preseleccionado, será contactado por la organización para continuar con el proceso.
-    </p>
-    <p>
-      Su información es confidencial, sin embargo, nuestra organización podría tener que compartir parte de sus datos,
-      de manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG
-      nacionales e internacionales, cuando haya posibles casos duplicados, de fraude o para referir su hogar a servicios
-      adicionales, y contribuir en iniciativas de investigación conjuntas.
-    </p>
-    <p>
-      La organización no retendrá su información personal durante más tiempo que el periodo de duración del programa y
-      también borrará su información, si usted lo requiere. Pero, sin su información personal no se podrán lograr los
-      objetivos del programa.
-    </p>
-    <p>
-      Esta encuesta incluye preguntas sobre su situación actual. Tenga en cuenta, que todos los datos que usted entregue
-      a continuación serán verificados por la organización, por favor responda con sus datos reales.
-    </p>
+  <div *ngIf="termnsandconditions" fxLayout="row">
+    <div class="termnsandconditions">
+      <p class="text-bold">
+        Este proceso no genera ningún costo o cobro asociado.
+      </p>
+      <p class="text-bold">
+        Su participación es voluntaria y puede decidir no participar o retirar su consentimiento en cualquier momento.
+      </p>
+      <p class="text-bold">
+        La información recogida no tendrá ninguna implicación en su condición migratoria.
+      </p>
+      <p>
+        El objetivo de esta encuesta es valorar si es posible que usted sea elegido para ingresar a programas de
+        asistencia humanitaria, estos programas pueden incluir asistencia financiera, servicios de protección y otros
+        servicios humanitarios. Responder a estas preguntas no quiere decir que usted y su familia serán automáticamente
+        seleccionados. Si usted es preseleccionado, será contactado por la organización para continuar con el proceso.
+      </p>
+      <p>
+        Su información es confidencial, sin embargo, nuestra organización podría tener que compartir parte de sus datos,
+        de manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG
+        nacionales e internacionales, cuando haya posibles casos duplicados, de fraude o para referir su hogar a
+        servicios adicionales, y contribuir en iniciativas de investigación conjuntas.
+      </p>
+      <p>
+        La organización no retendrá su información personal durante más tiempo que el periodo de duración del programa y
+        también borrará su información, si usted lo requiere. Pero, sin su información personal no se podrán lograr los
+        objetivos del programa.
+      </p>
+      <p>
+        Esta encuesta incluye preguntas sobre su situación actual. Tenga en cuenta, que todos los datos que usted
+        entregue
+        a continuación serán verificados por la organización, por favor responda con sus datos reales.
+      </p>
+    </div>
   </div>
-
-
   <div *ngIf="quentionaccepttermns">
     <div>
-      <label class="text-bold">¿Está usted de acuerdo con las condiciones expuestas anteriormente? </label>
-
+      <label class="text-bold">¿Está usted de acuerdo con las condiciones expuestas anteriormente?</label>
     </div>
     <div *ngIf="buttonsConfirm" class="margin-top-20 text-center">
       <button mat-stroked-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
       <button mat-stroked-button (click)="termsAccept(false)">NO</button>
-
     </div>
-
   </div>
-
   <div class="card-container" *ngIf="formPrincipal">
     <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper>
-
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
-
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Primer Nombre</mat-label>
             <input matInput placeholder=" Primer Nombre" formControlName="firstNameCtrl" required>
-
           </mat-form-field>
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Segundo Nombre</mat-label>
             <input matInput placeholder="Segundo Nombre" formControlName="secondNameCtrl">
           </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Primer Apellido</mat-label>
             <input matInput placeholder="Primer Apellido" formControlName="lastNameCtrl" required>
           </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Segundo Apellido</mat-label>
             <input matInput placeholder="Segundo apellido" formControlName="secondLastNameCtrl">
           </mat-form-field>
-
-
-          <div class="col-lg-12">
-
-
-            <label>Sexo: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="sexoCtrl">
+          <div>
+            <p>Sexo:</p>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="sexoCtrl">
               <mat-radio-button value="mujer">Mujer</mat-radio-button>
               <mat-radio-button value="hombre">Hombre</mat-radio-button>
-
             </mat-radio-group>
           </div>
-
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Fecha de Nacimiento</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="fechaNacimientoCtrl">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Nacionalidad:</mat-label>
             <mat-select formControlName="nacionalidadCtrl" required>
               <mat-option *ngFor="let nacionalidad of nacionalidades" [value]="nacionalidad.name">
                 {{nacionalidad.name}}
-
               </mat-option>
-
             </mat-select>
           </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Tipo de Documento:</mat-label>
             <mat-select formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumento($event)" required>
               <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
                 {{documento.name}}
               </mat-option>
-
             </mat-select>
           </mat-form-field>
-
-
-          <mat-form-field class="col-lg-12" *ngIf="otroTipoDocumento">
+          <mat-form-field *ngIf="otroTipoDocumento">
             <mat-label>¿Cuál? *(Indicar tipo, ejemplo: pasaporte)*</mat-label>
             <input matInput placeholder="Ejemplo: Pasaporte" formControlName="otroTipoDocumentoCtrl" required>
-
           </mat-form-field>
-
-          <mat-form-field class="col-lg-12" *ngIf="numeroDocumento">
+          <mat-form-field *ngIf="numeroDocumento">
             <mat-label>Número de Documento</mat-label>
             <input matInput placeholder="Número de Documento" type="number" formControlName="numeroDocumentoCtrl"
                    required>
           </mat-form-field>
-
           <div *ngIf="secondFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(secondFormGroup,'paso1',stepper,true,stepper)">Siguiente</button>
-
-            <div>
+            <button color="primary" mat-raised-button
+                    (click)="enviarInfo(secondFormGroup,'paso1',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>
               *Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
-            </div>
+            </p>
           </div>
-
           <!--matStepperNext-->
         </form>
       </mat-step>
@@ -159,281 +129,211 @@
             <input matInput formControlName="thirdCtrl" placeholder="Ex. 1 Main St, New York, NY"
                   required>
           </mat-form-field>-->
+          <!--<div id="mati"></div>-->
 
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Departamento:</mat-label>
             <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
               <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
                 {{departamento.nombre}}
               </mat-option>
-
             </mat-select>
           </mat-form-field>
-
-          <mat-form-field class="col-lg-12">
+          <mat-form-field>
             <mat-label>Municipio:</mat-label>
             <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event.value)" required>
               <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
                 {{municipio.nombre}}
               </mat-option>
-
             </mat-select>
           </mat-form-field>
-
           <mat-form-field>
             <mat-label>Barrio donde reside:</mat-label>
-            <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside"
-                   required>
+            <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside" required>
           </mat-form-field>
-
           <mat-form-field>
             <mat-label>Dirección completa:</mat-label>
             <input matInput formControlName="direccionCtrl" placeholder="Dirección completa">
           </mat-form-field>
-
           <mat-form-field>
             <mat-label>Número de Contacto:</mat-label>
             <input matInput type="number" formControlName="numeroContactoCtrl" placeholder="Ej: (7) 6234323" required>
           </mat-form-field>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>¿Esta línea de contacto es propia? *: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="lineaContactoPropiaCtrl" (change)="lineaContactoPropia($event)" required>
+          <div class="margin-bottom-10">
+            <label>¿Esta línea de contacto es propia?*: </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="lineaContactoPropiaCtrl"
+                             (change)="lineaContactoPropia($event)" required>
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
               </div>
             </mat-radio-group>
           </div>
-
           <mat-form-field class="contactoAlternativo" *ngIf='contactoAlternativoInput'>
-            <mat-label> ¿Por quién preguntar en caso de llamar?:</mat-label>
+            <mat-label> ¿Por quién preguntar en caso de llamar?</mat-label>
             <input matInput formControlName="contactoAlternativoCtrl" placeholder="">
           </mat-form-field>
-
-          <div class="col-lg-12 margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
-            <label>¿Su línea de contacto está asociada a whatsapp? *: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
+          <div class="margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
+            <label>¿Su línea de contacto está asociada a whatsapp?*: </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName
               ="lineaContactoAsociadaAWhatsappCtrl" required>
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-
           <mat-form-field class="contactoAlternativo">
-            <mat-label> ¿Usted tiene un correo electrónico donde le podemos contactar?:</mat-label>
+            <mat-label>¿Usted tiene un correo electrónico donde le podemos contactar?</mat-label>
             <input matInput formControlName="correoCtrl" placeholder="">
           </mat-form-field>
-
           <mat-form-field class="contactoAlternativo">
-            <mat-label> ¿Escriba cualquier comentario adicional sobre la mejor forma o la forma preferida para
-              contactarle?:
+            <mat-label>
+              ¿Escriba cualquier comentario adicional sobre la mejor forma o la forma preferida para contactarle?
             </mat-label>
             <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
           </mat-form-field>
-
-
           <div *ngIf="thirdFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">Siguiente</button>
+            <button color="primary" mat-raised-button
+                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">Siguiente
+            </button>
             <!--matStepperNext-->
-            <div>
+            <p>
               *Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
-
       <mat-step [stepControl]="fourFormGroup">
         <form [formGroup]="fourFormGroup">
           <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
-
-          <p> *A continuación, se deben agregar los datos personales de cada miembro del hogar*</p>
-
+          <p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro del hogar*</p>
           <div formArrayName="miembrosFamilia">
-
-            <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;">
-
-
+            <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;" class="margin-top-20">
               <div [formGroup]="miembroinfo">
-
                 <div>
-
-                  <label>Otro miembro del hogar #{{i + 1}}</label>
+                  <label class="text-bold">{{i + 1}}. Miembro del hogar</label>
                 </div>
-
-
-                <mat-form-field class="col-lg-12">
+                <mat-form-field>
                   <mat-label>Primer Nombre</mat-label>
                   <input matInput placeholder="Primer Nombre" formControlName="primernombreCtrl" required>
-
                 </mat-form-field>
-
-                <mat-form-field class="col-lg-12">
+                <mat-form-field>
                   <mat-label>Segundo Nombre</mat-label>
                   <input matInput placeholder="Segundo Nombre" formControlName="segundonombreCtrl">
-
                 </mat-form-field>
-
-                <mat-form-field class="col-lg-12">
+                <mat-form-field>
                   <mat-label>Primer Apellido</mat-label>
                   <input matInput placeholder="Primer Apellido" formControlName="primerapellidoCtrl" required>
-
                 </mat-form-field>
-
-                <mat-form-field class="col-lg-12">
+                <mat-form-field>
                   <mat-label>Segundo Apellido</mat-label>
                   <input matInput placeholder="Segundo Apellido" formControlName="segundoapellidoCtrl">
-
                 </mat-form-field>
-
-                <div class="col-lg-12">
-
-
-                  <label>Sexo:* </label>
-                  <mat-radio-group aria-label="Seleccione una opcion" formControlName="sexoCtrl" required>
+                <div>
+                  <p>Sexo*: </p>
+                  <mat-radio-group aria-label="Seleccione una opción" formControlName="sexoCtrl" required>
                     <div>
                       <mat-radio-button value="mujer">Mujer</mat-radio-button>
                       <mat-radio-button value="hombre">Hombre</mat-radio-button>
                     </div>
-
                   </mat-radio-group>
                 </div>
-
-                <mat-form-field class="col-lg-12">
-                  <mat-label>Fecha de Nacimiento</mat-label>
+                <mat-form-field>
+                  <mat-label>Fecha de Nacimiento:</mat-label>
                   <input matInput [matDatepicker]="pickertres_i" formControlName="fechaCtrl" required>
                   <mat-datepicker-toggle matSuffix [for]="pickertres_i"></mat-datepicker-toggle>
                   <mat-datepicker #pickertres_i></mat-datepicker>
                 </mat-form-field>
-
               </div>
-
               <button mat-mini-fab color="warn" aria-label="Eliminar miembro" (click)="EliminarMiembro(i)">
-                <mat-icon>Eliminar</mat-icon>
+                <mat-icon>delete</mat-icon>
               </button>
-
             </div>
-
           </div>
-
-
-          <div>
-            <label>Añade un miembro del hogar</label>
-            <button mat-fab color="primary" aria-label="Otro miembro" (click)="agregarNuevoMiembro()">
-              <mat-icon>Añadir</mat-icon>
+          <div class="margin-top-20">
+            <label (click)="agregarNuevoMiembro()">Añade un miembro del hogar</label>
+            <button class="margin-left-10" mat-mini-fab color="accent" aria-label="Otro miembro"
+                    (click)="agregarNuevoMiembro()">
+              <mat-icon>add</mat-icon>
             </button>
           </div>
-
-
-          <div *ngIf="fourFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">Siguiente</button>
-            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+          <div *ngIf="fourFormGroup.status == 'VALID'" class="margin-top-20">
+            <button color="primary" mat-raised-button (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
-
       <mat-step [stepControl]="fiveFormGroup">
         <form [formGroup]="fiveFormGroup">
           <ng-template matStepLabel>SALUD</ng-template>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-
-            <label>¿En el hogar hay mujeres embarazadas?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName="mujeresEmbarazadasCtrl">
+          <div class="margin-bottom-10">
+            <label>¿En el hogar hay mujeres embarazadas? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="mujeresEmbarazadasCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-
-            <label>¿En el hogar hay mujeres lactantes?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName="mujeresLactantesCtrl">
+          <div class="margin-bottom-10">
+            <label>¿En el hogar hay mujeres lactantes? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="mujeresLactantesCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
-
             </mat-radio-group>
           </div>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>¿En el hogar hay personas en situación de discapacidad?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName="personasDiscapacidadCtrl">
+          <div class="margin-bottom-10">
+            <label>¿En el hogar hay personas en situación de discapacidad? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="personasDiscapacidadCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-          <div class="col-lg-12 margin-bottom-10">
-
+          <div class="margin-bottom-10">
             <label>¿En el hogar hay personas con enfermedades crónicas? <br>
-              enfermedades cronicas como cáncer, diabetes, hipertensión, SIDA, etc.: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="personasEnfermedadesCronicasCtrl">
+              Enfermedades cronicas como cáncer, diabetes, hipertensión, SIDA, etc.: </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="personasEnfermedadesCronicasCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-
           <div *ngIf="fiveFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(fiveFormGroup,'paso4',stepper,true,stepper)">Siguiente</button>
-            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <button color="primary" mat-raised-button (click)="enviarInfo(fiveFormGroup,'paso4',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
-
       <mat-step [stepControl]="sixFormGroup">
         <form [formGroup]="sixFormGroup">
           <ng-template matStepLabel>ALIMENTOS</ng-template>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.1 En los últimos 30 días, ¿hubo algún momento en que no<br>
-              había nada de comida en su casa debido a falta de recursos para obtener comida?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alimentos11Ctrl">
+          <div class="margin-bottom-10">
+            <label>En los últimos 30 días, ¿hubo algún momento en que no había nada de comida en su casa debido a falta
+              de recursos para obtener comida? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos11Ctrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.2 ¿Cuántas veces ocurrió esto en los últimos 30 días?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alimentos12Ctrl">
+          <div class="margin-bottom-10">
+            <label>¿Cuántas veces ocurrió esto en los últimos 30 días? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos12Ctrl">
               <div>
                 <mat-radio-button value="pocas_veces_1-2_veces">Pocas veces: 1-2 veces</mat-radio-button>
                 <mat-radio-button value="algunas_veces_3-10_veces">Algunas veces: 3-10 veces</mat-radio-button>
@@ -441,27 +341,19 @@
               </div>
             </mat-radio-group>
           </div>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.3 En los últimos 30 días, ¿usted o algún miembro de su hogar se ha acostado a dormir<br>
-              en la noche con hambre porque no había suficiente comida?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alimentos13Ctrl">
+          <div class="margin-bottom-10">
+            <label>En los últimos 30 días, ¿usted o algún miembro de su hogar se ha acostado a dormir en la noche con
+              hambre porque no había suficiente comida? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos13Ctrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.4 ¿Cuántas veces ocurrió esto en los últimos 30 días?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alimentos14Ctrl">
+          <div class="margin-bottom-10">
+            <label>¿Cuántas veces ocurrió esto en los últimos 30 días? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos14Ctrl">
               <div>
                 <mat-radio-button value="pocas_veces_1-2_veces">Pocas veces: 1-2 veces</mat-radio-button>
                 <mat-radio-button value="algunas_veces_3-10_veces">Algunas veces: 3-10 veces</mat-radio-button>
@@ -469,28 +361,19 @@
               </div>
             </mat-radio-group>
           </div>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.5 En los últimos 30 días, ¿usted o algún miembro de su hogar ha pasado todo un día y<br>
-              una noche sin comer nada porque no había suficiente comida?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alimentos15Ctrl">
+          <div class="margin-bottom-10">
+            <label>En los últimos 30 días, ¿usted o algún miembro de su hogar ha pasado todo un día y una noche sin
+              comer nada porque no había suficiente comida? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos15Ctrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
                 <mat-radio-button value="0">No</mat-radio-button>
               </div>
-
             </mat-radio-group>
           </div>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.6 ¿Cuántas veces ocurrió esto en los últimos 30 días?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alimentos16Ctrl">
+          <div class="margin-bottom-10">
+            <label>¿Cuántas veces ocurrió esto en los últimos 30 días? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos16Ctrl">
               <div>
                 <mat-radio-button value="pocas_veces_1-2_veces">Pocas veces: 1-2 veces</mat-radio-button>
                 <mat-radio-button value="algunas_veces_3-10_veces">Algunas veces: 3-10 veces</mat-radio-button>
@@ -498,28 +381,23 @@
               </div>
             </mat-radio-group>
           </div>
-
-
           <div *ngIf="sixFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(sixFormGroup,'paso5',stepper,true,stepper)">Siguiente</button>
-            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <button color="primary" mat-raised-button (click)="enviarInfo(sixFormGroup,'paso5',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
-
       <mat-step [stepControl]="sevenFormGroup">
         <form [formGroup]="sevenFormGroup">
-          <ng-template matStepLabel>NECESIDADES BASICAS</ng-template>
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.7 ¿Puede su hogar satisfacer todas, la mayoría, algunas o ninguna de sus necesidades básicas,<br>
-              tal como las define en los últimos 3 meses?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="necesidades17Ctrl" required>
+          <ng-template matStepLabel>NECESIDADES BÁSICAS</ng-template>
+          <div class="margin-bottom-10">
+            <label>¿Puede su hogar satisfacer todas, la mayoría, algunas o ninguna de sus necesidades básicas, tal como
+              las define en los últimos 3 meses? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="necesidades17Ctrl" required>
               <div>
                 <mat-radio-button value="algunas">Algunas</mat-radio-button>
                 <mat-radio-button value="lamayoria">La mayoria</mat-radio-button>
@@ -528,39 +406,31 @@
               </div>
             </mat-radio-group>
           </div>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>2.2 ¿Cuáles son las necesidades básicas que su hogar no puede satisfacer?: </label>
-
+          <div class="margin-bottom-10">
+            <label>¿Cuáles son las necesidades básicas que su hogar no puede satisfacer? </label>
             <div *ngFor="let necesidad of necesidadesList; let i=index;"
-                 class="flex-container  align-center multi-checkbox">
+                 class="flex-container align-center multi-checkbox">
               <input type="checkbox" [value]="necesidad.id"
                      (change)="setNecedidadesBasicas($event);" required>
               {{necesidadesList[i].nombre}}
             </div>
           </div>
-
           <div *ngIf="sevenFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(sevenFormGroup,'paso6',stepper,true,stepper)">Siguiente</button>
-            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <button color="primary" mat-raised-button (click)="enviarInfo(sevenFormGroup,'paso6',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
       <mat-step [stepControl]="eightFormGroup">
         <form [formGroup]="eightFormGroup">
           <ng-template matStepLabel>ALOJAMIENTO Y VIVIENDA</ng-template>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.8 ¿En qué tipo de alojamiento ha vivido en los últimos 15 días?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
-              ="alojamientoViviendaCtrl">
+          <div class="margin-bottom-10">
+            <label>¿En qué tipo de alojamiento ha vivido en los últimos 15 días? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="alojamientoViviendaCtrl">
               <div>
                 <mat-radio-button value="casa">Casa</mat-radio-button>
                 <mat-radio-button value="apartamento">Apartamento</mat-radio-button>
@@ -574,82 +444,61 @@
                 <mat-radio-button value="albergue_mas5dias">Albergue por más de 5 días</mat-radio-button>
                 <mat-radio-button value="situacion_calle">Situación de calle</mat-radio-button>
               </div>
-
-
             </mat-radio-group>
           </div>
-
-
           <div *ngIf="eightFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(eightFormGroup,'paso7',stepper,true,stepper)">Siguiente</button>
-            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <button color="primary" mat-raised-button (click)="enviarInfo(eightFormGroup,'paso7',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
-
       <mat-step [stepControl]="nineFormGroup">
         <form [formGroup]="nineFormGroup">
           <ng-template matStepLabel>ECONOMICO</ng-template>
-
-
-          <div class="col-lg-12 margin-bottom-10">
-
-            <label>1.9 ¿Cómo describe sus ingresos?: </label>
-            <mat-radio-group aria-label="Seleccione una opcion" formControlName
+          <div class="margin-bottom-10">
+            <label>¿Cómo describe sus ingresos? </label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName
               ="economicoCtrl">
               <div>
                 <mat-radio-button value="estable_permanente">Estable y permanente</mat-radio-button>
                 <mat-radio-button value="inestable_temporal">Inestable y temporal</mat-radio-button>
                 <mat-radio-button value="inexistente">Inexistente</mat-radio-button>
-
               </div>
-
-
             </mat-radio-group>
           </div>
-
-          <label>5. ¿Cuánto gastó el hogar en promedio en los ÚLTIMOS 7 DÍAS? :</label>
+          <label>¿Cuánto gastó el hogar en promedio en los ÚLTIMOS 7 DÍAS?</label>
           <mat-form-field class="gastototal">
             <input matInput type="number" formControlName="gastoHogar7diasCtrl" placeholder="">
           </mat-form-field>
-
           <div *ngIf="nineFormGroup.status == 'VALID'">
-            <button mat-button (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">Siguiente</button>
-            <div>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <button color="primary" mat-raised-button (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
-            </div>
+            </p>
           </div>
         </form>
       </mat-step>
-
-
       <mat-step [stepControl]="tenFormGroup">
         <form [formGroup]="tenFormGroup">
-          <ng-template matStepLabel>VALIDACION DE IDENTIDAD</ng-template>
-
-          <div id="mati">
-
-          </div>
-
-
+          <ng-template matStepLabel>VALIDACIÓN DE IDENTIDAD</ng-template>
+          <div id="mati"></div>
           <div>
-            <button mat-button matStepperNext>Siguiente</button>
+            <button color="primary" mat-raised-button (click)="finalizar()">
+              Siguiente
+            </button>
+            <p>*Oprima el botón "Siguiente" para salvar la información y finalizar.
+              <!--matSteppperNext-->
+            </p>
           </div>
         </form>
       </mat-step>
-
-      <mat-step>
-        <ng-template matStepLabel>Hecho!</ng-template>
-        <p>Gracias por completar el formulario.</p>
-        <div>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
-      </mat-step>
     </mat-vertical-stepper>
-
   </div>
 
 

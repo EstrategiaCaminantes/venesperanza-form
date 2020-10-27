@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  server: 'http://venesperanza.immap.org/venpb/api/',
+  //server: 'http://venesperanza.immap.org/venpb/api/',
+  server:'http://venback:8888/api/',
   //server:'http://127.0.0.1:8000/api/',
   client : 'icgqwT0AvspX7gRkk0UgpweQD3ATlTkV1uFpcqm7biY='
 };

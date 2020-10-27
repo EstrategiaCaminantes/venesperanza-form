@@ -21,6 +21,7 @@
   justify-content: center;
   margin-top: 16px;
 }
+
 .card-container-miembrohogar {
   flex-wrap: wrap;
   justify-content: center;
@@ -32,7 +33,7 @@
 }
 
 .flexcolumn {
-  margin: 20px 40px 20px 40px;
+  padding: 20px 40px 20px 40px;
 }
 
 .titleheader {
@@ -59,6 +60,9 @@
   margin-bottom: 10px;
 }
 
+.margin-left-10 {
+  margin-left: 10px;
+}
 
 .accept-button {
   margin-right: 10px;

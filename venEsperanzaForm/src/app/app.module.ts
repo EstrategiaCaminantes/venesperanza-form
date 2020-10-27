@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { HttpClientModule  } from '@angular/common/http';
 
 import { NgModule } from '@angular/core';
@@ -25,19 +25,20 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent
   ],
   imports: [
-    BrowserModule,BrowserAnimationsModule, 
-    MatFormFieldModule,MatStepperModule, 
+    BrowserModule, BrowserAnimationsModule,
+    MatFormFieldModule, MatStepperModule,
     FormsModule, ReactiveFormsModule, MatInputModule,
-    MatButtonModule, MatRadioModule,MatGridListModule, FlexLayoutModule,
-    CommonModule,MatDatepickerModule,MatNativeDateModule,
+    MatButtonModule, MatRadioModule, MatGridListModule, FlexLayoutModule,
+    CommonModule, MatDatepickerModule, MatNativeDateModule,
     MatSelectModule, MatCheckboxModule,
-    HttpClientModule, MatSnackBarModule,MatProgressSpinnerModule,MatCardModule
+    HttpClientModule, MatSnackBarModule, MatProgressSpinnerModule, MatCardModule, MatIconModule
 
   ],
   providers: [MatDatepickerModule,MatNativeDateModule],
