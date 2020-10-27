@@ -1,5 +1,8 @@
 <div fxLayout="column" fxLayoutAlign="center" class="flexcolumn">
   <div class="titleheader">
+    <div fxLayout="row">
+
+    </div>
     <h2 *ngIf="titleheader">
       Formulario de identificación de familias migrantes Venezolanas
     </h2>
@@ -45,8 +48,8 @@
       <label class="text-bold">¿Está usted de acuerdo con las condiciones expuestas anteriormente?</label>
     </div>
     <div *ngIf="buttonsConfirm" class="margin-top-20 text-center">
-      <button mat-stroked-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
-      <button mat-stroked-button (click)="termsAccept(false)">NO</button>
+      <button mat-raised-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
+      <button mat-raised-button (click)="termsAccept(false)">NO</button>
     </div>
   </div>
   <div class="card-container" *ngIf="formPrincipal">
