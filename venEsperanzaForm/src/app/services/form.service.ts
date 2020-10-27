@@ -22,7 +22,7 @@ export class FormService {
     let headers = new HttpHeaders;
     let informa;
     informa = this.httpClient.post(this.SERVER_URL+'login',{
-      headers:{'Authorization':'Bearer '+this.client}
+      headers:{'Authorization':this.client}
     }
     );
     return informa;
@@ -34,28 +34,14 @@ export class FormService {
     if(remember){
       localStorage.setItem("remember_token",JSON.stringify(this.useractual));
     }
-    console.log("THIS USER ACTUA-------_ ", this.useractual);
 
   }
  
 
-
-  //envio info del formulario
-  /*
-  postForm(data){
-    this.httpClient.post<any>(this.SERVER_URL+'encuestas', data).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-  }*/
-  /*
-  public getIp() {
-    return this.httpClient.get('http://jsonip.appspot.com/');
-  }
-
   public getValidation(params) {
-    return this.httpClient.post(this.SERVER_URL + 'validation', params);
-  }*/
+    return this.httpClient.get('https://ipinfo.io');
+   // return this.httpClient.post(this.SERVER_URL + 'validation', params);
+  }
 
   /*
     public validationId(valor) {
@@ -86,7 +72,7 @@ export class FormService {
 
   getDepartamentos() {
     let headers = new HttpHeaders;
-    console.log("THIS USER ACTUA_ ", this.useractual);
+    //console.log("THIS USER ACTUA_ ", this.useractual);
 
 
     return this.httpClient.get<any>(this.SERVER_URL + 'departamentos',{

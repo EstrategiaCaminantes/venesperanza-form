@@ -8,7 +8,7 @@ import {MatStepper} from '@angular/material/stepper';
 
 @Component({
   // selector: 'form-encuesta',
-  selector: 'app-root',
+  selector: 'form-encuesta',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
@@ -102,20 +102,20 @@ export class FormComponent implements OnInit {
   ngOnInit() {
 
     this.formService.Login().subscribe(res => {
-      console.log('RESPUESTA LOGIN', res);
+      //console.log('RESPUESTA LOGIN', res); //login exitoso se genera token
 
       this.formService.setLocal(res, false);
       this.formService.getDepartamentos()
         .subscribe((data: any[]) => {
           this.departamentosList = data;
-          console.log('DEPARTAMENTOS: ', data);
+         // console.log('DEPARTAMENTOS: ', data);
         });
 
       this.formService.getMunicipios()
         .subscribe((data: any[]) => {
           this.municipiosList = data;
           this.municipiosFilter = this.municipiosList;
-          console.log('MUNICIPIOS: ', data);
+          //console.log('MUNICIPIOS: ', data);
         });
 
       this.formService.getNecesidadesBasicas()
@@ -212,7 +212,7 @@ export class FormComponent implements OnInit {
 
 //Primer paso aceptar terminos
   termsAccept($event: any) {
-    console.log($event);
+   // console.log($event);
     this.termnsandconditions = false;
     this.quentionaccepttermns = false;
     this.buttonsConfirm = false;
@@ -227,14 +227,14 @@ export class FormComponent implements OnInit {
 
 //validacion tipo documento
   selectTipoDocumento($event: any) {
-    console.log('ENTRO A OTRO', $event.value);
+    //console.log('ENTRO A OTRO', $event.value);
     if ($event.value == 'Otro') { //si es Otro agrega el controlador
-      console.log('ES OTRO');
+      //console.log('ES OTRO');
       this.otroTipoDocumento = true;
       this.secondFormGroup.addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
     } else if ($event.value != 'Otro' && this.secondFormGroup.contains('otroTipoDocumentoCtrl')) {
       //si es diferente de Otro y ya contien otro, elimina el controlador de Otro
-      console.log('NO ES OTRO');
+      //console.log('NO ES OTRO');
       this.otroTipoDocumento = false;
       this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
     }
@@ -250,26 +250,26 @@ export class FormComponent implements OnInit {
 
 //selecciona departamento y filtra lso municipios
   selectDepartamento($event: any) {
-    console.log('DEPARTAMENTO : ', $event);
+    //console.log('DEPARTAMENTO : ', $event);
     this.municipiosFilter = this.municipiosList;
     const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
     this.municipiosFilter = municipiosnuevo;
-    console.log('MUNICIPIOS: ', this.municipiosFilter);
+    //console.log('MUNICIPIOS: ', this.municipiosFilter);
     this.thirdFormGroup.controls['municipioCtrl'].setValue(null);
-    console.log('MUNICIPIO ACTUAL: ', this.thirdFormGroup.controls['municipioCtrl']);
+    //console.log('MUNICIPIO ACTUAL: ', this.thirdFormGroup.controls['municipioCtrl']);
   }
 
   selectMunicipio($event: any) {
-    console.log('MUNICIPIO SELECCIONADO: ', $event);
+    //console.log('MUNICIPIO SELECCIONADO: ', $event);
   }
 
 //validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
   lineaContactoPropia($event: any) {
-    console.log('LINEA EVENTO: ', $event);
+   /* console.log('LINEA EVENTO: ', $event);
     console.log('LINEA EVENTO: ', $event.value);
     console.log('LINEA EVENTO: ', $event.value.toString());
     console.log('LINEA DE CONTACTO: ', this.thirdFormGroup.controls['lineaContactoPropiaCtrl'].value);
-    console.log('LINEA EVENTO: ', this.thirdFormGroup.controls['lineaContactoPropiaCtrl']);
+    console.log('LINEA EVENTO: ', this.thirdFormGroup.controls['lineaContactoPropiaCtrl']);*/
     if ($event.value === 'si') { //si la linea de contacto es propia, oculta contacto alternativo y muestra linea whatsapp
       this.contactoAlternativoInput = false;
       this.lineacontactoWhatsappInput = true;
@@ -291,9 +291,9 @@ export class FormComponent implements OnInit {
 
 //Seleccion de necesidades basicas
   setNecedidadesBasicas($event) {
-    console.log('NECESIDAD: ', $event);
+    /*console.log('NECESIDAD: ', $event);
     console.log('CONTROLADOR: ', this.sevenFormGroup.controls['necesidades22Ctrl']);
-    console.log('CONTROLADOR VALUE: ', this.sevenFormGroup.controls['necesidades22Ctrl'].value);
+    console.log('CONTROLADOR VALUE: ', this.sevenFormGroup.controls['necesidades22Ctrl'].value);*/
     //Crea un formgroup par el controlador de necesidades basicas
     const checkArray: FormArray = this.sevenFormGroup.controls['necesidades22Ctrl'] as FormArray;
     //si esta seleccionado lo agrega al array
@@ -310,8 +310,8 @@ export class FormComponent implements OnInit {
         i++;
       });
     }
-    console.log('CONTROLADOR: ', this.sevenFormGroup.controls['necesidades22Ctrl']);
-    console.log('ARRAYCHECK', checkArray);
+    //console.log('CONTROLADOR: ', this.sevenFormGroup.controls['necesidades22Ctrl']);
+    //console.log('ARRAYCHECK', checkArray);
   }
 
   iniciaValidacion(event) {
@@ -319,11 +319,11 @@ export class FormComponent implements OnInit {
       this.elementRef.nativeElement.querySelector(`[data-qa="StartSubmit"]`)
         .addEventListener('click', this.validacionTerminada.bind(this));
     }, 5000);*/
-    console.log(event);
+    //console.log(event);
   }
 
   validacionTerminada(event) {
-    console.log(event);
+    //console.log(event);
   }
 
   finalizar() {
@@ -334,7 +334,7 @@ export class FormComponent implements OnInit {
 
 //Agrega miembro del hogar
   agregarNuevoMiembro() {
-    console.log('AGREGO GRUPO AL ARRAY DE MIEMBROS FAMILIA:');
+    //console.log('AGREGO GRUPO AL ARRAY DE MIEMBROS FAMILIA:');
     //Crea un form array de los controles del miembro familiar y agrega un formgroup para cada nuevo miembro
     const chekgroup: FormArray = this.fourFormGroup.controls['miembrosFamilia'] as FormArray;
     const controle = new FormGroup({
@@ -346,26 +346,26 @@ export class FormComponent implements OnInit {
       fechaCtrl: new FormControl('', Validators.required)
     });
     chekgroup.push(controle);
-    console.log('CHECK', chekgroup);
-    console.log('THIS--', this.fourFormGroup);
+    //console.log('CHECK', chekgroup);
+    //console.log('THIS--', this.fourFormGroup);
   }
 
 //elimina miembro del hogar
   EliminarMiembro(index) {
     this.miembrosFamilia.removeAt(index);
-    console.log('DESPUES DE ELIMINAR', this.fourFormGroup);
+    //console.log('DESPUES DE ELIMINAR', this.fourFormGroup);
   }
 
 //funcion para cambiar de paso
   stepChange(e, stepper) {
     if (!this.error) { //si bandera error es false me deja guardar al pasar a otro step
-      console.log(e);
-      console.log('ERROR VALOR: ', this.error);
+      //console.log(e);
+      //console.log('ERROR VALOR: ', this.error);
       if (e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null) {
-        console.log('envio cuando es 0');
+       // console.log('envio cuando es 0');
         this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex);
       } else if (e.previouslySelectedIndex != 0) {
-        console.log('envio cuando es diferente 0');
+       // console.log('envio cuando es diferente 0');
         this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex);
       }
     } else { //cuando deja guardar info al pasar a otro step, esto para que no se ejecute 2 cuando oprimo boton siguiente y ejecuta next()
@@ -375,7 +375,7 @@ export class FormComponent implements OnInit {
 
 //creo boton mati con parametros
   botonMati() {
-    console.log('EN BOTON MATI: ', this.id);
+    //console.log('EN BOTON MATI: ', this.id);
 
     this.mati.setAttribute('clientid', '5f91a78600ef73001be85cf4');
     this.mati.setAttribute('metadata', JSON.stringify({'user_id': this.id}));
@@ -389,35 +389,35 @@ export class FormComponent implements OnInit {
 
 //Guardo información
   enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama) {
-    console.log('PASO PREVIO: ', pasoquellama);
+   /* console.log('PASO PREVIO: ', pasoquellama);
     console.log('EL PASO ES: ', paso);
     console.log('EL GRUPO ES: ', grupo);
-    console.log('EL next ES: ', next);
+    console.log('EL next ES: ', next);*/
     let data = {
       'paso': paso,
       'infoencuesta': grupo.value,
     };
     // Guarda por primera vez, no se ha creado la encuesta, id es null
     if (this.id == null && data.paso == 'paso1') {
-      console.log('VALOR DE ID ', this.id);
+     // console.log('VALOR DE ID ', this.id);
       this.formService.postForm(data).subscribe(res => {
-        console.log('RESPUESTA: ', res);
+      //  console.log('RESPUESTA: ', res);
         this.id = res['id'];
         this.botonMati(); // Llamo a función para agregar bloque botón mati
         this.infoencuesta = res; // Toda la info de la encuesta
-        console.log('INFO ENCUESTA:', this.infoencuesta);
-        console.log('VALRO NEXT', next);
+      //  console.log('INFO ENCUESTA:', this.infoencuesta);
+      //  console.log('VALRO NEXT', next);
         this._snackBar.open('Información de ' + paso + ' almacenada correctamente', 'X', {
           duration: 2000
         });
         if (next) { //cuando oprimo boton "siguiente"
           this.error = true; //bandera para que no se ejecute stepChange al cambiar de step1 a step2
-          console.log('PASO ASIGUIENTE?', this.error);
+       //   console.log('PASO ASIGUIENTE?', this.error);
           stepper.next();
         }
       }, error => {
-        console.log('GRUPO STATUS DESPUES:', grupo.status);
-        console.log(stepper);
+      //  console.log('GRUPO STATUS DESPUES:', grupo.status);
+       // console.log(stepper);
         if (!next) { //si cambie de step1 a step2 oprimiendo el encabezado llamando a stepChange
           this._snackBar.open('Error al almacenar información en ' + paso + '. Vuelva a intentarlo', 'X', {
             duration: 2000,
@@ -436,7 +436,7 @@ export class FormComponent implements OnInit {
       stepper.selectedIndex = 1;
     } else if (this.id != null) {
       //cuando ya el formulario está creado y tengo el id, voy a actualizar cualquier paso
-      console.log('VOY A ACTUALIZAR');
+     // console.log('VOY A ACTUALIZAR');
       if (data.paso == 'paso8') {
         //Determino la cantidad de miembros agregado, sumando 1 que es la persona que responde el formulario
         let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length + 1;
@@ -449,7 +449,7 @@ export class FormComponent implements OnInit {
             duration: 2000
           });
           this.error = true; //bandera para que no se ejecute el llamado a stepChange por cambiar de paso
-          console.log('PASO ASIGUIENTE?');
+         // console.log('PASO ASIGUIENTE?');
           stepper.next();
         } else { //cuando selecciono el encabezado del siguiente paso directamente y se ejecuta stepChange
           this._snackBar.open('Información de ' + paso + ' almacenada correctamente', 'X', {
@@ -463,15 +463,15 @@ export class FormComponent implements OnInit {
           this._snackBar.open('Error al almacenar información en ' + paso, 'X', {
             duration: 2000,
           });
-          console.log('EN EL STEPPER QUE ESTOY: ', stepper);
-          console.log('THSI STEPPER: ', this.stepper);
-          console.log('THIS ', this.stepper.selectedIndex);
+         // console.log('EN EL STEPPER QUE ESTOY: ', stepper);
+         // console.log('THSI STEPPER: ', this.stepper);
+         // console.log('THIS ', this.stepper.selectedIndex);
           stepper.selectedIndex = pasoquellama; //paso en el que estoy antes de llamar al nuevo paso
         } else { //cuando se oprime botón siguiente
           this.error = false; //cuando oprimo siguiente no intenta pasar al siguiente step entonces habilito la  bandera
           //y cuando intente ir a otro paso oprimiendo el step, me permite intentar ir a ese step.
           this._snackBar.open('Error al almacenar información en ' + paso, 'X', {
-            duration: 2000,
+            duration: 2000, 
           });
         }
       });

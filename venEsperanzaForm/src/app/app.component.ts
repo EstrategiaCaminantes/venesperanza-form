@@ -14,73 +14,62 @@ export class AppComponent implements OnInit  {
   title = 'venEsperanzaForm';
 
   error = false;
-  /*
-  referrer:any = document.referrer;
-
-   queryString:any = window.location.search;*/
-
   
-   
+  referrer:any = document.referrer; //origen del trafico
 
-  //ip: any = window.RTCPeerConnection 
+   queryString:any = window.location.search; //obtener url
+
 
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
   show = false;
 
-  constructor( private formService: FormService) {}
   
 
-    ngOnInit(){
-     
-      /*this.formService.getIp().subscribe(res=>{
-        console.log("LA IP ES: ",res['ip']);
+  constructor( private formService: FormService) {}
+ 
+    ngOnInit(){ 
 
-      })*/
-      /*
-      const urlParams = new URLSearchParams(this.queryString);
-      //const fbclid = urlParams.get('fbclid');
-      const fbclid = "qwrud08afbadsf";
+      //const urlParams = new URLSearchParams(this.queryString);  //url
+      //const fbclid = urlParams.get('fbclid'); //parametro fbclid
+      this.referrer = "http://l.facebook.com"; //valor referer para transito facebook
 
-      console.log("REFERER: ", this.referrer);
-      console.log("queryString_ ",this.queryString);
-      console.log("urlparams: ", urlParams);
-      console.log("FBCLIID: ",fbclid);
-      this.referrer = "";
+      if(this.referrer.includes("http://l.facebook.com") || this.referrer.includes("https://l.facebook.com") 
+      || this.referrer.includes("http://facebook.com") || this.referrer.includes("https://facebook.com")
+      || this.referrer.includes("http://m.facebook.com") || this.referrer.includes("https://m.facebook.com")
+      || this.referrer.includes("http://lm.facebook.com") || this.referrer.includes("http://lm.facebook.com")){
 
-      console.log("REFERER: ",this.referrer);
-      if( (this.referrer.includes("http://l.facebook.com") || this.referrer.includes("https://l.facebook.com") || this.referrer.includes("http://facebook.com") || 
-      this.referrer.includes("https://facebook.com") || this.referrer.includes("http://l.facebook.com") || this.referrer.includes("https://l.facebook.com") || this.referrer.includes("http://m.facebook.com") || this.referrer.includes("https://m.facebook.com") || this.referrer.includes("http://lm.facebook.com") || this.referrer.includes("http://lm.facebook.com")) && fbclid){
+          this.show= true; //muestra formulario. esto se debe eliminar
 
-     
+          //validacion de navegacion comentado provisionalmente
+         /*  navigator.geolocation.getCurrentPosition((position) => {
+              //console.log("POSITION. ", position);
 
-        console.log("REFERER: ",this.referrer);
-        let params ={
-          'datos': {
-                     'url_origen': this.referrer,
-                      'ip': '1243',
-                     'facebookclid': fbclid}
-          
-        }
-        this.formService.getValidation(params).subscribe(res=>{
-          console.log("RESPUESTA DE VALIDACON: ",res);
-          
-          this.show = true;
-
-        },error=>{
-
-          this.error = true;
-        });
-
-        
-
+              // if( (position.coords.latitude >= 7.8155213 && position.coords.latitude <= 7.872665) &&
+              // ( position.coords.longitude >= -72.4542771 && position.coords.longitude <= -72.4900311)){
+              if(position.coords.latitude == 7.1279139 && position.coords.longitude == -73.1215082){
+                // console.log("GEO;: ", position.coords);
+                  //console.log("THIS referer: ", this.referrer);
+                  
+                  this.show = true; //muestra seccion formulario componente form
+                  
+                  //console.log("value show: ",this.show);
+                // console.log("valude error: ",this.error);
+              }else{
+                  this.error = true; //muestra error porq las coordenadas no corresponden a villa del rosario
+                // console.log("error: ", this.error);
+                }
+                
+           },error=>{
+                this.error = true; //muestra error xq no habilita geolocalizacion
+               });
+               */
       }else{
-        this.error = true;
-        
-      } 
-      */
-    }
+        this.error = true; //muestra error porq el trafico no proviene de facebook
+      }
 
+      
+    }    
   
 }

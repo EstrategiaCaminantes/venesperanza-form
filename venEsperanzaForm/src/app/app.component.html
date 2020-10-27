@@ -9,8 +9,8 @@
 
   <mat-spinner *ngIf="show != true && error != true"></mat-spinner>
 
-  <mat-card *ngIf="error == true">
-    <mat-icon class="mat-icon-rtl-mirror" svgIcon="thumb-up">error</mat-icon>
+  <mat-card *ngIf="error == true">ERROR
+    <mat-icon class="mat-icon-rtl-mirror" >error</mat-icon>
   </mat-card>
   <form-encuesta *ngIf="show == true && error != true"></form-encuesta>
 

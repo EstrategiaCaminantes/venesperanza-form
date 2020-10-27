@@ -42,6 +42,6 @@ import {MatIconModule} from '@angular/material/icon';
 
   ],
   providers: [MatDatepickerModule,MatNativeDateModule],
-  bootstrap: [FormComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
