@@ -445,7 +445,7 @@ export class FormComponent implements OnInit {
       this.formService.updateForm(this.id, data).subscribe(res => {
         this.infoencuesta = res;
         if (next) { // cuando selecciono botón siguiente
-          this._snackBar.open('Error al almacenar información. Vuelva a intentarlo. #EPS' + paso, 'X', {
+          this._snackBar.open('Información almacenada correctamente', 'X', {
             duration: 2000
           });
           this.error = true; // bandera para que no se ejecute el llamado a stepChange por cambiar de paso
