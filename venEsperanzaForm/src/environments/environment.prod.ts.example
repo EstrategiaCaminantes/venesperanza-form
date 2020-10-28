@@ -1,0 +1,5 @@
+export const environment = {
+  production: true,
+  server: BACK_URL,
+  client: APP_API_KEY
+};
