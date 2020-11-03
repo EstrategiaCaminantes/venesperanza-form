@@ -15,29 +15,21 @@ import {MatStepper} from '@angular/material/stepper';
 export class FormComponent implements OnInit {
 
   mati: any = document.createElement('mati-button'); // boton mati
-
-
   infoencuesta = {}; // datos de la encuesta
-
   id = null; // id del formulario
-
   title = 'venEsperanzaForm';
-
   isLinear = true; // paso a paso lineal
-
 
   // banderas
   termnsandconditions = true;
   titleheader = true;
   quentionaccepttermns = true;
   thanksmessage = false;
+  finishmessage = false;
   buttonsConfirm = true;
-
   otroTipoDocumento = false;
-
   formPrincipal = false;
   numeroDocumento = true;
-
   contactoAlternativoInput = false;
   lineacontactoWhatsappInput = false;
 
@@ -216,10 +208,10 @@ export class FormComponent implements OnInit {
     this.termnsandconditions = false;
     this.quentionaccepttermns = false;
     this.buttonsConfirm = false;
+    this.titleheader = false;
     if ($event == false) {
-      this.titleheader = false;
       this.formPrincipal = false;
-      this.thanksmessage = true;
+      this.finishmessage = true;
     } else if ($event == true) {
       this.formPrincipal = true;
     }

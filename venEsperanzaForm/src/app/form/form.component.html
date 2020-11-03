@@ -1,51 +1,65 @@
 <div fxLayout="column" fxLayoutAlign="center" class="flexcolumn">
-  <div class="titleheader">
-    <div fxLayout="row">
-
+  <section class="titleheader mat-typography">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
+      <div fxFlex="0 0 30%" fxFlex.lt-sm="0 0 40%" fxFlex.gt-md="0 0 20%">
+        <img class="margin-top-10 logo-venes" src="assets/img/logovenes.png" alt="VenEsperanza">
+      </div>
+      <div fxFlex="0 0 40%" fxFlex.lt-sm="0 0 60%" fxFlex.gt-lg="0 0 30%">
+        <img class="margin-top-10 logo-wv" src="assets/img/logowv.png" alt="World Vision">
+      </div>
     </div>
-    <h2 *ngIf="titleheader">
-      Formulario de identificación de familias migrantes Venezolanas
+    <h2 *ngIf="titleheader" class="text-blue text-bold margin-top-20">
+      Formulario de identificación de familias migrantes venezolanas, colombianas retornadas y comunidades de acogida.
     </h2>
-    <H2 *ngIf="thanksmessage">¡Gracias por participar!</H2>
-  </div>
-  <div *ngIf="termnsandconditions" fxLayout="row">
+    <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
+    <h3 class="text-bold" *ngIf="thanksmessage">Si eres preseleccionado World Vision se comunicará contigo</h3>
+    <h3 class="text-bold" *ngIf="thanksmessage">Esperamos que las cosas para tí y tu familia pronto puedan mejorar. ¡Ánimo!</h3>
+  </section>
+  <section *ngIf="termnsandconditions" fxLayout="row">
     <div class="termnsandconditions">
-      <p class="text-bold">
-        Este proceso no genera ningún costo o cobro asociado.
+      <p class="text-bold text-red">
+        Este proceso es gratuito.
       </p>
       <p class="text-bold">
-        Su participación es voluntaria y puede decidir no participar o retirar su consentimiento en cualquier momento.
+        Tu participación es voluntaria.
       </p>
       <p class="text-bold">
-        La información recogida no tendrá ninguna implicación en su condición migratoria.
+        Puedes decidir no participar o retirarte en cualquier momento.
+      </p>
+      <p class="text-bold">
+        La información brindada no tendrá ninguna implicación en tu condición migratoria.
       </p>
       <p>
-        El objetivo de esta encuesta es valorar si es posible que usted sea elegido para ingresar a programas de
-        asistencia humanitaria, estos programas pueden incluir asistencia financiera, servicios de protección y otros
-        servicios humanitarios. Responder a estas preguntas no quiere decir que usted y su familia serán automáticamente
-        seleccionados. Si usted es preseleccionado, será contactado por la organización para continuar con el proceso.
+        El objetivo de esta encuesta es valorar si es posible que seas elegido para ingresar a programas de asistencia
+        humanitaria.
       </p>
       <p>
-        Su información es confidencial, sin embargo, nuestra organización podría tener que compartir parte de sus datos,
-        de manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG
-        nacionales e internacionales, cuando haya posibles casos duplicados, de fraude o para referir su hogar a
-        servicios adicionales, y contribuir en iniciativas de investigación conjuntas.
+        Estos programas pueden incluir asistencia multipropósito, servicios de protección y otros servicios
+        humanitarios.
       </p>
       <p>
-        La organización no retendrá su información personal durante más tiempo que el periodo de duración del programa y
-        también borrará su información, si usted lo requiere. Pero, sin su información personal no se podrán lograr los
-        objetivos del programa.
+        Responder a estas preguntas no quiere decir que tu y tu familia serán automáticamente seleccionados. Si eres
+        preseleccionado, serás contactado por la organización para continuar con el proceso.
       </p>
       <p>
-        Esta encuesta incluye preguntas sobre su situación actual. Tenga en cuenta, que todos los datos que usted
-        entregue
-        a continuación serán verificados por la organización, por favor responda con sus datos reales.
+        Tu información es confidencial, sin embargo, la organización podría tener que compartir parte de tus datos, de
+        manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONGs
+        nacionales e internacionales. Esto con el fin de no tener posibles casos duplicados, de fraude o para referir tu
+        hogar a servicios adicionales, y contribuir en iniciativas de investigación conjuntas de carácter humanitario.
+      </p>
+      <p>
+        La organización solo tendrá tu información personal durante el periodo de duración del programa y también
+        borrará su información, si tu lo requieres.
+      </p>
+      <p>
+        Esta encuesta incluye preguntas sobre tu situación actual. Los datos que entregues serán verificados por la
+        organización, por favor responde con tus datos reales.
       </p>
     </div>
-  </div>
+  </section>
   <div *ngIf="quentionaccepttermns">
     <div>
-      <label class="text-bold">¿Está usted de acuerdo con las condiciones expuestas anteriormente?</label>
+      <label class="text-bold text-blue">¿Estás de acuerdo con las condiciones explicadas?</label>
     </div>
     <div *ngIf="buttonsConfirm" class="margin-top-20 text-center">
       <button mat-raised-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
@@ -117,7 +131,7 @@
               Siguiente
             </button>
             <p>
-              *Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+              *Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
           <!--matStepperNext-->
@@ -177,7 +191,7 @@
             <input matInput formControlName="contactoAlternativoCtrl" placeholder="">
           </mat-form-field>
           <div class="margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
-            <label>¿Su línea de contacto está asociada a whatsapp?*: </label>
+            <label>¿Su línea de contacto está asociada a WhatsApp?*: </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName
               ="lineaContactoAsociadaAWhatsappCtrl" required>
               <div>
@@ -187,7 +201,7 @@
             </mat-radio-group>
           </div>
           <mat-form-field class="contactoAlternativo">
-            <mat-label>¿Usted tiene un correo electrónico donde le podemos contactar?</mat-label>
+            <mat-label>Correo electrónico donde le podemos contactar</mat-label>
             <input matInput formControlName="correoCtrl" placeholder="">
           </mat-form-field>
           <mat-form-field class="contactoAlternativo">
@@ -202,7 +216,7 @@
             </button>
             <!--matStepperNext-->
             <p>
-              *Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+              *Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
         </form>
@@ -265,7 +279,7 @@
             <button color="primary" mat-raised-button (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <p>*Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
             </p>
           </div>
@@ -275,7 +289,7 @@
         <form [formGroup]="fiveFormGroup">
           <ng-template matStepLabel>SALUD</ng-template>
           <div class="margin-bottom-10">
-            <label>¿En el hogar hay mujeres embarazadas? </label>
+            <label>¿En tu hogar hay mujeres embarazadas? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="mujeresEmbarazadasCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
@@ -284,7 +298,7 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>¿En el hogar hay mujeres lactantes? </label>
+            <label>¿En tu hogar hay mujeres lactantes? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="mujeresLactantesCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
@@ -293,7 +307,7 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>¿En el hogar hay personas en situación de discapacidad? </label>
+            <label>¿En tu hogar hay personas en situación de discapacidad? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="personasDiscapacidadCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
@@ -302,8 +316,8 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>¿En el hogar hay personas con enfermedades crónicas? <br>
-              Enfermedades cronicas como cáncer, diabetes, hipertensión, SIDA, etc.: </label>
+            <label>¿En tu hogar hay personas con enfermedades crónicas? <br>
+              Enfermedades crónicas como cáncer, diabetes, hipertensión, SIDA, etc... </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="personasEnfermedadesCronicasCtrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
@@ -315,7 +329,7 @@
             <button color="primary" mat-raised-button (click)="enviarInfo(fiveFormGroup,'paso4',stepper,true,stepper)">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <p>*Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
             </p>
           </div>
@@ -325,8 +339,8 @@
         <form [formGroup]="sixFormGroup">
           <ng-template matStepLabel>ALIMENTOS</ng-template>
           <div class="margin-bottom-10">
-            <label>En los últimos 30 días, ¿hubo algún momento en que no había nada de comida en su casa debido a falta
-              de recursos para obtener comida? </label>
+            <label>En los últimos 30 días, ¿hubo algún momento en el que no había nada de comida en su casa debido a la
+              falta de recursos? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos11Ctrl">
               <div>
                 <mat-radio-button value="1">Si</mat-radio-button>
@@ -345,7 +359,7 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>En los últimos 30 días, ¿usted o algún miembro de su hogar se ha acostado a dormir en la noche con
+            <label>En los últimos 30 días, ¿Tu o algún miembro de tu hogar se ha acostado a dormir en la noche con
               hambre porque no había suficiente comida? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos13Ctrl">
               <div>
@@ -365,7 +379,7 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>En los últimos 30 días, ¿usted o algún miembro de su hogar ha pasado todo un día y una noche sin
+            <label>En los últimos 30 días, ¿Tu o algún miembro de tu hogar ha pasado todo un día y una noche sin
               comer nada porque no había suficiente comida? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="alimentos15Ctrl">
               <div>
@@ -388,7 +402,7 @@
             <button color="primary" mat-raised-button (click)="enviarInfo(sixFormGroup,'paso5',stepper,true,stepper)">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <p>*Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
             </p>
           </div>
@@ -398,19 +412,19 @@
         <form [formGroup]="sevenFormGroup">
           <ng-template matStepLabel>NECESIDADES BÁSICAS</ng-template>
           <div class="margin-bottom-10">
-            <label>¿Puede su hogar satisfacer todas, la mayoría, algunas o ninguna de sus necesidades básicas, tal como
+            <label>¿Puede tu hogar satisfacer todas, la mayoría, algunas o ninguna de sus necesidades básicas, tal como
               las define en los últimos 3 meses? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="necesidades17Ctrl" required>
               <div>
                 <mat-radio-button value="algunas">Algunas</mat-radio-button>
-                <mat-radio-button value="lamayoria">La mayoria</mat-radio-button>
+                <mat-radio-button value="lamayoria">La mayoría</mat-radio-button>
                 <mat-radio-button value="todas">Todas</mat-radio-button>
                 <mat-radio-button value="ninguna">Ninguna</mat-radio-button>
               </div>
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>¿Cuáles son las necesidades básicas que su hogar no puede satisfacer? </label>
+            <label>¿Cuáles son las necesidades básicas que tu hogar no puede satisfacer? </label>
             <div *ngFor="let necesidad of necesidadesList; let i=index;"
                  class="flex-container align-center multi-checkbox">
               <input type="checkbox" [value]="necesidad.id"
@@ -422,7 +436,7 @@
             <button color="primary" mat-raised-button (click)="enviarInfo(sevenFormGroup,'paso6',stepper,true,stepper)">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <p>*Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
             </p>
           </div>
@@ -432,7 +446,7 @@
         <form [formGroup]="eightFormGroup">
           <ng-template matStepLabel>ALOJAMIENTO Y VIVIENDA</ng-template>
           <div class="margin-bottom-10">
-            <label>¿En qué tipo de alojamiento ha vivido en los últimos 15 días? </label>
+            <label>¿En qué tipo de alojamiento has vivido en los últimos 15 días? </label>
             <mat-radio-group aria-label="Seleccione una opción" formControlName="alojamientoViviendaCtrl">
               <div>
                 <mat-radio-button value="casa">Casa</mat-radio-button>
@@ -453,7 +467,7 @@
             <button color="primary" mat-raised-button (click)="enviarInfo(eightFormGroup,'paso7',stepper,true,stepper)">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <p>*Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
             </p>
           </div>
@@ -461,19 +475,18 @@
       </mat-step>
       <mat-step [stepControl]="nineFormGroup">
         <form [formGroup]="nineFormGroup">
-          <ng-template matStepLabel>ECONOMICO</ng-template>
+          <ng-template matStepLabel>ECONÓMICO</ng-template>
           <div class="margin-bottom-10">
-            <label>¿Cómo describe sus ingresos? </label>
-            <mat-radio-group aria-label="Seleccione una opción" formControlName
-              ="economicoCtrl">
+            <label>¿Cómo describes tus ingresos?</label>
+            <mat-radio-group aria-label="Seleccione una opción" formControlName="economicoCtrl">
               <div>
-                <mat-radio-button value="estable_permanente">Estable y permanente</mat-radio-button>
-                <mat-radio-button value="inestable_temporal">Inestable y temporal</mat-radio-button>
-                <mat-radio-button value="inexistente">Inexistente</mat-radio-button>
+                <mat-radio-button value="estable_permanente">Estables y permanentes</mat-radio-button>
+                <mat-radio-button value="inestable_temporal">Inestables y temporales</mat-radio-button>
+                <mat-radio-button value="inexistente">Inexistentes</mat-radio-button>
               </div>
             </mat-radio-group>
           </div>
-          <label>¿Cuánto gastó el hogar en promedio en los ÚLTIMOS 7 DÍAS?</label>
+          <label>¿Cuánto gastó el hogar en promedio en los ÚLTIMOS 7 DÍAS? En pesos colombianos (COP)</label>
           <mat-form-field class="gastototal">
             <input matInput type="number" formControlName="gastoHogar7diasCtrl" placeholder="">
           </mat-form-field>
@@ -481,7 +494,7 @@
             <button color="primary" mat-raised-button (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            <p>*Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
               <!--matSteppperNext-->
             </p>
           </div>
@@ -495,7 +508,7 @@
             <button color="primary" mat-raised-button (click)="finalizar()">
               Siguiente
             </button>
-            <p>*Oprima el botón "Siguiente" para salvar la información y finalizar.
+            <p>*Oprime el botón "Siguiente" para salvar la información y finalizar.
               <!--matSteppperNext-->
             </p>
           </div>
