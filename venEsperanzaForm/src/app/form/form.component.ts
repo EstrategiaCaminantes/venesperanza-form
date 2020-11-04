@@ -24,6 +24,7 @@ export class FormComponent implements OnInit {
   termnsandconditions = true;
   titleheader = true;
   quentionaccepttermns = true;
+  mujeres = false;
   thanksmessage = false;
   finishmessage = false;
   buttonsConfirm = true;
@@ -126,7 +127,6 @@ export class FormComponent implements OnInit {
 
 
     this.secondFormGroup = this._formBuilder.group({
-
       firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
       lastNameCtrl: ['', Validators.required],
@@ -135,7 +135,7 @@ export class FormComponent implements OnInit {
       fechaNacimientoCtrl: [''],
       nacionalidadCtrl: ['', Validators.required],
       tipoDocumentoCtrl: ['', Validators.required],
-      numeroDocumentoCtrl: ['', Validators.required]
+      numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]]
     });
 
 
@@ -144,7 +144,7 @@ export class FormComponent implements OnInit {
       municipioCtrl: ['', Validators.required],
       barrioCtrl: ['', Validators.required],
       direccionCtrl: [''],
-      numeroContactoCtrl: ['', Validators.required],
+      numeroContactoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
       lineaContactoPropiaCtrl: ['', Validators.required],
       correoCtrl: [''],
       comentarioAdicionalCtrl: ['']
@@ -191,8 +191,8 @@ export class FormComponent implements OnInit {
 
     this.nineFormGroup = this._formBuilder.group({
       economicoCtrl: [''],
+      gastoHogarCtrl: [''],
       gastoHogar7diasCtrl: ['']
-
     });
 
     this.tenFormGroup = this._formBuilder.group({
@@ -235,9 +235,20 @@ export class FormComponent implements OnInit {
       this.numeroDocumento = false;
     } else if ($event.value != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl')) {
       // si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
-      this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', Validators.required));
+      this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
       this.numeroDocumento = true;
     }
+  }
+
+// validacion tipo documento
+  alimentosSeleccion($event: any, field) {
+    if ($event.value == '1') {
+      this.sixFormGroup.controls[field].setValidators([Validators.required]);
+    } else {
+      this.sixFormGroup.controls[field].clearValidators();
+    }
+    this.sixFormGroup.controls[field].updateValueAndValidity();
+    console.log(this.sixFormGroup.controls);
   }
 
 // selecciona departamento y filtra lso municipios
@@ -266,7 +277,8 @@ export class FormComponent implements OnInit {
       this.contactoAlternativoInput = false;
       this.lineacontactoWhatsappInput = true;
       // crea controlador de lineacontactowhatsapp
-      this.thirdFormGroup.addControl('lineaContactoAsociadaAWhatsappCtrl', new FormControl('', Validators.required));
+      this.thirdFormGroup.addControl('lineaContactoAsociadaAWhatsappCtrl', new FormControl('',
+        [Validators.required, Validators.min(1000000), Validators.max(9999999999)]));
       if (this.thirdFormGroup.contains('contactoAlternativoCtrl')) {
         // elimina controlador si existe
         this.thirdFormGroup.removeControl('contactoAlternativoCtrl');
@@ -274,36 +286,62 @@ export class FormComponent implements OnInit {
     } else if ($event.value === 'no') { // si linea de contacto no es propia
       this.contactoAlternativoInput = true;  // muestra contacto alternativo
       this.lineacontactoWhatsappInput = false; // oculta linea contacto whatsapp
-      this.thirdFormGroup.addControl('contactoAlternativoCtrl', new FormControl('', Validators.required)); // crea controlador para contactoalternativo
+      this.thirdFormGroup.addControl('contactoAlternativoCtrl', new FormControl('', [Validators.required, Validators.min(1000000), Validators.max(9999999999)])); // crea controlador para contactoalternativo
       if (this.thirdFormGroup.contains('contactoAlternativoCtrl')) { // si ya existe contacto alternativo elimina linea whatsapp
         this.thirdFormGroup.removeControl('lineaContactoAsociadaAWhatsappCtrl');
       }
     }
   }
 
+// validacion de seleccion si es mujer
+  seleccionSexo() {
+    let muj = false;
+    this.fourFormGroup.controls['miembrosFamilia'].value.forEach(item => {
+      muj = (muj || item.sexoCtrl === 'mujer');
+    });
+    this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
+  }
+
 // Seleccion de necesidades basicas
-  setNecedidadesBasicas($event) {
-    /*console.log('NECESIDAD: ', $event);
-    console.log('CONTROLADOR: ', this.sevenFormGroup.controls['necesidades22Ctrl']);
-    console.log('CONTROLADOR VALUE: ', this.sevenFormGroup.controls['necesidades22Ctrl'].value);*/
-    // Crea un formgroup par el controlador de necesidades basicas
+  changeNecesidades(e) {
+    if (e.value == 'ninguna' || e.value == 'algunas') {
+      this.sevenFormGroup.controls.necesidades22Ctrl.setValidators([Validators.required]);
+    } else {
+      this.sevenFormGroup.controls.necesidades22Ctrl.clearValidators();
+    }
+    this.sevenFormGroup.controls.necesidades22Ctrl.updateValueAndValidity();
+  }
+
+// Seleccion de necesidades basicas
+  setNecedidadesBasicas(e) {
     const checkArray: FormArray = this.sevenFormGroup.controls['necesidades22Ctrl'] as FormArray;
+    if (checkArray.value.length > 2 && e.target.checked) {
+      return e.preventDefault();
+    }
     // si esta seleccionado lo agrega al array
-    if ($event.target.checked) {
-      checkArray.push(new FormControl($event.target.value));
+    if (e.target.checked) {
+      checkArray.push(new FormControl(e.target.value));
     } else {
       // si no esta checkeado lo busca y lo elimina
       let i: number = 0;
       checkArray.controls.forEach((item: FormControl) => {
-        if (item.value == $event.target.value) {
+        if (item.value == e.target.value) {
           checkArray.removeAt(i);
           return;
         }
         i++;
       });
     }
-    // console.log('CONTROLADOR: ', this.sevenFormGroup.controls['necesidades22Ctrl']);
-    // console.log('ARRAYCHECK', checkArray);
+  }
+
+  toggleEcon(e) {
+    this.nineFormGroup.controls.gastoHogarCtrl.setValue((e.checked) ? '1' : '0');
+    if (!e.checked) {
+      this.nineFormGroup.controls.gastoHogar7diasCtrl.setValidators([Validators.required, Validators.min(1000)]);
+    } else {
+      this.nineFormGroup.controls.gastoHogar7diasCtrl.clearValidators();
+    }
+    this.nineFormGroup.controls.gastoHogar7diasCtrl.updateValueAndValidity();
   }
 
   iniciaValidacion(event) {
@@ -345,6 +383,7 @@ export class FormComponent implements OnInit {
 // elimina miembro del hogar
   EliminarMiembro(index) {
     this.miembrosFamilia.removeAt(index);
+    this.seleccionSexo();
     // console.log('DESPUES DE ELIMINAR', this.fourFormGroup);
   }
 
@@ -368,7 +407,6 @@ export class FormComponent implements OnInit {
 // creo boton mati con parametros
   botonMati() {
     // console.log('EN BOTON MATI: ', this.id);
-
     this.mati.setAttribute('clientid', '5f91a78600ef73001be85cf4');
     this.mati.setAttribute('metadata', JSON.stringify({'user_id': this.id}));
     document.getElementById('mati').appendChild(this.mati);
@@ -395,10 +433,11 @@ export class FormComponent implements OnInit {
       this.formService.postForm(data).subscribe(res => {
         //   console.log('RESPUESTA: ', res);
         this.id = res['id'];
-        this.botonMati(); //  Llamo a función para agregar bloque botón mati
+        console.log('doc', grupo.value.tipoDocumentoCtrl);
+        if (grupo.value.tipoDocumentoCtrl != 'Indocumentado') {
+          this.botonMati(); //  Llamo a función para agregar bloque botón mati
+        }
         this.infoencuesta = res; //  Toda la info de la encuesta
-        //   console.log('INFO ENCUESTA:', this.infoencuesta);
-        //   console.log('VALRO NEXT', next);
         this._snackBar.open('Información almacenada correctamente.', 'X', {
           duration: 2000
         });

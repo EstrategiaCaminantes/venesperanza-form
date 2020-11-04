@@ -26,21 +26,22 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent
   ],
-  imports: [
-    BrowserModule, BrowserAnimationsModule,
-    MatFormFieldModule, MatStepperModule,
-    FormsModule, ReactiveFormsModule, MatInputModule,
-    MatButtonModule, MatRadioModule, MatGridListModule, FlexLayoutModule,
-    CommonModule, MatDatepickerModule, MatNativeDateModule,
-    MatSelectModule, MatCheckboxModule,
-    HttpClientModule, MatSnackBarModule, MatProgressSpinnerModule, MatCardModule, MatIconModule
+    imports: [
+        BrowserModule, BrowserAnimationsModule,
+        MatFormFieldModule, MatStepperModule,
+        FormsModule, ReactiveFormsModule, MatInputModule,
+        MatButtonModule, MatRadioModule, MatGridListModule, FlexLayoutModule,
+        CommonModule, MatDatepickerModule, MatNativeDateModule,
+        MatSelectModule, MatCheckboxModule,
+        HttpClientModule, MatSnackBarModule, MatProgressSpinnerModule, MatCardModule, MatIconModule, MatSlideToggleModule
 
-  ],
+    ],
   providers: [MatDatepickerModule,MatNativeDateModule],
   bootstrap: [AppComponent]
 })

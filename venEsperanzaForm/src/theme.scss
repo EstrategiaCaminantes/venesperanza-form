@@ -1,0 +1,74 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+
+@include mat-core();
+$mat-primary: (
+  50: #1B51A2,
+  100: #1B51A2,
+  200: #1B51A2,
+  300: #1B51A2,
+  400: #1B51A2,
+  500: #1B51A2,
+  600: #1B51A2,
+  700: #1B51A2,
+  800: #1B51A2,
+  900: #1B51A2,
+  A100: #1B51A2,
+  A200: #1B51A2,
+  A400: #1B51A2,
+  A700: #1B51A2,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+$mat-accent: (
+  50: #F36A21,
+  100: #F36A21,
+  200: #F36A21,
+  300: #F36A21,
+  400: #F36A21,
+  500: #F36A21,
+  600: #F36A21,
+  700: #F36A21,
+  800: #F36A21,
+  900: #F36A21,
+  A100: #F36A21,
+  A200: #F36A21,
+  A400: #F36A21,
+  A700: #F36A21,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+$my-app-primary: mat-palette($mat-primary);
+$my-app-accent: mat-palette($mat-accent, 500, 900, A100);
+$my-app-warn: mat-palette($mat-deep-orange);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);
