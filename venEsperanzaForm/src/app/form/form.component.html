@@ -12,7 +12,7 @@
       Formulario de identificación de familias migrantes venezolanas, colombianas retornadas y comunidades de acogida.
     </h2>
     <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
-    <h3 class="text-bold" *ngIf="thanksmessage">Si eres preseleccionado World Vision se comunicará contigo</h3>
+    <h3 class="text-bold" *ngIf="thanksmessage">Si eres preseleccionado/a World Vision se comunicará contigo</h3>
     <h3 class="text-bold" *ngIf="thanksmessage">Esperamos que las cosas para tí y tu familia pronto puedan mejorar.
       ¡Ánimo!</h3>
   </section>
@@ -50,7 +50,7 @@
       </p>
       <p>
         La organización solo tendrá tu información personal durante el periodo de duración del programa y también
-        borrará su información, si así lo requieres.
+        borrará tu información, si así lo requieres.
       </p>
       <p>
         Esta encuesta incluye preguntas sobre tu situación actual. Los datos que entregues serán verificados por la
@@ -71,7 +71,6 @@
     <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper>
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-          <!--<div id="mati"></div>-->
           <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
           <mat-form-field>
             <mat-label>Primer Nombre</mat-label>
@@ -220,12 +219,12 @@
       <mat-step [stepControl]="fourFormGroup">
         <form [formGroup]="fourFormGroup">
           <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
-          <p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro del hogar*</p>
+          <p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro de tu hogar*</p>
           <div formArrayName="miembrosFamilia">
             <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;" class="margin-top-20">
               <div [formGroup]="miembroinfo">
                 <div>
-                  <label class="text-bold">{{i + 1}}. Miembro del hogar</label>
+                  <label class="text-bold">{{i + 1}}. Miembro de tu hogar</label>
                 </div>
                 <mat-form-field>
                   <mat-label>Primer Nombre</mat-label>
@@ -266,7 +265,7 @@
             </div>
           </div>
           <div class="margin-top-20">
-            <label (click)="agregarNuevoMiembro()">Añade un miembro del hogar</label>
+            <label (click)="agregarNuevoMiembro()">Añade un miembro de tu hogar</label>
             <button class="margin-left-10" mat-mini-fab color="accent" aria-label="Otro miembro"
                     (click)="agregarNuevoMiembro()">
               <mat-icon>add</mat-icon>
@@ -336,7 +335,7 @@
         <form [formGroup]="sixFormGroup">
           <ng-template matStepLabel>ALIMENTOS</ng-template>
           <div class="margin-bottom-10">
-            <label>En los últimos 30 días, ¿hubo algún momento en el que no había nada de comida en su casa debido a la
+            <label>En los últimos 30 días, ¿hubo algún momento en el que no había nada de comida en tu casa debido a la
               falta de recursos?*</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="alimentos11Ctrl" required
                              (change)="alimentosSeleccion($event, 'alimentos12Ctrl')">
@@ -357,7 +356,7 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>En los últimos 30 días, ¿Tu o algún miembro de tu hogar se ha acostado a dormir en la noche con
+            <label>En los últimos 30 días, ¿tú o algún miembro de tu hogar se ha acostado a dormir en la noche con
               hambre porque no había suficiente comida?*</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="alimentos13Ctrl" required
                              (change)="alimentosSeleccion($event, 'alimentos14Ctrl')">
@@ -378,7 +377,7 @@
             </mat-radio-group>
           </div>
           <div class="margin-bottom-10">
-            <label>En los últimos 30 días, ¿Tu o algún miembro de tu hogar ha pasado todo un día y una noche sin
+            <label>En los últimos 30 días, ¿tú o algún miembro de tu hogar ha pasado todo un día y una noche sin
               comer nada porque no había suficiente comida?*</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="alimentos15Ctrl" required
                              (change)="alimentosSeleccion($event, 'alimentos16Ctrl')">
@@ -413,8 +412,7 @@
         <form [formGroup]="sevenFormGroup">
           <ng-template matStepLabel>NECESIDADES BÁSICAS</ng-template>
           <div class="margin-bottom-10">
-            <label>¿Puede tu hogar satisfacer todas, la mayoría, algunas o ninguna de sus necesidades básicas, tal como
-              las define en los últimos 3 meses?*</label>
+            <label>¿Pudo tu hogar satisfacer sus necesidades básicas, en los últimos 3 meses?*</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="necesidades17Ctrl" required  (change)="changeNecesidades($event);">
               <div>
                 <mat-radio-button value="algunas">Algunas</mat-radio-button>
@@ -426,7 +424,7 @@
           </div>
           <div class="margin-bottom-10"
                *ngIf="sevenFormGroup.value.necesidades17Ctrl == 'ninguna' || sevenFormGroup.value.necesidades17Ctrl == 'algunas'">
-            <label>¿Cuales son las principales necesidades básicas que tu hogar no puede satisfacer? (Selecciones las 3
+            <label>¿Cuáles son las principales necesidades básicas que tu hogar no puede satisfacer? (Selecciona las 3
               principales)*</label>
             <div *ngFor="let necesidad of necesidadesList; let i=index;"
                  class="flex-container align-center multi-checkbox">
@@ -488,7 +486,7 @@
             </mat-radio-group>
           </div>
           <div>
-            <label class="margin-bottom-10">¿Cuánto gastó el hogar en promedio en los ÚLTIMOS 7 DÍAS? En pesos colombianos (COP)</label>
+            <label class="margin-bottom-10">¿Cuánto gastó tu hogar en promedio en los ÚLTIMOS 7 DÍAS? En pesos colombianos (COP)</label>
             <br>
             <mat-form-field class="gastototal"
                             *ngIf="!nineFormGroup.value.gastoHogarCtrl || nineFormGroup.value.gastoHogarCtrl == '0'">
@@ -512,6 +510,7 @@
       <mat-step [stepControl]="tenFormGroup" *ngIf="secondFormGroup.value.tipoDocumentoCtrl != 'Indocumentado'">
         <form [formGroup]="tenFormGroup">
           <ng-template matStepLabel>VALIDACIÓN DE IDENTIDAD</ng-template>
+          <h3>Ahora verificaremos tus datos</h3>
           <div id="mati"></div>
           <div>
             <button color="primary" mat-raised-button (click)="finalizar()">
