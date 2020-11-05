@@ -408,6 +408,7 @@ export class FormComponent implements OnInit {
   botonMati() {
     // console.log('EN BOTON MATI: ', this.id);
     this.mati.setAttribute('clientid', '5f91a78600ef73001be85cf4');
+    this.mati.setAttribute('language', 'es');
     this.mati.setAttribute('metadata', JSON.stringify({'user_id': this.id}));
     document.getElementById('mati').appendChild(this.mati);
     this.mati.addEventListener('click', this.iniciaValidacion.bind(this));
