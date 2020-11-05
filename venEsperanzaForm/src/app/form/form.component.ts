@@ -33,6 +33,12 @@ export class FormComponent implements OnInit {
   numeroDocumento = true;
   contactoAlternativoInput = false;
   lineacontactoWhatsappInput = false;
+  
+  otroSexoEncuestado = false;
+
+  mostrarOtroSexoMiembrosFamilia = []; //Array para definir true/false y mostrar campo otro sexo en cada miembro de familia agregado
+
+  myDate = new Date(); //fecha actual para inhabilitar seleccion de fechas de nacimiento mayores a la actual
 
   // firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -65,6 +71,7 @@ export class FormComponent implements OnInit {
   departamentosList = [];
   municipiosList = [];
   municipiosFilter = [];
+  barriosVillaRosarioList = []; //barrios villa del rosario
   necesidadesList = [];
 
 
@@ -94,6 +101,8 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
 
+    //console.log("FECHA ACTUAL",this.myDate);
+
     this.formService.Login().subscribe(res => {
       // console.log('RESPUESTA LOGIN', res); // login exitoso se genera token
 
@@ -109,6 +118,11 @@ export class FormComponent implements OnInit {
           this.municipiosList = data;
           this.municipiosFilter = this.municipiosList;
           // console.log('MUNICIPIOS: ', data);
+        });
+
+      this.formService.getBarrios()
+        .subscribe((data: any[]) => {
+          this.barriosVillaRosarioList = data;
         });
 
       this.formService.getNecesidadesBasicas()
@@ -263,8 +277,17 @@ export class FormComponent implements OnInit {
   }
 
   selectMunicipio($event: any) {
-    // console.log('MUNICIPIO SELECCIONADO: ', $event);
+     //console.log('MUNICIPIO SELECCIONADO: ', $event);
+     //console.log("EL MUNICIPIO EN THIRD FORMGROUP: ",this.thirdFormGroup.controls['municipioCtrl']);
+     if($event != 820){
+       //console.log("selecciona municipio diferente", this.thirdFormGroup.controls['barrioCtrl'].value);
+       this.thirdFormGroup.controls['barrioCtrl'].setValue('');
+     
+
+     }
   }
+
+  
 
 // validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
   lineaContactoPropia($event: any) {
@@ -294,12 +317,62 @@ export class FormComponent implements OnInit {
   }
 
 // validacion de seleccion si es mujer
-  seleccionSexo() {
+  seleccionSexo(posicion) {
+    //console.log("Posicion desde donde hago el llamado: ",posicion);
     let muj = false;
     this.fourFormGroup.controls['miembrosFamilia'].value.forEach(item => {
       muj = (muj || item.sexoCtrl === 'mujer');
     });
     this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
+
+
+    //cuando selecciono "otro" sexo en datos del encuestado paso 1
+    //console.log("seleccion en sexo datos encuestado: ",this.secondFormGroup.controls['sexoCtrl']);
+    if(this.secondFormGroup.controls['sexoCtrl'].value == "otro" && !this.secondFormGroup.contains('otroSexoCtrl')){
+      
+      
+      this.secondFormGroup.addControl('otroSexoCtrl', new FormControl('', Validators.required));
+      this.otroSexoEncuestado = true;
+
+    }else if(this.secondFormGroup.controls['sexoCtrl'].value !=="otro"  && this.secondFormGroup.contains('otroSexoCtrl')){
+      this.secondFormGroup.removeControl('otroSexoCtrl');
+      this.otroSexoEncuestado = false;
+    }
+
+
+    //cuando selecciono sexo en otro miembro de familia
+    if(posicion != 'principal'){
+
+      //console.log("TODOS LOS MIEMBROS FAMILIA CONTROLADOR", this.miembrosFamilia);
+      //console.log("IMPRIMO CONTROLADOR DE MIEMBRO :"+posicion+" -->",this.miembrosFamilia.controls[posicion]);
+      //console.log("EL CONTROLADOR DEL MIEMBRO CONTIENE OTROSEXOCTRL?: ", this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl'));
+      
+      //si el controlador del miembro de familia selecciona "otro" sexo por primera vez, el controlador no existe en el formulario dle miembro
+      if(this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value == "otro" &&
+       !this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')){
+
+        //console.log("EL EL MIEMBRO NO CONTIENE SEXOCTRL");
+        //agrega el controlador al miembro d ela familia
+        this.miembrosFamilia.controls[posicion].addControl('otroSexoCtrl', new FormControl('',Validators.required));
+        //muestra el campo para agregar el otro sexo
+        this.mostrarOtroSexoMiembrosFamilia[posicion] = true;
+        //console.log("LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
+        
+        //si el controlador de sexo es diferente de "otro" y además anteriormente había seleccioando la opción "otro"
+       }else if(this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value !== "otro" &&
+       this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl') ){
+
+        //remuevo el controlador otrosexoctrl del miembro de la familia
+        this.miembrosFamilia.controls[posicion].removeControl('otroSexoCtrl');
+        //console.log("CONTROLADOR MIEMBROS FAMILIA: ", this.miembrosFamilia);
+
+        //oculto el campo de ingresar el valor de otro sexo
+        this.mostrarOtroSexoMiembrosFamilia[posicion] = false;
+         //console.log("EL MIEMBRO SI CONTIENE SEXOCTRL");
+       }
+
+    }
+    
   }
 
 // Seleccion de necesidades basicas
@@ -376,14 +449,23 @@ export class FormComponent implements OnInit {
       fechaCtrl: new FormControl('', Validators.required)
     });
     chekgroup.push(controle);
+
+    let agregarMostrarCampo = false;
+
+    this.mostrarOtroSexoMiembrosFamilia.push(agregarMostrarCampo);
+      
+    //console.log("CUANDO AGREGO NUEVO MIEMBRO LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
+
     // console.log('CHECK', chekgroup);
     // console.log('THIS--', this.fourFormGroup);
+    
   }
 
 // elimina miembro del hogar
   EliminarMiembro(index) {
     this.miembrosFamilia.removeAt(index);
-    this.seleccionSexo();
+    this.seleccionSexo(index);
+    this.mostrarOtroSexoMiembrosFamilia.splice(index,1);
     // console.log('DESPUES DE ELIMINAR', this.fourFormGroup);
   }
 
@@ -433,7 +515,7 @@ export class FormComponent implements OnInit {
       this.formService.postForm(data).subscribe(res => {
         //   console.log('RESPUESTA: ', res);
         this.id = res['id'];
-        console.log('doc', grupo.value.tipoDocumentoCtrl);
+        //console.log('doc', grupo.value.tipoDocumentoCtrl);
         if (grupo.value.tipoDocumentoCtrl != 'Indocumentado') {
           this.botonMati(); //  Llamo a función para agregar bloque botón mati
         }

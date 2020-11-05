@@ -61,6 +61,12 @@ export class FormService {
     });
   }
 
+  getBarrios() {
+    return this.httpClient.get<any>(this.SERVER_URL + 'barrios', {
+      headers: {'Authorization': 'Bearer ' + this.useractual['remember_token']}
+    });
+  }
+
   getNecesidadesBasicas() {
     return this.httpClient.get<any>(this.SERVER_URL + 'necesidadesbasicas', {
       headers: {'Authorization': 'Bearer ' + this.useractual['remember_token']}

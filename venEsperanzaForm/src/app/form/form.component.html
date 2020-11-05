@@ -90,14 +90,20 @@
           </mat-form-field>
           <div>
             <p>Sexo:</p>
-            <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl" (change)="seleccionSexo()">
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl" (change)="seleccionSexo('principal')">
               <mat-radio-button value="mujer">Mujer</mat-radio-button>
               <mat-radio-button value="hombre">Hombre</mat-radio-button>
+              <mat-radio-button value="otro">Otro</mat-radio-button>
             </mat-radio-group>
+            <mat-form-field *ngIf="otroSexoEncuestado">
+              <mat-label>Cuál?</mat-label>
+              <input matInput placeholder="Otro Sexo" formControlName="otroSexoCtrl" required>
+            </mat-form-field>
           </div>
+          
           <mat-form-field>
             <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="fechaNacimientoCtrl">
+            <input matInput [matDatepicker]="picker" [max]="myDate" formControlName="fechaNacimientoCtrl">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -158,10 +164,19 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value != 820">
             <mat-label>Barrio donde resides:</mat-label>
             <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside" required>
           </mat-form-field>
+          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value == 820">
+            <mat-label>Barrio donde resides:</mat-label>
+            <mat-select formControlName="barrioCtrl"  required>
+              <mat-option *ngFor="let barrio of barriosVillaRosarioList" [value]="barrio.nombre">
+                {{barrio.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>Dirección completa:</mat-label>
             <input matInput formControlName="direccionCtrl" placeholder="Dirección completa">
@@ -245,16 +260,21 @@
                 <div>
                   <p>Sexo*: </p>
                   <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl" required
-                                   (change)="seleccionSexo()">
+                                   (change)="seleccionSexo(i)">
                     <div>
                       <mat-radio-button value="mujer">Mujer</mat-radio-button>
                       <mat-radio-button value="hombre">Hombre</mat-radio-button>
+                      <mat-radio-button value="otro">Otro</mat-radio-button>
                     </div>
                   </mat-radio-group>
+                  <mat-form-field *ngIf="mostrarOtroSexoMiembrosFamilia[i]">
+                    <mat-label>Cuál?</mat-label>
+                    <input matInput placeholder="Otro Sexo" formControlName="otroSexoCtrl" required>
+                  </mat-form-field>
                 </div>
                 <mat-form-field>
                   <mat-label>Fecha de Nacimiento:</mat-label>
-                  <input matInput [matDatepicker]="pickertres_i" formControlName="fechaCtrl" required>
+                  <input matInput [matDatepicker]="pickertres_i" [max]="myDate" formControlName="fechaCtrl" required>
                   <mat-datepicker-toggle matSuffix [for]="pickertres_i"></mat-datepicker-toggle>
                   <mat-datepicker #pickertres_i></mat-datepicker>
                 </mat-form-field>
