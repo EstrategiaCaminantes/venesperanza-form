@@ -142,8 +142,6 @@
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
-          <h3>Ahora verificaremos tus datos</h3>
-          <div id="mati"></div>
           <mat-form-field>
             <mat-label>Departamento:</mat-label>
             <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
