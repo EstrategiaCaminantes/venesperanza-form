@@ -100,7 +100,7 @@
               <input matInput placeholder="Otro Sexo" formControlName="otroSexoCtrl" required>
             </mat-form-field>
           </div>
-          
+
           <mat-form-field>
             <mat-label>Fecha de Nacimiento</mat-label>
             <input matInput [matDatepicker]="picker" [max]="myDate" formControlName="fechaNacimientoCtrl">
@@ -141,7 +141,8 @@
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
-          <p *ngIf="secondFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="secondFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
 
@@ -228,7 +229,8 @@
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
-          <p *ngIf="thirdFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="thirdFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="fourFormGroup">
@@ -299,7 +301,8 @@
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
-          <p *ngIf="fourFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="fourFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="fiveFormGroup">
@@ -348,7 +351,8 @@
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.</p>
           </div>
-          <p *ngIf="fiveFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="fiveFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="sixFormGroup">
@@ -425,7 +429,8 @@
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
-          <p *ngIf="sixFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="sixFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="sevenFormGroup">
@@ -458,7 +463,8 @@
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.</p>
           </div>
-          <p *ngIf="sevenFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="sevenFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="eightFormGroup">
@@ -489,7 +495,8 @@
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
           </div>
-          <p *ngIf="eightFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="eightFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="nineFormGroup">
@@ -524,7 +531,8 @@
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.</p>
           </div>
-          <p *ngIf="nineFormGroup.status != 'VALID'">*Pregunta obligatoria</p>
+          <p *ngIf="nineFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
       <mat-step [stepControl]="tenFormGroup" *ngIf="secondFormGroup.value.tipoDocumentoCtrl != 'Indocumentado'">
