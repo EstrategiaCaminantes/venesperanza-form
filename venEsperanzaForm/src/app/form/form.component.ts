@@ -262,7 +262,6 @@ export class FormComponent implements OnInit {
       this.sixFormGroup.controls[field].clearValidators();
     }
     this.sixFormGroup.controls[field].updateValueAndValidity();
-    console.log(this.sixFormGroup.controls);
   }
 
 // selecciona departamento y filtra lso municipios
