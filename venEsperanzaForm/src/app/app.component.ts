@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
-  show = false;
+  show = true;
 
 
   constructor(private formService: FormService) {
@@ -26,62 +26,48 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-   //const urlParams = new URLSearchParams(this.queryString);  //url
+    //const urlParams = new URLSearchParams(this.queryString);  //url
     //const fbclid = urlParams.get('fbclid'); //parametro fbclid
     //this.referrer = 'http://l.facebook.com'; //valor referer para transito facebook
 
-    if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
+    /*if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
       || this.referrer.includes('http://facebook.com') || this.referrer.includes('https://facebook.com')
       || this.referrer.includes('http://m.facebook.com') || this.referrer.includes('https://m.facebook.com')
       || this.referrer.includes('http://lm.facebook.com') || this.referrer.includes('http://lm.facebook.com')) {
 
       //this.show = true; //muestra formulario. esto se debe eliminar
-
       //validacion de navegacion comentado provisionalmente
       navigator.geolocation.getCurrentPosition((position) => {
-
         //geolocalizacion tomada del navegador
-            //let coords = {'latitud':position.coords.latitude,'longitud':position.coords.longitude};
-            
-            //geolocalizacion prueba
-            //Cucuta: 7.9116667,-72.5261027
-            let coords = {'latitud':-72.5261027,'longitud':7.9116667  };
-
-            //VRosario: 
-            //7.865935,-72.4673127
-            //let coords = {'latitud': -72.466412,'longitud':7.823252  };
-            //let coords = {'latitud': -72.4673127,'longitud':7.8659352};
-            //let coords = {'latitud': -72.478822   ,'longitud':7.576244 }; //por fuera
-            
-    
-                  let datos = {'coordenadas':coords};
-
-                  //console.log("SE CARGA ARRAY COORDENADAS?");
-                  this.formService.validarUbicacionVR(datos).subscribe(res=>{
-                    //console.log(res);
-                   // res['existeenpoligono'] = 1;
-                    //console.log(res['existeenpoligono']);
-
-                    if(res['existeenpoligono']){
-                      this.show = true;
-      
-                    }else{
-                      this.error = true;
-                    }
-                },error=>{
-                 // console.log("error en validar coordenadas en back")
-                  this.error = true;
-                  
-                });
-
-
-
-          },error=>{
-            this.error = true; //muestra error xq no habilita geolocalizacion
-          });
-
+        //let coords = {'latitud':position.coords.latitude,'longitud':position.coords.longitude};
+        //geolocalizacion prueba
+        //Cucuta: 7.9116667,-72.5261027
+        let coords = {'latitud': -72.5261027, 'longitud': 7.9116667};
+        //VRosario:
+        //7.865935,-72.4673127
+        //let coords = {'latitud': -72.466412,'longitud':7.823252  };
+        //let coords = {'latitud': -72.4673127,'longitud':7.8659352};
+        //let coords = {'latitud': -72.478822   ,'longitud':7.576244 }; //por fuera
+        let datos = {'coordenadas': coords};
+        //console.log("SE CARGA ARRAY COORDENADAS?");
+        this.formService.validarUbicacionVR(datos).subscribe(res => {
+          //console.log(res);
+          // res['existeenpoligono'] = 1;
+          //console.log(res['existeenpoligono']);
+          if (res['existeenpoligono']) {
+            this.show = true;
+          } else {
+            this.error = true;
+          }
+        }, error => {
+          // console.log("error en validar coordenadas en back")
+          this.error = true;
+        });
+      }, error => {
+        this.error = true; //muestra error xq no habilita geolocalizacion
+      });
       //validacion de navegacion comentado provisionalmente
-      /*  navigator.geolocation.getCurrentPosition((position) => {
+      /!*  navigator.geolocation.getCurrentPosition((position) => {
            //console.log("POSITION. ", position);
 
            // if( (position.coords.latitude >= 7.8155213 && position.coords.latitude <= 7.872665) &&
@@ -102,10 +88,10 @@ export class AppComponent implements OnInit {
         },error=>{
              this.error = true; //muestra error xq no habilita geolocalizacion
             });
-            */
+            *!/
     } else {
       this.error = true; //muestra error porq el trafico no proviene de facebook
-    }
+    }*/
   }
 
 }

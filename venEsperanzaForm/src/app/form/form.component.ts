@@ -22,18 +22,19 @@ export class FormComponent implements OnInit {
 
   // banderas
   termnsandconditions = true;
+  autorizationPolicy = false;
+  autorizationConditions = false;
   titleheader = true;
   quentionaccepttermns = true;
   mujeres = false;
   thanksmessage = false;
   finishmessage = false;
-  buttonsConfirm = true;
   otroTipoDocumento = false;
   formPrincipal = false;
   numeroDocumento = true;
   contactoAlternativoInput = false;
   lineacontactoWhatsappInput = false;
-  
+
   otroSexoEncuestado = false;
 
   mostrarOtroSexoMiembrosFamilia = []; //Array para definir true/false y mostrar campo otro sexo en cada miembro de familia agregado
@@ -166,7 +167,7 @@ export class FormComponent implements OnInit {
 
 
     this.fourFormGroup = this._formBuilder.group({
-
+      unicoMiembro: [''],
       miembrosFamilia: new FormArray([])
 
     });
@@ -221,7 +222,6 @@ export class FormComponent implements OnInit {
     //  console.log($event);
     this.termnsandconditions = false;
     this.quentionaccepttermns = false;
-    this.buttonsConfirm = false;
     this.titleheader = false;
     if ($event == false) {
       this.formPrincipal = false;
@@ -277,17 +277,16 @@ export class FormComponent implements OnInit {
   }
 
   selectMunicipio($event: any) {
-     //console.log('MUNICIPIO SELECCIONADO: ', $event);
-     //console.log("EL MUNICIPIO EN THIRD FORMGROUP: ",this.thirdFormGroup.controls['municipioCtrl']);
-     if($event != 820){
-       //console.log("selecciona municipio diferente", this.thirdFormGroup.controls['barrioCtrl'].value);
-       this.thirdFormGroup.controls['barrioCtrl'].setValue('');
-     
+    //console.log('MUNICIPIO SELECCIONADO: ', $event);
+    //console.log("EL MUNICIPIO EN THIRD FORMGROUP: ",this.thirdFormGroup.controls['municipioCtrl']);
+    if ($event != 820) {
+      //console.log("selecciona municipio diferente", this.thirdFormGroup.controls['barrioCtrl'].value);
+      this.thirdFormGroup.controls['barrioCtrl'].setValue('');
 
-     }
+
+    }
   }
 
-  
 
 // validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
   lineaContactoPropia($event: any) {
@@ -317,7 +316,7 @@ export class FormComponent implements OnInit {
   }
 
 // validacion de seleccion si es mujer
-  seleccionSexo(posicion) {
+  seleccionSexo(posicion): void {
     //console.log("Posicion desde donde hago el llamado: ",posicion);
     let muj = false;
     this.fourFormGroup.controls['miembrosFamilia'].value.forEach(item => {
@@ -325,54 +324,37 @@ export class FormComponent implements OnInit {
     });
     this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
 
-
     //cuando selecciono "otro" sexo en datos del encuestado paso 1
     //console.log("seleccion en sexo datos encuestado: ",this.secondFormGroup.controls['sexoCtrl']);
-    if(this.secondFormGroup.controls['sexoCtrl'].value == "otro" && !this.secondFormGroup.contains('otroSexoCtrl')){
-      
-      
+    if (this.secondFormGroup.controls['sexoCtrl'].value == 'otro' && !this.secondFormGroup.contains('otroSexoCtrl')) {
       this.secondFormGroup.addControl('otroSexoCtrl', new FormControl('', Validators.required));
       this.otroSexoEncuestado = true;
-
-    }else if(this.secondFormGroup.controls['sexoCtrl'].value !=="otro"  && this.secondFormGroup.contains('otroSexoCtrl')){
+    } else if (this.secondFormGroup.controls['sexoCtrl'].value !== 'otro' && this.secondFormGroup.contains('otroSexoCtrl')) {
       this.secondFormGroup.removeControl('otroSexoCtrl');
       this.otroSexoEncuestado = false;
     }
-
-
     //cuando selecciono sexo en otro miembro de familia
-    if(posicion != 'principal'){
-
-      //console.log("TODOS LOS MIEMBROS FAMILIA CONTROLADOR", this.miembrosFamilia);
-      //console.log("IMPRIMO CONTROLADOR DE MIEMBRO :"+posicion+" -->",this.miembrosFamilia.controls[posicion]);
-      //console.log("EL CONTROLADOR DEL MIEMBRO CONTIENE OTROSEXOCTRL?: ", this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl'));
-      
+    if (posicion != 'principal') {
       //si el controlador del miembro de familia selecciona "otro" sexo por primera vez, el controlador no existe en el formulario dle miembro
-      if(this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value == "otro" &&
-       !this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')){
-
+      if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value == 'otro' &&
+        !this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
         //console.log("EL EL MIEMBRO NO CONTIENE SEXOCTRL");
         //agrega el controlador al miembro d ela familia
-        this.miembrosFamilia.controls[posicion].addControl('otroSexoCtrl', new FormControl('',Validators.required));
+        this.miembrosFamilia.controls[posicion].addControl('otroSexoCtrl', new FormControl('', Validators.required));
         //muestra el campo para agregar el otro sexo
         this.mostrarOtroSexoMiembrosFamilia[posicion] = true;
         //console.log("LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
-        
         //si el controlador de sexo es diferente de "otro" y además anteriormente había seleccioando la opción "otro"
-       }else if(this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value !== "otro" &&
-       this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl') ){
-
+      } else if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value !== 'otro' &&
+        this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
         //remuevo el controlador otrosexoctrl del miembro de la familia
         this.miembrosFamilia.controls[posicion].removeControl('otroSexoCtrl');
         //console.log("CONTROLADOR MIEMBROS FAMILIA: ", this.miembrosFamilia);
-
         //oculto el campo de ingresar el valor de otro sexo
         this.mostrarOtroSexoMiembrosFamilia[posicion] = false;
-         //console.log("EL MIEMBRO SI CONTIENE SEXOCTRL");
-       }
-
+        //console.log("EL MIEMBRO SI CONTIENE SEXOCTRL");
+      }
     }
-    
   }
 
 // Seleccion de necesidades basicas
@@ -386,7 +368,7 @@ export class FormComponent implements OnInit {
   }
 
 // Seleccion de necesidades basicas
-  setNecedidadesBasicas(e) {
+  setNecedidadesBasicas(e): void {
     const checkArray: FormArray = this.sevenFormGroup.controls['necesidades22Ctrl'] as FormArray;
     if (checkArray.value.length > 2 && e.target.checked) {
       return e.preventDefault();
@@ -407,7 +389,7 @@ export class FormComponent implements OnInit {
     }
   }
 
-  toggleEcon(e) {
+  toggleEcon(e): void {
     this.nineFormGroup.controls.gastoHogarCtrl.setValue((e.checked) ? '1' : '0');
     if (!e.checked) {
       this.nineFormGroup.controls.gastoHogar7diasCtrl.setValidators([Validators.required, Validators.min(1000)]);
@@ -415,6 +397,18 @@ export class FormComponent implements OnInit {
       this.nineFormGroup.controls.gastoHogar7diasCtrl.clearValidators();
     }
     this.nineFormGroup.controls.gastoHogar7diasCtrl.updateValueAndValidity();
+  }
+
+  toggleMiembro(e): void {
+    this.fourFormGroup.controls.unicoMiembro.setValue((!!e.checked));
+  }
+
+  toggleAutorTrat(e): void {
+    this.autorizationPolicy = (!!e.checked);
+  }
+
+  toggleAutorCond(e): void {
+    this.autorizationConditions = (!!e.checked);
   }
 
   iniciaValidacion(event) {
@@ -453,19 +447,19 @@ export class FormComponent implements OnInit {
     let agregarMostrarCampo = false;
 
     this.mostrarOtroSexoMiembrosFamilia.push(agregarMostrarCampo);
-      
+
     //console.log("CUANDO AGREGO NUEVO MIEMBRO LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
 
     // console.log('CHECK', chekgroup);
     // console.log('THIS--', this.fourFormGroup);
-    
+
   }
 
 // elimina miembro del hogar
   EliminarMiembro(index) {
     this.miembrosFamilia.removeAt(index);
     this.seleccionSexo(index);
-    this.mostrarOtroSexoMiembrosFamilia.splice(index,1);
+    this.mostrarOtroSexoMiembrosFamilia.splice(index, 1);
     // console.log('DESPUES DE ELIMINAR', this.fourFormGroup);
   }
 

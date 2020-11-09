@@ -84,6 +84,10 @@
   color: #1B51A2;
 }
 
+.text-underline {
+  text-decoration: underline;
+}
+
 .logo-venes, .logo-wv {
   max-width: 100%;
 }

@@ -18,6 +18,7 @@
   </section>
   <section *ngIf="termnsandconditions" fxLayout="row">
     <div class="termnsandconditions">
+      <h3 class="text-underline">Términos de participación</h3>
       <p class="text-bold text-red">
         Este proceso es gratuito.
       </p>
@@ -43,26 +44,71 @@
         preseleccionado, serás contactado por la organización para continuar con el proceso.
       </p>
       <p>
-        Tu información es confidencial, sin embargo, la organización podría tener que compartir parte de tus datos, de
-        manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONGs
-        nacionales e internacionales. Esto con el fin de no tener posibles casos duplicados, de fraude o para referir tu
-        hogar a servicios adicionales, y contribuir en iniciativas de investigación conjuntas de carácter humanitario.
-      </p>
-      <p>
-        La organización solo tendrá tu información personal durante el periodo de duración del programa y también
-        borrará tu información, si así lo requieres.
-      </p>
-      <p>
         Esta encuesta incluye preguntas sobre tu situación actual. Los datos que entregues serán verificados por la
         organización, por favor responde con tus datos reales.
+      </p>
+      <h3 class="text-underline">Autorización para el tratamiento de Datos Personales</h3>
+      <p>
+        Cuando haces clic en la casilla “Si autorizo” aceptas el tratamiento de tus datos personales a Visión Mundial
+        Internacional, como responsable de la información personal, para las siguientes finalidades:</p>
+      <ul>
+        <li>Validación de los requisitos necesarios para aplicar a los beneficios que tiene el programa.</li>
+        <li>Identificar y focalizarse como posible beneficiario del programa.</li>
+        <li>Para contactarme por vía telefónica, o por medios digitales para brindar información adicional para
+          participar en el programa.
+        </li>
+        <li>Validar mis datos personales, en especial la identidad.</li>
+        <li>Participar en transferencias monetarias en caso de quedar beneficiario del programa.</li>
+        <li>Hacer parte de la base de datos de beneficiarios de familias venezolanas que se encuentran expatriadas en
+          territorio colombiano.
+        </li>
+        <li>Participar en encuestas para identificar elementos de vulnerabilidad de la población beneficiaria.</li>
+        <li>Participar en investigaciones, análisis o prestación de servicio humanitario.</li>
+        <li>Recibir comunicaciones físicas y/o electrónicas.</li>
+      </ul>
+      <p>
+        Entiendo que me pueden llegar a realizar preguntas relacionadas con datos personales sensibles y datos
+        personales de mi núcleo familiar. Me han informado que no me encuentro obligado a suministrar dichos datos
+        personales. No obstante, se me ha explicado la importancia de suministrar dicha información con el propósito de
+        poder acceder a los beneficios del programa.
+      </p>
+      <p>Entiendo y autorizo el tratamiento de mis datos personales y los datos personales de mi núcleo familiar,
+        quienes previamente me han otorgado su autorización para entregar sus datos personales, para participar en el
+        programa, según las finalidades aquí descritas.</p>
+      <p>
+        Autorizo y entiendo que la información personal que suministro será almacenada en servidores externos a cargo de
+        terceros en un país que tiene un nivel adecuado de seguridad de los datos, y que mi información personal puede
+        llegar a ser transmitida a otras organizaciones que participan en el programa, conforme a lo establecido en la
+        Política de Tratamiento de Datos Personales.
+      </p>
+      <p>
+        Declaro que Visión Mundial Internacional ha puesto en mi conocimiento, el derecho que poseo como titular de la
+        información entregada, de recibir en cualquier momento información acerca del tratamiento dado a los datos
+        entregados y/o de solicitar la actualización, rectificación y/o supresión de los datos personales recolectados o
+        la revocatoria de la autorización otorgada, lo cual podré solicitar mediante un correo electrónico enviado a
+        juridica_colombia@wvi.org , o a través de una comunicación dirigida a la sede principal ubicada en la Cra. 7 No.
+        60 a –24 de la ciudad de Bogotá D.C.
+      </p>
+      <p>
+        Conozco que Visión Mundial Internacional para efectos del presente programa, cuenta con una política de
+        Protección de Datos Personales la cual podré consultar en la página web
+        <a href="https://www.worldvision.co/politica-tratamiento-datos-venesperanza">https://www.worldvision.co/politica-tratamiento-datos-venesperanza</a>
       </p>
     </div>
   </section>
   <div *ngIf="quentionaccepttermns">
-    <div>
-      <label class="text-bold text-blue">¿Estás de acuerdo con las condiciones explicadas?</label>
-    </div>
-    <div *ngIf="buttonsConfirm" class="margin-top-20 text-center">
+    <p>
+      <mat-slide-toggle (change)="toggleAutorTrat($event)"></mat-slide-toggle>
+      Autorizo el tratamiento de mis datos personales, conforme a lo informado previamente.
+    </p>
+    <p>
+      <mat-slide-toggle (change)="toggleAutorCond($event)"></mat-slide-toggle>
+      Entiendo y acepto los términos y condiciones establecidos para participar en el programa.
+    </p>
+    <h3 *ngIf="autorizationPolicy && autorizationConditions" class="text-bold text-blue">
+      ¿Estás de acuerdo con las condiciones explicadas?
+    </h3>
+    <div *ngIf="autorizationPolicy && autorizationConditions" class="margin-top-20 text-center">
       <button mat-raised-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
       <button mat-raised-button (click)="termsAccept(false)">NO</button>
     </div>
@@ -90,7 +136,8 @@
           </mat-form-field>
           <div>
             <p>Sexo:</p>
-            <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl" (change)="seleccionSexo('principal')">
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl"
+                             (change)="seleccionSexo('principal')">
               <mat-radio-button value="mujer">Mujer</mat-radio-button>
               <mat-radio-button value="hombre">Hombre</mat-radio-button>
               <mat-radio-button value="otro">Otro</mat-radio-button>
@@ -171,7 +218,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value == 820">
             <mat-label>Barrio donde resides:</mat-label>
-            <mat-select formControlName="barrioCtrl"  required>
+            <mat-select formControlName="barrioCtrl" required>
               <mat-option *ngFor="let barrio of barriosVillaRosarioList" [value]="barrio.nombre">
                 {{barrio.nombre}}
               </mat-option>
@@ -286,14 +333,20 @@
               </button>
             </div>
           </div>
-          <div class="margin-top-20">
+          <div class="margin-top-20" *ngIf="!fourFormGroup.value.unicoMiembro">
             <label (click)="agregarNuevoMiembro()">Añade un miembro de tu hogar</label>
             <button class="margin-left-10" mat-mini-fab color="accent" aria-label="Otro miembro"
                     (click)="agregarNuevoMiembro()">
               <mat-icon>add</mat-icon>
             </button>
           </div>
-          <div *ngIf="fourFormGroup.status == 'VALID'" class="margin-top-20">
+          <div class="margin-bottom-10 margin-top-10" *ngIf="fourFormGroup.value.miembrosFamilia.length == 0">
+            <mat-slide-toggle (change)="toggleMiembro($event)">
+              Soy el único miembro del hogar
+            </mat-slide-toggle>
+          </div>
+          <div class="margin-top-20"
+            *ngIf="fourFormGroup.value.unicoMiembro || (fourFormGroup.value.miembrosFamilia.length > 0 && fourFormGroup.status == 'VALID')">
             <button color="primary" mat-raised-button (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">
               Siguiente
             </button>
@@ -438,7 +491,8 @@
           <ng-template matStepLabel>NECESIDADES BÁSICAS</ng-template>
           <div class="margin-bottom-10">
             <label>¿Pudo tu hogar satisfacer sus necesidades básicas, en los últimos 3 meses?*</label>
-            <mat-radio-group aria-label="Selecciona una opción" formControlName="necesidades17Ctrl" required  (change)="changeNecesidades($event);">
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="necesidades17Ctrl" required
+                             (change)="changeNecesidades($event);">
               <div>
                 <mat-radio-button value="algunas">Algunas</mat-radio-button>
                 <mat-radio-button value="lamayoria">La mayoría</mat-radio-button>
@@ -513,7 +567,8 @@
             </mat-radio-group>
           </div>
           <div>
-            <label class="margin-bottom-10">¿Cuánto gastó tu hogar en promedio en los ÚLTIMOS 7 DÍAS? En pesos colombianos (COP)</label>
+            <label class="margin-bottom-10">¿Cuánto gastó tu hogar en promedio en los ÚLTIMOS 7 DÍAS? En pesos
+              colombianos (COP)</label>
             <br>
             <mat-form-field class="gastototal"
                             *ngIf="!nineFormGroup.value.gastoHogarCtrl || nineFormGroup.value.gastoHogarCtrl == '0'">
