@@ -14,6 +14,10 @@ export class FormService {
   constructor(private httpClient: HttpClient) {
   }
 
+  validarUbicacionVR(array){
+    return this.httpClient.post(this.SERVER_URL+'validarUbicacionVR',array);
+  }
+
   Login() {
     let headers = new HttpHeaders;
     let informa;
