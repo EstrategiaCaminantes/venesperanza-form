@@ -1,6 +1,6 @@
 import {Injectable, Output, EventEmitter} from '@angular/core';
 import {HttpClient, HttpClientModule, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../environments/environment'; 
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class FormService {
   constructor(private httpClient: HttpClient) {
   }
 
-  validarUbicacionVR(array){
-    return this.httpClient.post(this.SERVER_URL+'validarUbicacionVR',array);
+  validarUbicacionVR(array) {
+    return this.httpClient.post(this.SERVER_URL + 'validarUbicacionVR', array);
   }
 
   Login() {
@@ -36,14 +36,16 @@ export class FormService {
   }
 
   public getValidation(params) {
-   // return this.httpClient.get('https://ipinfo.io');
-     //return this.httpClient.post(this.SERVER_URL + 'validation', params);
+    // return this.httpClient.get('https://ipinfo.io');
+    //return this.httpClient.post(this.SERVER_URL + 'validation', params);
   }
 
   public crearAutorizacion(params) {
     // return this.httpClient.get('https://ipinfo.io');
-      return this.httpClient.post(this.SERVER_URL + 'autorizacion', params);
-   }
+    return this.httpClient.post(this.SERVER_URL + 'autorizacion', params, {
+      headers: {'Authorization': 'Bearer ' + this.useractual['remember_token']}
+    });
+  }
 
   public postForm(data) {
     return this.httpClient.post(this.SERVER_URL + 'encuestas', data, {

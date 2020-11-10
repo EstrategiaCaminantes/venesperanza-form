@@ -228,32 +228,23 @@ export class FormComponent implements OnInit {
       this.formPrincipal = false;
       this.finishmessage = true;
     } else if ($event == true) {
-
-      let datos_aceptar_condiciones ={ 
-        'tratamientoDatos':true,
-        'terminosCondiciones':true,
-        'condiciones':true
+      let datos_aceptar_condiciones = {
+        'tratamientoDatos': true,
+        'terminosCondiciones': true,
+        'condiciones': true
       };
-
-      this.formService.crearAutorizacion(datos_aceptar_condiciones).subscribe(res=>{
-
-        if(res['id']){
+      this.formService.crearAutorizacion(datos_aceptar_condiciones).subscribe(res => {
+        if (res['id']) {
           this.autorizacion_actual = res;
           this.formPrincipal = true;
-        }else{
+        } else {
           this.formPrincipal = false;
           this.finishmessage = true;
-
-
         }
-        
-        
-      },error=>{
+      }, error => {
         this.formPrincipal = false;
-      this.finishmessage = true;
-
+        this.finishmessage = true;
       });
-      
     }
   }
 
@@ -528,7 +519,7 @@ export class FormComponent implements OnInit {
     let data = {
       'paso': paso,
       'infoencuesta': grupo.value,
-      'autorizacion_id':this.autorizacion_actual['id']
+      'autorizacion_id': this.autorizacion_actual['id']
     };
     //  Guarda por primera vez, no se ha creado la encuesta, id es null
     if (this.id == null && data.paso == 'paso1') {
