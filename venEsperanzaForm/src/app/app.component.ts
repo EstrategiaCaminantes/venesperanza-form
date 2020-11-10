@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
-  show = true;
+  show = true; //debe ser false y habilitar el if de validar referrer
 
 
   constructor(private formService: FormService) {
@@ -30,19 +30,19 @@ export class AppComponent implements OnInit {
     //const fbclid = urlParams.get('fbclid'); //parametro fbclid
     //this.referrer = 'http://l.facebook.com'; //valor referer para transito facebook
 
-    /*if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
+    /* //Se debe descomentar para validar fuente de transito, ubicación y ip en back
+    if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
       || this.referrer.includes('http://facebook.com') || this.referrer.includes('https://facebook.com')
       || this.referrer.includes('http://m.facebook.com') || this.referrer.includes('https://m.facebook.com')
       || this.referrer.includes('http://lm.facebook.com') || this.referrer.includes('http://lm.facebook.com')) {
 
-      //this.show = true; //muestra formulario. esto se debe eliminar
       //validacion de navegacion comentado provisionalmente
       navigator.geolocation.getCurrentPosition((position) => {
         //geolocalizacion tomada del navegador
-        //let coords = {'latitud':position.coords.latitude,'longitud':position.coords.longitude};
+        let coords = {'latitud':position.coords.latitude,'longitud':position.coords.longitude};
         //geolocalizacion prueba
         //Cucuta: 7.9116667,-72.5261027
-        let coords = {'latitud': -72.5261027, 'longitud': 7.9116667};
+        //let coords = {'latitud': -72.5261027, 'longitud': 7.9116667};
         //VRosario:
         //7.865935,-72.4673127
         //let coords = {'latitud': -72.466412,'longitud':7.823252  };
@@ -66,29 +66,7 @@ export class AppComponent implements OnInit {
       }, error => {
         this.error = true; //muestra error xq no habilita geolocalizacion
       });
-      //validacion de navegacion comentado provisionalmente
-      /!*  navigator.geolocation.getCurrentPosition((position) => {
-           //console.log("POSITION. ", position);
-
-           // if( (position.coords.latitude >= 7.8155213 && position.coords.latitude <= 7.872665) &&
-           // ( position.coords.longitude >= -72.4542771 && position.coords.longitude <= -72.4900311)){
-           if(position.coords.latitude == 7.1279139 && position.coords.longitude == -73.1215082){
-             // console.log("GEO;: ", position.coords);
-               //console.log("THIS referer: ", this.referrer);
-
-               this.show = true; //muestra seccion formulario componente form
-
-               //console.log("value show: ",this.show);
-             // console.log("valude error: ",this.error);
-           }else{
-               this.error = true; //muestra error porq las coordenadas no corresponden a villa del rosario
-             // console.log("error: ", this.error);
-             }
-
-        },error=>{
-             this.error = true; //muestra error xq no habilita geolocalizacion
-            });
-            *!/
+      
     } else {
       this.error = true; //muestra error porq el trafico no proviene de facebook
     }*/

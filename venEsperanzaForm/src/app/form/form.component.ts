@@ -234,7 +234,8 @@ export class FormComponent implements OnInit {
         'condiciones': true
       };
       this.formService.crearAutorizacion(datos_aceptar_condiciones).subscribe(res => {
-        if (res['id']) {
+        
+        if (res) {
           this.autorizacion_actual = res;
           this.formPrincipal = true;
         } else {
@@ -351,25 +352,31 @@ export class FormComponent implements OnInit {
     }
     //cuando selecciono sexo en otro miembro de familia
     if (posicion != 'principal') {
-      //si el controlador del miembro de familia selecciona "otro" sexo por primera vez, el controlador no existe en el formulario dle miembro
-      if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value == 'otro' &&
-        !this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
-        //console.log("EL EL MIEMBRO NO CONTIENE SEXOCTRL");
-        //agrega el controlador al miembro d ela familia
-        this.miembrosFamilia.controls[posicion].addControl('otroSexoCtrl', new FormControl('', Validators.required));
-        //muestra el campo para agregar el otro sexo
-        this.mostrarOtroSexoMiembrosFamilia[posicion] = true;
-        //console.log("LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
-        //si el controlador de sexo es diferente de "otro" y además anteriormente había seleccioando la opción "otro"
-      } else if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value !== 'otro' &&
-        this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
-        //remuevo el controlador otrosexoctrl del miembro de la familia
-        this.miembrosFamilia.controls[posicion].removeControl('otroSexoCtrl');
-        //console.log("CONTROLADOR MIEMBROS FAMILIA: ", this.miembrosFamilia);
-        //oculto el campo de ingresar el valor de otro sexo
-        this.mostrarOtroSexoMiembrosFamilia[posicion] = false;
-        //console.log("EL MIEMBRO SI CONTIENE SEXOCTRL");
+      console.log("MIEMBROS FAMILIA: ",this.miembrosFamilia);
+
+      if(this.miembrosFamilia.controls.length>0){
+        //si el controlador del miembro de familia selecciona "otro" sexo por primera vez, el controlador no existe en el formulario dle miembro
+          if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value == 'otro' &&
+          !this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
+          //console.log("EL EL MIEMBRO NO CONTIENE SEXOCTRL");
+          //agrega el controlador al miembro d ela familia
+          this.miembrosFamilia.controls[posicion].addControl('otroSexoCtrl', new FormControl('', Validators.required));
+          //muestra el campo para agregar el otro sexo
+          this.mostrarOtroSexoMiembrosFamilia[posicion] = true;
+          //console.log("LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
+          //si el controlador de sexo es diferente de "otro" y además anteriormente había seleccioando la opción "otro"
+        } else if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value !== 'otro' &&
+          this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
+          //remuevo el controlador otrosexoctrl del miembro de la familia
+          this.miembrosFamilia.controls[posicion].removeControl('otroSexoCtrl');
+          //console.log("CONTROLADOR MIEMBROS FAMILIA: ", this.miembrosFamilia);
+          //oculto el campo de ingresar el valor de otro sexo
+          this.mostrarOtroSexoMiembrosFamilia[posicion] = false;
+          //console.log("EL MIEMBRO SI CONTIENE SEXOCTRL");
+        }
+
       }
+      
     }
   }
 
@@ -519,19 +526,19 @@ export class FormComponent implements OnInit {
     let data = {
       'paso': paso,
       'infoencuesta': grupo.value,
-      'autorizacion_id': this.autorizacion_actual['id']
+      'autorizacion_id': this.autorizacion_actual
     };
     //  Guarda por primera vez, no se ha creado la encuesta, id es null
     if (this.id == null && data.paso == 'paso1') {
       //  console.log('VALOR DE ID ', this.id);
       this.formService.postForm(data).subscribe(res => {
         //   console.log('RESPUESTA: ', res);
-        this.id = res['id'];
+        this.id = res;
         //console.log('doc', grupo.value.tipoDocumentoCtrl);
         if (grupo.value.tipoDocumentoCtrl != 'Indocumentado') {
           this.botonMati(); //  Llamo a función para agregar bloque botón mati
         }
-        this.infoencuesta = res; //  Toda la info de la encuesta
+        //this.infoencuesta = res; //  Toda la info de la encuesta
         this._snackBar.open('Información almacenada correctamente.', 'X', {
           duration: 2000
         });
@@ -568,7 +575,7 @@ export class FormComponent implements OnInit {
         data['infoencuesta']['cantidad_miembros'] = cantidad_miembros;
       }
       this.formService.updateForm(this.id, data).subscribe(res => {
-        this.infoencuesta = res;
+        //this.infoencuesta = res;
         if (next) { // cuando selecciono botón siguiente
           this._snackBar.open('Información almacenada correctamente', 'X', {
             duration: 2000
