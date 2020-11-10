@@ -352,7 +352,6 @@ export class FormComponent implements OnInit {
     }
     //cuando selecciono sexo en otro miembro de familia
     if (posicion != 'principal') {
-      console.log("MIEMBROS FAMILIA: ",this.miembrosFamilia);
 
       if(this.miembrosFamilia.controls.length>0){
         //si el controlador del miembro de familia selecciona "otro" sexo por primera vez, el controlador no existe en el formulario dle miembro
