@@ -71,5 +71,4 @@ export class AppComponent implements OnInit {
       this.text = 'Debes compartir tu ubicación para continuar con el proceso.';
     });
   }
-
 }
