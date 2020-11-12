@@ -14,8 +14,8 @@ export class FormService {
   constructor(private httpClient: HttpClient) {
   }
 
-  validarUbicacionVR(array) {
-    return this.httpClient.post(this.SERVER_URL + 'validarUbicacionVR', array);
+  validateUser(array) {
+    return this.httpClient.post(this.SERVER_URL + 'validateUser', array);
   }
 
   Login() {

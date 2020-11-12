@@ -12,6 +12,7 @@ import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 export class AppComponent implements OnInit {
 
   title = 'venEsperanzaForm';
+  text = 'Validando enlace';
   error = false;
   referrer: any = document.referrer; // origen del trafico
   queryString: any = window.location.search; // obtener url
@@ -25,54 +26,50 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('REFERERRR: ', this.referrer);
-    // console.log('LOCATIONSEARCH ', this.queryString);
-
     const urlParams = new URLSearchParams(this.queryString);  // url
-    // console.log('LOCATIONSEARCH ', urlParams.get('isv'));
     const isv = urlParams.get('isv'); // parametro isv
-    // const fbclid = urlParams.get('fbclid'); //parametro fbclid
-    // this.referrer = 'http://l.facebook.com'; //valor referer para transito facebook
-
-     // Se debe descomentar para validar fuente de transito, ubicación y ip en back
-    if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
+    /*if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
       || this.referrer.includes('http://facebook.com') || this.referrer.includes('https://facebook.com')
       || this.referrer.includes('http://m.facebook.com') || this.referrer.includes('https://m.facebook.com')
       || this.referrer.includes('http://lm.facebook.com') || this.referrer.includes('http://lm.facebook.com')) {
 
-      // validacion de navegacion comentado provisionalmente
       navigator.geolocation.getCurrentPosition((position) => {
-        // geolocalizacion tomada del navegador
-        let coords = {'latitud':position.coords.latitude, 'longitud' : position.coords.longitude};
-        // geolocalizacion prueba
-        // Cucuta: 7.9116667,-72.5261027
-        // let coords = {'latitud': -72.5261027, 'longitud': 7.9116667};
-        // VRosario:
-        // 7.865935,-72.4673127
-        // let coords = {'latitud': -72.466412,'longitud':7.823252  };
-        // let coords = {'latitud': -72.4673127,'longitud':7.8659352};
-        // let coords = {'latitud': -72.478822   ,'longitud':7.576244 }; //por fuera
-        let datos = {'coordenadas': coords, 'adf' : isv};
-        // console.log("SE CARGA ARRAY COORDENADAS?");
+        let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
+        let datos = {'coordenadas': coords, 'adf': isv};
         this.formService.validarUbicacionVR(datos).subscribe(res => {
-          // console.log(res);
-          // res['existeenpoligono'] = 1;
-          // console.log(res['existeenpoligono']);
           if (res['existeenpoligono'] == true) {
             this.show = true;
           } else {
             this.error = true;
           }
         }, error => {
-          // console.log("error en validar coordenadas en back")
           this.error = true;
         });
       }, error => {
         this.error = true; // muestra error xq no habilita geolocalizacion
+      this.text = 'Debes compartir tu ubicación para continuar con el proceso';
       });
     } else {
       this.error = true; // muestra error porq el trafico no proviene de facebook
-    }
+    }*/
+    navigator.geolocation.getCurrentPosition((position) => {
+      let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
+      let datos = {'coordenadas': coords, 'adf': isv};
+      this.formService.validateUser(datos).subscribe(res => {
+        if (res['valid'] == true) {
+          this.show = true;
+        } else {
+          this.error = true;
+          this.text = 'No estás autorizado/a para ingresar a esta página.';
+        }
+      }, error => {
+        this.error = true;
+        this.text = 'No estás autorizado/a para ingresar a esta página.';
+      });
+    }, error => {
+      this.error = true; // muestra error xq no habilita geolocalizacion
+      this.text = 'Debes compartir tu ubicación para continuar con el proceso.';
+    });
   }
 
 }

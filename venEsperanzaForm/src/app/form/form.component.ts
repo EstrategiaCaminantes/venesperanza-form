@@ -234,7 +234,7 @@ export class FormComponent implements OnInit {
         'condiciones': true
       };
       this.formService.crearAutorizacion(datos_aceptar_condiciones).subscribe(res => {
-        
+
         if (res) {
           this.autorizacion_actual = res;
           this.formPrincipal = true;
@@ -375,7 +375,7 @@ export class FormComponent implements OnInit {
         }
 
       }
-      
+
     }
   }
 

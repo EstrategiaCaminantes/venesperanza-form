@@ -7,12 +7,12 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-  <mat-spinner *ngIf="show != true && error != true"></mat-spinner>
+<mat-spinner *ngIf="show != true && error != true"></mat-spinner>
 
-  <mat-card *ngIf="error == true">ERROR
-    <mat-icon class="mat-icon-rtl-mirror" >error</mat-icon>
-  </mat-card>
-  <form-encuesta *ngIf="show == true && error != true"></form-encuesta>
+<mat-card *ngIf="error == true">
+  {{text}}
+</mat-card>
+<form-encuesta *ngIf="show == true && error != true"></form-encuesta>
 
 
 <!--
@@ -505,7 +505,7 @@
     </a>
   </div>
 
-  
+
   <footer>
       Love Angular?&nbsp;
       <a href="https://github.com/angular/angular" target="_blank" rel="noopener"> Give our repo a star.
