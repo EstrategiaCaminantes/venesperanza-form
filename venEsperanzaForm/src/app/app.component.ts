@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
-  show = true; //debe ser false y habilitar el if de validar referrer
+  show = false; //debe ser false y habilitar el if de validar referrer
 
 
   constructor(private formService: FormService) {
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     //const fbclid = urlParams.get('fbclid'); //parametro fbclid
     //this.referrer = 'http://l.facebook.com'; //valor referer para transito facebook
 
-    /* //Se debe descomentar para validar fuente de transito, ubicación y ip en back
+     //Se debe descomentar para validar fuente de transito, ubicación y ip en back
     if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
       || this.referrer.includes('http://facebook.com') || this.referrer.includes('https://facebook.com')
       || this.referrer.includes('http://m.facebook.com') || this.referrer.includes('https://m.facebook.com')
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
       
     } else {
       this.error = true; //muestra error porq el trafico no proviene de facebook
-    }*/
+    }
   }
 
 }
