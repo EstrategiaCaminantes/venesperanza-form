@@ -28,47 +28,30 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const urlParams = new URLSearchParams(this.queryString);  // url
     const isv = urlParams.get('isv'); // parametro isv
-    /*if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
+    if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
       || this.referrer.includes('http://facebook.com') || this.referrer.includes('https://facebook.com')
       || this.referrer.includes('http://m.facebook.com') || this.referrer.includes('https://m.facebook.com')
       || this.referrer.includes('http://lm.facebook.com') || this.referrer.includes('http://lm.facebook.com')) {
-
       navigator.geolocation.getCurrentPosition((position) => {
         let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
         let datos = {'coordenadas': coords, 'adf': isv};
-        this.formService.validarUbicacionVR(datos).subscribe(res => {
-          if (res['existeenpoligono'] == true) {
+        this.formService.validateUser(datos).subscribe(res => {
+          if (res['valid'] == true) {
             this.show = true;
           } else {
             this.error = true;
+            this.text = 'No estás autorizado/a para ingresar a esta página.';
           }
         }, error => {
           this.error = true;
+          this.text = 'No estás autorizado/a para ingresar a esta página.';
         });
       }, error => {
         this.error = true; // muestra error xq no habilita geolocalizacion
-      this.text = 'Debes compartir tu ubicación para continuar con el proceso';
+        this.text = 'Debes compartir tu ubicación para continuar con el proceso';
       });
     } else {
       this.error = true; // muestra error porq el trafico no proviene de facebook
-    }*/
-    navigator.geolocation.getCurrentPosition((position) => {
-      let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
-      let datos = {'coordenadas': coords, 'adf': isv};
-      this.formService.validateUser(datos).subscribe(res => {
-        if (res['valid'] == true) {
-          this.show = true;
-        } else {
-          this.error = true;
-          this.text = 'No estás autorizado/a para ingresar a esta página.';
-        }
-      }, error => {
-        this.error = true;
-        this.text = 'No estás autorizado/a para ingresar a esta página.';
-      });
-    }, error => {
-      this.error = true; // muestra error xq no habilita geolocalizacion
-      this.text = 'Debes compartir tu ubicación para continuar con el proceso.';
-    });
+    }
   }
 }
