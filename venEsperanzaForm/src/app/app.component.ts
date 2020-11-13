@@ -28,10 +28,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const urlParams = new URLSearchParams(this.queryString);  // url
     const isv = urlParams.get('isv'); // parametro isv
-    if (this.referrer.includes('http://l.facebook.com') || this.referrer.includes('https://l.facebook.com')
-      || this.referrer.includes('http://facebook.com') || this.referrer.includes('https://facebook.com')
-      || this.referrer.includes('http://m.facebook.com') || this.referrer.includes('https://m.facebook.com')
-      || this.referrer.includes('http://lm.facebook.com') || this.referrer.includes('http://lm.facebook.com')) {
+    if (this.referrer.includes('facebook.com')) {
       navigator.geolocation.getCurrentPosition((position) => {
         let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
         let datos = {'coordenadas': coords, 'adf': isv};
