@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
       });
     } else {
       this.error = true; // muestra error porq el trafico no proviene de facebook
+      this.text = 'No estás autorizado/a para ingresar a esta página.';
     }
   }
 }
