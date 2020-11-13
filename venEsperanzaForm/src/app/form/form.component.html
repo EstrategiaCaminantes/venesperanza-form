@@ -21,7 +21,7 @@
     </h3>
   </section>
   <section *ngIf="termnsandconditions" fxLayout="row">
-    <div class="termnsandconditions">
+    <div class="termnsandconditions" fxFlex="100%">
       <h3 class="text-underline">Términos de participación</h3>
       <p class="text-bold text-red">
         Este proceso es gratuito.
@@ -103,33 +103,24 @@
         electrónico enviado a juridica_colombia@wvi.org , o a través de una comunicación dirigida a la sede principal
         ubicada en la Cra. 7 No. 60 a –24 de la ciudad de Bogotá D.C.
       </p>
-      <p>
+      <p class="url-text">
         Conozco que Visión Mundial Internacional para efectos del presente programa, cuenta con una política de
-        Protección de Datos Personales la cual podré consultar en la página web.
+        Protección de Datos Personales la cual podré consultar en la página web
         <a target="_blank" href="https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf">
-          https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf
-        </a>
+          https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf</a>.
       </p>
     </div>
   </section>
   <div *ngIf="quentionaccepttermns">
     <p>
-      <!--<mat-slide-toggle (change)="toggleAutorTrat($event)"></mat-slide-toggle>
-       Autorizo el tratamiento de mis datos personales, conforme a lo informado previamente.
-      -->
       <mat-checkbox class="example-margin" color="primary" (change)="toggleAutorTrat($event)">
-        Autorizo el tratamiento de mis datos personales, conforme a lo informado previamente.
       </mat-checkbox>
-
+      Autorizo el tratamiento de mis datos personales, conforme a lo informado previamente.
     </p>
     <p>
       <mat-checkbox class="example-margin" color="primary" (change)="toggleAutorCond($event)">
-        Entiendo y acepto los términos y condiciones establecidos para participar en el programa.
       </mat-checkbox>
-
-      <!--<mat-slide-toggle (change)="toggleAutorCond($event)" ></mat-slide-toggle>
       Entiendo y acepto los términos y condiciones establecidos para participar en el programa.
-       -->
     </p>
     <h3 *ngIf="autorizationPolicy && autorizationConditions" class="text-bold text-blue">
       ¿Estás de acuerdo con las condiciones explicadas?
@@ -139,8 +130,9 @@
       <button mat-raised-button (click)="termsAccept(false)">NO</button>
     </div>
   </div>
-  <div class="card-container" *ngIf="formPrincipal">
-    <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper>
+  <div class="card-container" *ngIf="formPrincipal" fxLayout="row">
+    <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper
+                          fxFlex="100%">
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
