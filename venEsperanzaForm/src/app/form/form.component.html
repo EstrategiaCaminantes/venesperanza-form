@@ -218,7 +218,6 @@
           <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
-
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
@@ -610,10 +609,6 @@
             <mat-checkbox class="example-margin" color="primary" (change)="toggleEcon($event)">
               No gasté nada.
             </mat-checkbox>
-            <!--
-            <mat-slide-toggle (change)="toggleEcon($event)">
-              No gasté nada
-            </mat-slide-toggle>-->
           </div>
           <div *ngIf="nineFormGroup.status == 'VALID'">
             <button color="primary" mat-raised-button (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">

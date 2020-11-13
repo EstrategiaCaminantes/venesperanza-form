@@ -28,28 +28,24 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const urlParams = new URLSearchParams(this.queryString);  // url
     const isv = urlParams.get('isv'); // parametro isv
-    if (this.referrer.includes('facebook.com')) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
-        let datos = {'coordenadas': coords, 'adf': isv};
-        this.formService.validateUser(datos).subscribe(res => {
-          if (res['valid'] == true) {
-            this.show = true;
-          } else {
-            this.error = true;
-            this.text = 'No estás autorizado/a para ingresar a esta página.';
-          }
-        }, error => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
+      let datos = {'coordenadas': coords, 'adf': isv, 'ref': this.referrer};
+      this.formService.validateUser(datos).subscribe(res => {
+        if (res['valid'] == true) {
+          this.show = true;
+        } else {
           this.error = true;
           this.text = 'No estás autorizado/a para ingresar a esta página.';
-        });
+        }
       }, error => {
-        this.error = true; // muestra error xq no habilita geolocalizacion
-        this.text = 'Debes compartir tu ubicación para continuar con el proceso';
+        this.error = true;
+        this.text = 'No estás autorizado/a para ingresar a esta página.';
       });
-    } else {
-      this.error = true; // muestra error porq el trafico no proviene de facebook
-      this.text = 'No estás autorizado/a para ingresar a esta página.';
-    }
+    }, error => {
+      this.error = true; // muestra error xq no habilita geolocalizacion
+      this.text = 'Debes compartir tu ubicación para continuar con el proceso.';
+    });
+
   }
 }
