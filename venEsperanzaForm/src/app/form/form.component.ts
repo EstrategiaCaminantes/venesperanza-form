@@ -147,8 +147,8 @@ export class FormComponent implements OnInit {
       secondNameCtrl: [''],
       lastNameCtrl: ['', Validators.required],
       secondLastNameCtrl: [''],
-      sexoCtrl: [''],
-      fechaNacimientoCtrl: [''],
+      sexoCtrl: ['', Validators.required],
+      fechaNacimientoCtrl: ['', Validators.required],
       nacionalidadCtrl: ['', Validators.required],
       tipoDocumentoCtrl: ['', Validators.required],
       numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]]
@@ -341,6 +341,7 @@ export class FormComponent implements OnInit {
     });
     this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
 
+    /*
     //cuando selecciono "otro" sexo en datos del encuestado paso 1
     //console.log("seleccion en sexo datos encuestado: ",this.secondFormGroup.controls['sexoCtrl']);
     if (this.secondFormGroup.controls['sexoCtrl'].value == 'otro' && !this.secondFormGroup.contains('otroSexoCtrl')) {
@@ -377,16 +378,23 @@ export class FormComponent implements OnInit {
       }
 
     }
+    */
   }
 
 // Seleccion de necesidades basicas
   changeNecesidades(e) {
     if (e.value == 'ninguna' || e.value == 'algunas') {
       this.sevenFormGroup.controls.necesidades22Ctrl.setValidators([Validators.required]);
+      //console.log(" NECESIDADES NINGUNA ALGUNAS: ",this.sevenFormGroup.controls.necesidades22Ctrl);
+
     } else {
       this.sevenFormGroup.controls.necesidades22Ctrl.clearValidators();
+      this.sevenFormGroup.controls.necesidades22Ctrl['controls'] = [];
+      //console.log(" NECESIDADES ELSE: ",this.sevenFormGroup.controls.necesidades22Ctrl);
+
     }
     this.sevenFormGroup.controls.necesidades22Ctrl.updateValueAndValidity();
+    //console.log(" NECESIDADES DESPUES: ",this.sevenFormGroup.controls.necesidades22Ctrl);
   }
 
 // Seleccion de necesidades basicas

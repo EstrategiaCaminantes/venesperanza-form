@@ -153,22 +153,22 @@
             <input matInput placeholder="Segundo Apellido" formControlName="secondLastNameCtrl">
           </mat-form-field>
           <div>
-            <p>Sexo:</p>
+            <p>Sexo*:</p>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl"
-                             (change)="seleccionSexo('principal')">
+                             (change)="seleccionSexo('principal')" required>
               <mat-radio-button value="mujer">Mujer</mat-radio-button>
               <mat-radio-button value="hombre">Hombre</mat-radio-button>
-              <mat-radio-button value="otro">Otro</mat-radio-button>
+              <!--<mat-radio-button value="otro">Otro</mat-radio-button>-->
             </mat-radio-group>
-            <mat-form-field *ngIf="otroSexoEncuestado">
+            <!--<mat-form-field *ngIf="otroSexoEncuestado">
               <mat-label>Cuál?</mat-label>
               <input matInput placeholder="Otro Sexo" formControlName="otroSexoCtrl" required>
-            </mat-form-field>
+            </mat-form-field>-->
           </div>
 
           <mat-form-field>
             <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput [matDatepicker]="picker" [max]="myDate" formControlName="fechaNacimientoCtrl">
+            <input matInput [matDatepicker]="picker" [max]="myDate" formControlName="fechaNacimientoCtrl" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -330,13 +330,13 @@
                     <div>
                       <mat-radio-button value="mujer">Mujer</mat-radio-button>
                       <mat-radio-button value="hombre">Hombre</mat-radio-button>
-                      <mat-radio-button value="otro">Otro</mat-radio-button>
+                      <!--<mat-radio-button value="otro">Otro</mat-radio-button>-->
                     </div>
                   </mat-radio-group>
-                  <mat-form-field *ngIf="mostrarOtroSexoMiembrosFamilia[i]">
+                  <!--<mat-form-field *ngIf="mostrarOtroSexoMiembrosFamilia[i]">
                     <mat-label>Cuál?</mat-label>
                     <input matInput placeholder="Otro Sexo" formControlName="otroSexoCtrl" required>
-                  </mat-form-field>
+                  </mat-form-field>-->
                 </div>
                 <mat-form-field>
                   <mat-label>Fecha de Nacimiento:</mat-label>
