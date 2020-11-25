@@ -34,6 +34,7 @@ export class FormComponent implements OnInit {
   numeroDocumento = true;
   contactoAlternativoInput = false;
   lineacontactoWhatsappInput = false;
+  saving = false;
 
   otroSexoEncuestado = false;
 
@@ -288,30 +289,18 @@ export class FormComponent implements OnInit {
     this.municipiosFilter = this.municipiosList;
     const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
     this.municipiosFilter = municipiosnuevo;
-    // console.log('MUNICIPIOS: ', this.municipiosFilter);
     this.thirdFormGroup.controls['municipioCtrl'].setValue(null);
-    // console.log('MUNICIPIO ACTUAL: ', this.thirdFormGroup.controls['municipioCtrl']);
   }
 
   selectMunicipio($event: any) {
-    //console.log('MUNICIPIO SELECCIONADO: ', $event);
-    //console.log("EL MUNICIPIO EN THIRD FORMGROUP: ",this.thirdFormGroup.controls['municipioCtrl']);
     if ($event != 820) {
-      //console.log("selecciona municipio diferente", this.thirdFormGroup.controls['barrioCtrl'].value);
       this.thirdFormGroup.controls['barrioCtrl'].setValue('');
-
-
     }
   }
 
 
 // validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
   lineaContactoPropia($event: any) {
-    /* console.log('LINEA EVENTO: ', $event);
-     console.log('LINEA EVENTO: ', $event.value);
-     console.log('LINEA EVENTO: ', $event.value.toString());
-     console.log('LINEA DE CONTACTO: ', this.thirdFormGroup.controls['lineaContactoPropiaCtrl'].value);
-     console.log('LINEA EVENTO: ', this.thirdFormGroup.controls['lineaContactoPropiaCtrl']);*/
     if ($event.value === 'si') { // si la linea de contacto es propia, oculta contacto alternativo y muestra linea whatsapp
       this.contactoAlternativoInput = false;
       this.lineacontactoWhatsappInput = true;
@@ -334,51 +323,11 @@ export class FormComponent implements OnInit {
 
 // validacion de seleccion si es mujer
   seleccionSexo(posicion): void {
-    //console.log("Posicion desde donde hago el llamado: ",posicion);
     let muj = false;
     this.fourFormGroup.controls['miembrosFamilia'].value.forEach(item => {
       muj = (muj || item.sexoCtrl === 'mujer');
     });
     this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
-
-    /*
-    //cuando selecciono "otro" sexo en datos del encuestado paso 1
-    //console.log("seleccion en sexo datos encuestado: ",this.secondFormGroup.controls['sexoCtrl']);
-    if (this.secondFormGroup.controls['sexoCtrl'].value == 'otro' && !this.secondFormGroup.contains('otroSexoCtrl')) {
-      this.secondFormGroup.addControl('otroSexoCtrl', new FormControl('', Validators.required));
-      this.otroSexoEncuestado = true;
-    } else if (this.secondFormGroup.controls['sexoCtrl'].value !== 'otro' && this.secondFormGroup.contains('otroSexoCtrl')) {
-      this.secondFormGroup.removeControl('otroSexoCtrl');
-      this.otroSexoEncuestado = false;
-    }
-    //cuando selecciono sexo en otro miembro de familia
-    if (posicion != 'principal') {
-
-      if(this.miembrosFamilia.controls.length>0){
-        //si el controlador del miembro de familia selecciona "otro" sexo por primera vez, el controlador no existe en el formulario dle miembro
-          if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value == 'otro' &&
-          !this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
-          //console.log("EL EL MIEMBRO NO CONTIENE SEXOCTRL");
-          //agrega el controlador al miembro d ela familia
-          this.miembrosFamilia.controls[posicion].addControl('otroSexoCtrl', new FormControl('', Validators.required));
-          //muestra el campo para agregar el otro sexo
-          this.mostrarOtroSexoMiembrosFamilia[posicion] = true;
-          //console.log("LO QUE TENGO EN OTRO SEXO MIEMBROS ARRAY FAMILIA: ",this.mostrarOtroSexoMiembrosFamilia);
-          //si el controlador de sexo es diferente de "otro" y además anteriormente había seleccioando la opción "otro"
-        } else if (this.miembrosFamilia.controls[posicion].controls['sexoCtrl'].value !== 'otro' &&
-          this.miembrosFamilia.controls[posicion].contains('otroSexoCtrl')) {
-          //remuevo el controlador otrosexoctrl del miembro de la familia
-          this.miembrosFamilia.controls[posicion].removeControl('otroSexoCtrl');
-          //console.log("CONTROLADOR MIEMBROS FAMILIA: ", this.miembrosFamilia);
-          //oculto el campo de ingresar el valor de otro sexo
-          this.mostrarOtroSexoMiembrosFamilia[posicion] = false;
-          //console.log("EL MIEMBRO SI CONTIENE SEXOCTRL");
-        }
-
-      }
-
-    }
-    */
   }
 
 // Seleccion de necesidades basicas
@@ -495,14 +444,13 @@ export class FormComponent implements OnInit {
 
 // funcion para cambiar de paso
   stepChange(e, stepper) {
+    if (this.saving) {
+      return;
+    }
     if (!this.error) { // si bandera error es false me deja guardar al pasar a otro step
-      // console.log(e);
-      // console.log('ERROR VALOR: ', this.error);
       if (e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null) {
-        //  console.log('envio cuando es 0');
         this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex);
       } else if (e.previouslySelectedIndex != 0) {
-        //  console.log('envio cuando es diferente 0');
         this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex);
       }
     } else { // cuando deja guardar info al pasar a otro step, esto para que no se ejecute 2 cuando oprimo boton siguiente y ejecuta next()
@@ -518,18 +466,10 @@ export class FormComponent implements OnInit {
     this.mati.setAttribute('metadata', JSON.stringify({'user_id': this.id}));
     document.getElementById('mati').appendChild(this.mati);
     this.mati.addEventListener('click', this.iniciaValidacion.bind(this));
-    /*const mati = document.createElement('mati-button');mati-button
-      mati.setAttribute("clientid", "5f91a78600ef73001be85cf4");
-      mati.setAttribute("metadata", JSON.stringify({"user_id":this.id}));
-      document.getElementById('mati').appendChild(mati);*/
   }
 
 // Guardo información
   enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama) {
-    /* console.log('PASO PREVIO: ', pasoquellama);
-     console.log('EL PASO ES: ', paso);
-     console.log('EL GRUPO ES: ', grupo);
-     console.log('EL next ES: ', next);*/
     let data = {
       'paso': paso,
       'infoencuesta': grupo.value,
@@ -537,23 +477,20 @@ export class FormComponent implements OnInit {
     };
     //  Guarda por primera vez, no se ha creado la encuesta, id es null
     if (this.id == null && data.paso == 'paso1') {
-      //  console.log('VALOR DE ID ', this.id);
+      this.saving = true;
       this.formService.postForm(data).subscribe(res => {
-        //   console.log('RESPUESTA: ', res);
         this.id = res;
-        //console.log('doc', grupo.value.tipoDocumentoCtrl);
         if (grupo.value.tipoDocumentoCtrl != 'Indocumentado') {
           this.botonMati(); //  Llamo a función para agregar bloque botón mati
         }
-        //this.infoencuesta = res; //  Toda la info de la encuesta
         this._snackBar.open('Información almacenada correctamente.', 'X', {
           duration: 2000
         });
         if (next) { // cuando oprimo boton "siguiente"
           this.error = true; // bandera para que no se ejecute stepChange al cambiar de step1 a step2
-          //    console.log('PASO ASIGUIENTE?', this.error);
           stepper.next();
         }
+        this.saving = false;
       }, error => {
         //   console.log('GRUPO STATUS DESPUES:', grupo.status);
         //  console.log(stepper);
@@ -567,6 +504,7 @@ export class FormComponent implements OnInit {
             duration: 2000
           });
         }
+        this.saving = false;
       });
     } else if (this.id == null && data.paso != 'paso1') { // Si intento ir a paso2 pero hubo error en paso1
       this._snackBar.open('Error al almacenar información. Vuelva a intentarlo. #E' + paso, 'X', {
@@ -574,13 +512,12 @@ export class FormComponent implements OnInit {
       });
       stepper.selectedIndex = 1;
     } else if (this.id != null) {
-      // cuando ya el formulario está creado y tengo el id, voy a actualizar cualquier paso
-      //  console.log('VOY A ACTUALIZAR');
       if (data.paso == 'paso8') {
         // Determino la cantidad de miembros agregado, sumando 1 que es la persona que responde el formulario
         let cantidad_miembros = this.fourFormGroup.controls.miembrosFamilia.value.length + 1;
         data['infoencuesta']['cantidad_miembros'] = cantidad_miembros;
       }
+      this.saving = true;
       this.formService.updateForm(this.id, data).subscribe(res => {
         //this.infoencuesta = res;
         if (next) { // cuando selecciono botón siguiente
@@ -595,6 +532,7 @@ export class FormComponent implements OnInit {
             duration: 2000
           });
         }
+        this.saving = false;
       }, error => {
         this.error = true; // bandera para llamar solamente a stepChange para el paso en el que estaba inicialmente
         // bloquea el llamado del segundo step al que intento ir pero que me devuelve porq en el paso inicial hubo error
@@ -610,6 +548,7 @@ export class FormComponent implements OnInit {
             duration: 2000,
           });
         }
+        this.saving = false;
       });
     }
   }

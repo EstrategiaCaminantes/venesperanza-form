@@ -1,9 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center" class="flexcolumn">
   <section class="titleheader mat-typography">
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
-      <div fxFlex="0 0 30%" fxFlex.lt-sm="0 0 40%" fxFlex.gt-md="0 0 20%">
-        <img class="margin-top-10 logo-venes" src="assets/img/logovenes.png" alt="VenEsperanza">
-      </div>
       <div fxFlex="0 0 40%" fxFlex.lt-sm="0 0 60%" fxFlex.gt-lg="0 0 30%">
         <img class="margin-top-10 logo-wv" src="assets/img/logowv.png" alt="World Vision">
       </div>
@@ -204,9 +201,9 @@
                    required minlength="3">
           </mat-form-field>
           <div *ngIf="secondFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button
+            <button color="primary" mat-raised-button [disabled]="saving"
                     (click)="enviarInfo(secondFormGroup,'paso1',stepper,true,stepper)">
-              Siguiente
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
@@ -292,8 +289,9 @@
             <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
           </mat-form-field>
           <div *ngIf="thirdFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button
-                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
@@ -365,8 +363,9 @@
           </div>
           <div class="margin-top-20"
                *ngIf="fourFormGroup.value.unicoMiembro || (fourFormGroup.value.miembrosFamilia.length > 0 && fourFormGroup.status == 'VALID')">
-            <button color="primary" mat-raised-button (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
@@ -417,8 +416,9 @@
             </mat-radio-group>
           </div>
           <div *ngIf="fiveFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button (click)="enviarInfo(fiveFormGroup,'paso4',stepper,true,stepper)">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(fiveFormGroup,'paso4',stepper,true,stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.</p>
           </div>
@@ -493,8 +493,9 @@
             </mat-radio-group>
           </div>
           <div *ngIf="sixFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button (click)="enviarInfo(sixFormGroup,'paso5',stepper,true,stepper)">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(sixFormGroup,'paso5',stepper,true,stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
               Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
@@ -530,8 +531,9 @@
             </div>
           </div>
           <div *ngIf="sevenFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button (click)="enviarInfo(sevenFormGroup,'paso6',stepper,true,stepper)">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(sevenFormGroup,'paso6',stepper,true,stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.</p>
           </div>
@@ -561,8 +563,9 @@
             </mat-radio-group>
           </div>
           <div *ngIf="eightFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button (click)="enviarInfo(eightFormGroup,'paso7',stepper,true,stepper)">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(eightFormGroup,'paso7',stepper,true,stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
             </p>
@@ -599,8 +602,9 @@
             </mat-checkbox>
           </div>
           <div *ngIf="nineFormGroup.status == 'VALID'">
-            <button color="primary" mat-raised-button (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(nineFormGroup,'paso8',stepper,true,stepper)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.</p>
           </div>
@@ -614,8 +618,8 @@
           <h3>Ahora verificaremos tus datos</h3>
           <div id="mati"></div>
           <div class="margin-top-20">
-            <button color="primary" mat-raised-button (click)="finalizar()">
-              Siguiente
+            <button color="primary" mat-raised-button [disabled]="saving" (click)="finalizar()">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información y finalizar.</p>
           </div>
