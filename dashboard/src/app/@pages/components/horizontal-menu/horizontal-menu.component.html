@@ -55,7 +55,8 @@
       </a>
     </li>
   </ul>
-  <ng-template [ngTemplateOutlet]="mobileSidebarFooter"></ng-template>
+  <ng-template [ngTemplateOutlet]="mobileSidebarFooter">
+  </ng-template>
 </div>
 <div class="horizontal-menu-backdrop-dekstop" [style.display]="(currentItem?.open) ? 'block':'none'"
   (click)="closeHorizontalMenu()"></div>

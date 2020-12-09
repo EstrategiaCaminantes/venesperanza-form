@@ -14,6 +14,8 @@ import {
 } from '@angular/core';
 
 import { pagesToggleService } from '../../services/toggler.service';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
 declare var pg: any;
 @Component({
   selector: 'pg-horizontal-menu',
@@ -36,11 +38,15 @@ export class HorizontalMenuComponent implements AfterContentInit, AfterViewInit,
   @ViewChild('menuWrapper', { static: true }) _menuWrapper: ElementRef;
   @ContentChild('mobileSidebarFooter', { static: true }) mobileSidebarFooter: TemplateRef<void>;
 
-  constructor(private toggler: pagesToggleService) {
+  constructor(private toggler: pagesToggleService, private authService: AuthService) {
     this._service = this.toggler.mobileHorizontaMenu.subscribe(state => {
       this._horizontalMobileMenu = state;
       this.closeHorizontalMenu();
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   @Input()

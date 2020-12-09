@@ -23,7 +23,7 @@ export class CasualDashboardComponent implements OnInit {
     {data: [], label: 'Posibles candidatos'}
   ];
   lineChartWeekLabels: Label[] = [];
-  lineChartOptions: (ChartOptions & { annotation: any }) = {
+  lineChartOptions: (ChartOptions) = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -39,7 +39,7 @@ export class CasualDashboardComponent implements OnInit {
   };
   lineChartColors: Color[] = [
     { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
+      backgroundColor: 'rgba(8,88,226,0.2)',
       borderColor: 'rgba(148,159,177,1)',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
@@ -47,8 +47,8 @@ export class CasualDashboardComponent implements OnInit {
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
     { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
+      backgroundColor: 'rgb(73,133,70)',
+      borderColor: 'rgb(58,105,56)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -75,7 +75,6 @@ export class CasualDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.encuesta.getDash().subscribe((data: any) => {
-      console.log('data', data);
       Object.entries(data.week).forEach((obj: any) => {
         this.lineChartWeekLabels.push(obj[0]);
         this.lineChartWeekData[0].data.push(obj[1].length);

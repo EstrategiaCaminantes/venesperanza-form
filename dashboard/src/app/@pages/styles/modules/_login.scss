@@ -3,14 +3,13 @@
 */
 
 .login-wrapper {
-  background-color: $color-primary;
-  background: url(https://storage.googleapis.com/kepler-marketing/community_login_cover_c.jpg);
+  background: url('assets/img/login.jpeg'), #e8e6d6;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: left;
   & > * {
     height: 100%;
   }

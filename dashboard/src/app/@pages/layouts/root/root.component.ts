@@ -255,9 +255,7 @@ export class RootLayout implements OnInit, OnDestroy {
     }
   }
 
-
   logout() {
-    //console.log('borrar token');
     this.authService.logout();
   }
 }
