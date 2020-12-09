@@ -5,7 +5,12 @@
             <!-- START card -->
             <div class="card card-transparent">
                 <div class="card-body">
-                    <h3>Registros</h3>
+                    <h3>Registros ({{encuestas.length}})</h3>
+                    <h5>
+                        Potenciales candidatos:
+                        <span class="text-primary font-weight-bold">{{meta}}</span>/2500
+                        <span class="text-primary font-weight-bold">({{meta * 100 / 2500}}%)</span>
+                    </h5>
                     <ngx-datatable #expTable class='table table-condensed' [rows]="encuestas" [columnMode]="'force'"
                                    [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" [limit]="20"
                                    [scrollbarH]="true">
@@ -55,7 +60,8 @@
                                 </div>
                                 <div class="row no-margin miembros" *ngIf="row.miembroshogar.length > 0">
                                     <h4>Miembros del hogar</h4>
-                                    <div *ngFor="let m of row.miembroshogar; let i = index" class="col-lg-12 miembros-lista">
+                                    <div *ngFor="let m of row.miembroshogar; let i = index"
+                                         class="col-lg-12 miembros-lista">
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <strong>Nombre:</strong>
