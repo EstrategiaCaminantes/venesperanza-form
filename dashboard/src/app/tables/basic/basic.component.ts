@@ -80,7 +80,6 @@ export class BasicComponent implements OnInit {
     expanded: any = {};
 
     toggleExpandRow(row) {
-        console.log(row);
         this.expTable.rowDetail.toggleExpandRow(row);
     }
 

@@ -161,13 +161,10 @@ export class HorizontalMenuComponent implements AfterContentInit, AfterViewInit,
 
   _onContentChanges() {
     // Cache User Items
-    console.log(this._autoHideItems);
     if (this._autoHideItems === false) {
-
       return;
     }
     this._renduerMenuItems = this.menuItems.slice();
-    console.log(this._renduerMenuItems);
     const children = this._menuItemsList.nativeElement.childNodes;
     let totalChildrenWidth = 0;
     let liCount = 0;
