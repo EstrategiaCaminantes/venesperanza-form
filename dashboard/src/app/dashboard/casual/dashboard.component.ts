@@ -23,6 +23,11 @@ export class CasualDashboardComponent implements OnInit {
     {data: [], label: 'Posibles candidatos'}
   ];
   lineChartWeekLabels: Label[] = [];
+  lineChartWeekFormData: ChartDataSets[] = [
+    {data: [], label: 'Registros semanales'},
+    {data: [], label: 'Formularios completados'}
+  ];
+  lineChartWeekFormLabels: Label[] = [];
   lineChartOptions: (ChartOptions) = {
     responsive: true,
     maintainAspectRatio: false,
@@ -77,12 +82,23 @@ export class CasualDashboardComponent implements OnInit {
     this.encuesta.getDash().subscribe((data: any) => {
       Object.entries(data.week).forEach((obj: any) => {
         this.lineChartWeekLabels.push(obj[0]);
+        this.lineChartWeekFormLabels.push(obj[0]);
         this.lineChartWeekData[0].data.push(obj[1].length);
+        this.lineChartWeekFormData[0].data.push(obj[1].length);
         let cand = 0;
+        let form = 0;
         obj[1].forEach((obj2: any) => {
           cand += (obj2.puntaje >= 9) ? 1 : 0;
+          if ((obj[0] == '2021-01-11 - 2021-01-17' || obj[0] == '2021-01-18 - 2021-01-24' || obj[0] == '2021-01-25 - 2021-01-31'
+            || obj[0] == '2021-02-01 - 2021-02-07' || obj[0] == '2021-02-08 - 2021-02-14' || obj[0] == '2021-02-15 - 2021-02-21'
+            || obj[0] == '2021-02-22 - 2021-02-28')) {
+            form += (obj2.paso == 'paso4') ? 1 : 0;
+          } else {
+            form += (obj2.paso == 'paso8') ? 1 : 0;
+          }
         });
         this.lineChartWeekData[1].data.push(cand);
+        this.lineChartWeekFormData[1].data.push(form);
       });
       Object.entries(data.day).forEach((obj: any) => {
         this.lineChartDayLabels.push(obj[0]);

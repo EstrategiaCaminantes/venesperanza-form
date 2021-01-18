@@ -29,7 +29,6 @@ export class MessageContainerComponent {
     @Optional() @Inject(_MESSAGE_CONFIG) config: MessageConfig
   ) {
     this.config = { ...defaultConfig, ...config };
-    console.log(this.currentMessage);
   }
 
   // Create a new message

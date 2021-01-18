@@ -3,7 +3,7 @@
     <!-- START ROW -->
     <div class="row">
         <div class="col-lg-12 m-b-10">
-            <h3 class="text-center">Registros diarios</h3>
+            <h3 class="text-center">Registros diarios / Potenciales candidatos</h3>
             <!-- START WIDGET -->
             <canvas baseChart *ngIf="chartReady" style="max-height: 400px;"
                     [datasets]="lineChartDayData"
@@ -15,11 +15,23 @@
                     [plugins]="lineChartPlugins"></canvas>
         </div>
         <div class="col-lg-12 m-b-10">
-            <h3 class="text-center">Registros semanales</h3>
+            <h3 class="text-center">Registros semanales / Potenciales candidatos</h3>
             <!-- START WIDGET -->
             <canvas baseChart *ngIf="chartReady" style="max-height: 400px;"
                     [datasets]="lineChartWeekData"
                     [labels]="lineChartWeekLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins"></canvas>
+        </div>
+        <div class="col-lg-12 m-b-10">
+            <h3 class="text-center">Registros semanales / Formularios completos</h3>
+            <!-- START WIDGET -->
+            <canvas baseChart *ngIf="chartReady" style="max-height: 400px;"
+                    [datasets]="lineChartWeekFormData"
+                    [labels]="lineChartWeekFormLabels"
                     [options]="lineChartOptions"
                     [colors]="lineChartColors"
                     [legend]="lineChartLegend"
