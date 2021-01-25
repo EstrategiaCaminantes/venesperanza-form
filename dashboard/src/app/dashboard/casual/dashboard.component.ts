@@ -89,7 +89,13 @@ export class CasualDashboardComponent implements OnInit {
         let form = 0;
         obj[1].forEach((obj2: any) => {
           cand += (obj2.puntaje >= 9) ? 1 : 0;
-          form += (obj2.paso == 'paso8') ? 1 : 0;
+          if ((obj[0] == '2021-01-11 - 2021-01-17' || obj[0] == '2021-01-18 - 2021-01-24' || obj[0] == '2021-01-25 - 2021-01-31'
+            || obj[0] == '2021-02-01 - 2021-02-07' || obj[0] == '2021-02-08 - 2021-02-14' || obj[0] == '2021-02-15 - 2021-02-21'
+            || obj[0] == '2021-02-22 - 2021-02-28')) {
+            form += (obj2.paso == 'paso3' || obj2.paso == 'paso8') ? 1 : 0;
+          } else {
+            form += (obj2.paso == 'paso8') ? 1 : 0;
+          }
         });
         this.lineChartWeekData[1].data.push(cand);
         this.lineChartWeekFormData[1].data.push(form);
