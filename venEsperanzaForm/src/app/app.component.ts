@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
-  show = false; // debe ser false y habilitar el if de validar referrer
+  show: any = false; // debe ser false y habilitar el if de validar referrer
 
 
   constructor(private formService: FormService) {
@@ -32,19 +32,12 @@ export class AppComponent implements OnInit {
       let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
       let datos = {'coordenadas': coords, 'adf': isv, 'ref': this.referrer};
       this.formService.validateUser(datos).subscribe(res => {
-        if (res['valid'] == true) {
-          this.show = true;
-        } else {
-          this.error = true;
-          this.text = 'No estás autorizado/a para ingresar a esta página.';
-        }
+        this.show = (res['valid'] == true) ? 1 : 2;
       }, error => {
-        this.error = true;
-        this.text = 'No estás autorizado/a para ingresar a esta página.';
+        this.show = 2;
       });
     }, error => {
-      this.error = true; // muestra error xq no habilita geolocalizacion
-      this.text = 'Debes compartir tu ubicación para continuar con el proceso.';
+      this.show = 2;
     });
 
   }

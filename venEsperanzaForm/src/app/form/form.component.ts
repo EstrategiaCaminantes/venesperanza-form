@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 
 import {FormService} from '../services/form.service';
@@ -13,7 +13,7 @@ import {MatStepper} from '@angular/material/stepper';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
-
+  @Input() form: any = 1;
   mati: any = document.createElement('mati-button'); // boton mati
   infoencuesta = {}; // datos de la encuesta
   id = null; // id del formulario
@@ -480,7 +480,7 @@ export class FormComponent implements OnInit {
       this.saving = true;
       this.formService.postForm(data).subscribe(res => {
         this.id = res;
-        if (grupo.value.tipoDocumentoCtrl != 'Indocumentado') {
+        if (grupo.value.tipoDocumentoCtrl != 'Indocumentado' && this.form === 1) {
           this.botonMati(); //  Llamo a función para agregar bloque botón mati
         }
         this._snackBar.open('Información almacenada correctamente.', 'X', {

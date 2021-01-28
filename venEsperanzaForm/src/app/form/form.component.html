@@ -9,7 +9,9 @@
       Formulario de identificación de familias migrantes venezolanas, colombianas retornadas y comunidades de acogida.
     </h2>
     <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
-    <h3 class="text-bold" *ngIf="thanksmessage">Si eres preseleccionado/a World Vision se comunicará contigo</h3>
+    <h3 class="text-bold" *ngIf="thanksmessage && form === 1">
+      Si eres preseleccionado/a World Vision se comunicará contigo
+    </h3>
     <h3 class="text-bold margin-bottom-0" *ngIf="thanksmessage">
       Recuerda:
     </h3>
@@ -120,7 +122,7 @@
       </p>
     </div>
   </section>
-  <div *ngIf="quentionaccepttermns">
+  <div *ngIf="form && quentionaccepttermns">
     <p>
       <mat-checkbox class="example-margin" color="primary" (change)="toggleAutorTrat($event)">
       </mat-checkbox>
@@ -138,6 +140,9 @@
       <button mat-raised-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
       <button mat-raised-button (click)="termsAccept(false)">NO</button>
     </div>
+  </div>
+  <div *ngIf="!form" class="margin-top-20 text-center">
+    <mat-spinner></mat-spinner>
   </div>
   <div class="card-container" *ngIf="formPrincipal" fxLayout="row">
     <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper
@@ -215,7 +220,7 @@
       </mat-step>
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
+          <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO {{form}}</ng-template>
           <mat-form-field>
             <mat-label>Departamento:</mat-label>
             <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
@@ -288,7 +293,13 @@
             </mat-label>
             <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
           </mat-form-field>
-          <div *ngIf="thirdFormGroup.status == 'VALID'">
+          <div *ngIf="thirdFormGroup.status == 'VALID' && form===2">
+            <button color="primary" mat-raised-button [disabled]="saving" (click)="finalizar()">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
+            </button>
+            <p>Oprime el botón "Siguiente" para salvar la información y finalizar.</p>
+          </div>
+          <div *ngIf="thirdFormGroup.status == 'VALID' && form===1">
             <button color="primary" mat-raised-button [disabled]="saving"
                     (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">
               {{saving ? 'Guardando...' : 'Siguiente'}}
@@ -301,7 +312,7 @@
           <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
-      <mat-step [stepControl]="fourFormGroup">
+      <mat-step [stepControl]="fourFormGroup" *ngIf="form === 1">
         <form [formGroup]="fourFormGroup">
           <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
           <p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro de tu hogar*</p>
@@ -375,7 +386,8 @@
           <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
-      <mat-step [stepControl]="tenFormGroup" *ngIf="secondFormGroup.value.tipoDocumentoCtrl != 'Indocumentado'">
+      <mat-step [stepControl]="tenFormGroup"
+                *ngIf="form === 1 && secondFormGroup.value.tipoDocumentoCtrl != 'Indocumentado'">
         <form [formGroup]="tenFormGroup">
           <ng-template matStepLabel>VALIDACIÓN DE IDENTIDAD</ng-template>
           <h3>Ahora verificaremos tus datos</h3>

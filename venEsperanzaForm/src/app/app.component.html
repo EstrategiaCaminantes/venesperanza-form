@@ -7,12 +7,7 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<mat-spinner *ngIf="show != true && error != true"></mat-spinner>
-
-<mat-card *ngIf="error == true">
-  {{text}}
-</mat-card>
-<form-encuesta *ngIf="show == true && error != true"></form-encuesta>
+<form-encuesta [form]="show"></form-encuesta>
 
 
 <!--
