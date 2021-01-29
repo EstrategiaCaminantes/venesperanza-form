@@ -123,7 +123,7 @@ export class FormComponent implements OnInit {
     }, error => {
       console.log(error);
       this.form = 2;
-    });
+    }, {timeout: 8000});
 
     this.formService.Login().subscribe(res => {
 
