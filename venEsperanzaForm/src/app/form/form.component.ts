@@ -109,9 +109,7 @@ export class FormComponent implements OnInit {
 
     const urlParams = new URLSearchParams(this.queryString);  // url
     const isv = urlParams.get('isv'); // parametro isv
-    console.log(navigator.geolocation);
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
       let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
       let datos = {'coordenadas': coords, 'adf': isv, 'ref': this.referrer};
       this.formService.validateUser(datos).subscribe(res => {
