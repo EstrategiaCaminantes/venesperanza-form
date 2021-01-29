@@ -23,7 +23,7 @@
     <div class="termnsandconditions" fxFlex="100%">
       <h3 class="text-underline">Términos de participación</h3>
       <p class="text-bold text-red">
-        Este proceso es gratuito. {{form}}
+        Este proceso es gratuito.
       </p>
       <p class="text-bold">
         ¡Tu participación es voluntaria!
@@ -220,7 +220,7 @@
       </mat-step>
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO {{form}}</ng-template>
+          <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
           <mat-form-field>
             <mat-label>Departamento:</mat-label>
             <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
