@@ -13,7 +13,6 @@ import {MatStepper} from '@angular/material/stepper';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
-  @Input() form: any = 1;
   mati: any = document.createElement('mati-button'); // boton mati
   infoencuesta = {}; // datos de la encuesta
   id = null; // id del formulario
@@ -96,6 +95,10 @@ export class FormComponent implements OnInit {
 
   error = false; // bandera para no intentar guardar 2 veces al hacer click en siguiente de cada paso
 
+  referrer: any = document.referrer; // origen del trafico
+  queryString: any = window.location.search; // obtener url
+  form: any = false; // debe ser false y habilitar el if de validar referrer
+
   @ViewChild('stepper') stepper: MatStepper;
 
 
@@ -104,23 +107,36 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
 
-    //console.log("FECHA ACTUAL",this.myDate);
+    const urlParams = new URLSearchParams(this.queryString);  // url
+    const isv = urlParams.get('isv'); // parametro isv
+    console.log(navigator.geolocation);
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      let coords = {'latitud': position.coords.latitude, 'longitud': position.coords.longitude};
+      let datos = {'coordenadas': coords, 'adf': isv, 'ref': this.referrer};
+      this.formService.validateUser(datos).subscribe(res => {
+        this.form = (res['valid'] == true) ? 1 : 2;
+      }, error => {
+        console.log('error', error);
+        this.form = 2;
+      });
+    }, error => {
+      console.log(error);
+      this.form = 2;
+    });
 
     this.formService.Login().subscribe(res => {
-      // console.log('RESPUESTA LOGIN', res); // login exitoso se genera token
 
       this.formService.setLocal(res, false);
       this.formService.getDepartamentos()
         .subscribe((data: any[]) => {
           this.departamentosList = data;
-          //  console.log('DEPARTAMENTOS: ', data);
         });
 
       this.formService.getMunicipios()
         .subscribe((data: any[]) => {
           this.municipiosList = data;
           this.municipiosFilter = this.municipiosList;
-          // console.log('MUNICIPIOS: ', data);
         });
 
       this.formService.getBarrios()
@@ -136,13 +152,7 @@ export class FormComponent implements OnInit {
     }, error => {
 
     });
-
-    // llamados para valores de los selects
-
-
     // crea los formsGroup
-
-
     this.secondFormGroup = this._formBuilder.group({
       firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
@@ -221,7 +231,6 @@ export class FormComponent implements OnInit {
 
 // Primer paso aceptar terminos
   termsAccept($event: any) {
-    //  console.log($event);
     this.termnsandconditions = false;
     this.quentionaccepttermns = false;
     this.titleheader = false;
