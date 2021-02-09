@@ -456,9 +456,9 @@ export class FormComponent implements OnInit {
     }
     if (!this.error) { // si bandera error es false me deja guardar al pasar a otro step
       if (e.previouslySelectedIndex == 0 || e.previouslySelectedIndex == 0 && this.id == null) {
-        this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex);
+        this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex, false);
       } else if (e.previouslySelectedIndex != 0) {
-        this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex);
+        this.enviarInfo(e.previouslySelectedStep.stepControl, 'paso' + (e.previouslySelectedIndex + 1), stepper, false, e.previouslySelectedIndex, false);
       }
     } else { // cuando deja guardar info al pasar a otro step, esto para que no se ejecute 2 cuando oprimo boton siguiente y ejecuta next()
       this.error = false; // habilita la bandera para que se pueda pasar oprimienod en el cabezado del siguiente paso
