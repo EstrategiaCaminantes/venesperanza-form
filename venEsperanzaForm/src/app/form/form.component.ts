@@ -476,7 +476,7 @@ export class FormComponent implements OnInit {
   }
 
 // Guardo información
-  enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama) {
+  enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama, finalizar: boolean) {
     let data = {
       'paso': paso,
       'infoencuesta': grupo.value,
@@ -496,6 +496,9 @@ export class FormComponent implements OnInit {
         if (next) { // cuando oprimo boton "siguiente"
           this.error = true; // bandera para que no se ejecute stepChange al cambiar de step1 a step2
           stepper.next();
+        }
+        if (finalizar) {
+          this.finalizar();
         }
         this.saving = false;
       }, error => {
@@ -538,6 +541,9 @@ export class FormComponent implements OnInit {
           this._snackBar.open('Información almacenada correctamente', 'X', {
             duration: 2000
           });
+        }
+        if (finalizar) {
+          this.finalizar();
         }
         this.saving = false;
       }, error => {

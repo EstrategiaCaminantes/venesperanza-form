@@ -207,7 +207,7 @@
           </mat-form-field>
           <div *ngIf="secondFormGroup.status == 'VALID'">
             <button color="primary" mat-raised-button [disabled]="saving"
-                    (click)="enviarInfo(secondFormGroup,'paso1',stepper,true,stepper)">
+                    (click)="enviarInfo(secondFormGroup,'paso1',stepper,true,stepper, false)">
               {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
@@ -294,14 +294,15 @@
             <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
           </mat-form-field>
           <div *ngIf="thirdFormGroup.status == 'VALID' && form===2">
-            <button color="primary" mat-raised-button [disabled]="saving" (click)="finalizar()">
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper, true)">
               {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>Oprime el botón "Siguiente" para salvar la información y finalizar.</p>
           </div>
           <div *ngIf="thirdFormGroup.status == 'VALID' && form===1">
             <button color="primary" mat-raised-button [disabled]="saving"
-                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper)">
+                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper, false)">
               {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
@@ -375,7 +376,7 @@
           <div class="margin-top-20"
                *ngIf="fourFormGroup.value.unicoMiembro || (fourFormGroup.value.miembrosFamilia.length > 0 && fourFormGroup.status == 'VALID')">
             <button color="primary" mat-raised-button [disabled]="saving"
-                    (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper)">
+                    (click)="enviarInfo(fourFormGroup,'paso3',stepper,true,stepper, false)">
               {{saving ? 'Guardando...' : 'Siguiente'}}
             </button>
             <p>
