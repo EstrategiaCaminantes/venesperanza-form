@@ -251,7 +251,7 @@ export class FormComponent implements OnInit {
   }
 
 // validacion tipo documento
-  selectTipoDocumento($event: any) {
+  selectTipoDocumento($event: any): void {
     if ($event.value == 'Otro') { // si es Otro agrega el controlador
       this.otroTipoDocumento = true;
       this.secondFormGroup.addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
@@ -316,50 +316,6 @@ export class FormComponent implements OnInit {
       muj = (muj || item.sexoCtrl === 'mujer');
     });
     this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
-  }
-
-// Seleccion de necesidades basicas
-  changeNecesidades(e): void {
-    if (e.value == 'ninguna' || e.value == 'algunas') {
-      this.sevenFormGroup.controls.necesidades22Ctrl.setValidators([Validators.required]);
-    } else {
-      this.sevenFormGroup.controls.necesidades22Ctrl.clearValidators();
-      this.sevenFormGroup.controls.necesidades22Ctrl.controls = [];
-
-    }
-    this.sevenFormGroup.controls.necesidades22Ctrl.updateValueAndValidity();
-  }
-
-// Seleccion de necesidades basicas
-  setNecedidadesBasicas(e): void {
-    const checkArray: FormArray = this.sevenFormGroup.controls.necesidades22Ctrl as FormArray;
-    if (checkArray.value.length > 2 && e.target.checked) {
-      return e.preventDefault();
-    }
-    // si esta seleccionado lo agrega al array
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      // si no esta checkeado lo busca y lo elimina
-      let i = 0;
-      checkArray.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
-          checkArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
-  }
-
-  toggleEcon(e): void {
-    this.nineFormGroup.controls.gastoHogarCtrl.setValue((e.checked) ? '1' : '0');
-    if (!e.checked) {
-      this.nineFormGroup.controls.gastoHogar7diasCtrl.setValidators([Validators.required, Validators.min(1000)]);
-    } else {
-      this.nineFormGroup.controls.gastoHogar7diasCtrl.clearValidators();
-    }
-    this.nineFormGroup.controls.gastoHogar7diasCtrl.updateValueAndValidity();
   }
 
   toggleMiembro(e): void {
