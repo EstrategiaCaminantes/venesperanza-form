@@ -87,17 +87,13 @@ export class FormComponent implements OnInit {
   ];
 
   autorizacionActual = null;
-
   miembrosFamilia: any; // variable que se le asigna al grupo familiar
-
   error = false; // bandera para no intentar guardar 2 veces al hacer click en siguiente de cada paso
-
   referrer: any = document.referrer; // origen del trafico
   queryString: any = window.location.search; // obtener url
   form: any = false; // debe ser false y habilitar el if de validar referrer
 
   @ViewChild('stepper') stepper: MatStepper;
-
 
   constructor(private formBuilder: FormBuilder, private formService: FormService,
               private snackBar: MatSnackBar, private elementRef: ElementRef) {
