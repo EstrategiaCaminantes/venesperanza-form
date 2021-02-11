@@ -1,0 +1,2 @@
+mklink /D C:\Web\VenEsperanza\venesperanza-form\venEsperanzaForm\dist\venEsperanzaForm\caminantes C:\Web\VenEsperanza\caminantes\venesperanza-form\venEsperanzaForm\dist\venEsperanzaForm
+mklink /D C:\Web\VenEsperanza\venesperanza-form\venEsperanzaForm\dist\venEsperanzaForm\vencaminantesb C:\Web\VenEsperanza\caminantes\venesperanza-back\venesperanza-back\public
