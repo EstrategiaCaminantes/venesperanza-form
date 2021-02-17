@@ -144,9 +144,65 @@
   <div *ngIf="!form" class="margin-top-20 text-center">
     <mat-spinner></mat-spinner>
   </div>
+
   <div class="card-container" *ngIf="formPrincipal" fxLayout="row">
     <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper
                           fxFlex="100%">
+
+      <mat-step [stepControl]="llegadaDestinoFormGroup">
+          <form [formGroup]="llegadaDestinoFormGroup">
+            <ng-template matStepLabel>DATOS DE LLEGADA Y DESTINO</ng-template>
+           
+
+            <div class="margin-bottom-10">
+              <p>¿En qué fecha tu y tu grupo familiar llegaron al país?*</p>
+              <mat-form-field >
+                <mat-label>Seleccione una opción</mat-label>
+              <mat-select formControlName="fechaLlegadaAlPaisCtrl"  required>
+                <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
+                  {{fechallegada.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            </div>
+
+            <div class="margin-bottom-10">
+              <p>¿En los próximos seis meses planeas estar dentro de Colombia?*</p>
+              <mat-form-field >
+                <mat-label>Seleccione una opción</mat-label>
+              <mat-select formControlName="planeaEstarEnColombiaCtrl" (selectionChange)="planeaEstarEnColombia($event)"  required>
+                <!--<mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
+                  {{fechallegada.name}}
+                </mat-option>-->
+                <mat-option [value]="1">
+                  Sí
+                </mat-option>
+                <mat-option  [value]="0">
+                  No
+                </mat-option>
+                <mat-option  [value]="2">
+                  No estoy seguro
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            </div>
+            <!--
+            <mat-form-field class="fechaLlegada">
+              
+              <mat-label>¿En qué fecha tu y tu grupo familiar llegaron al país?</mat-label>
+              <mat-select formControlName="fechaLlegadaAlPaisCtrl"  required>
+                <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
+                  {{fechallegada.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            -->
+            
+          </form>
+      </mat-step>
+
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>

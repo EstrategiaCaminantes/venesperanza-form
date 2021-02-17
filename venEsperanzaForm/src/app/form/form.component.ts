@@ -49,6 +49,20 @@ export class FormComponent implements OnInit {
   nineFormGroup: FormGroup;
   tenFormGroup: FormGroup;
 
+  //nuevos pasos Jorge:
+  llegadaDestinoFormGroup: FormGroup;
+
+  //nuevas listas Jorge:
+  listaFechasLlegadaPais = [
+    {name: 'Menos de un mes'},
+    {name: 'Entre uno y dos meses'},
+    {name: 'Dos y tres meses'},
+    {name: '3-6 meses'},
+    {name: 'más de 6 meses'}
+
+  ]
+
+
   public autorizacionSeleccionada: number;
 
   nacionalidades = [
@@ -143,6 +157,23 @@ export class FormComponent implements OnInit {
     }, error => {
 
     });
+
+    //nuevos formgroup
+    this.llegadaDestinoFormGroup = this.formBuilder.group({
+      fechaLlegadaAlPaisCtrl: ['', Validators.required],
+      planeaEstarEnColombiaCtrl: ['', Validators.required]
+      /*
+      firstNameCtrl: ['', Validators.required],
+      secondNameCtrl: [''],
+      lastNameCtrl: ['', Validators.required],
+      secondLastNameCtrl: [''],
+      sexoCtrl: ['', Validators.required],
+      fechaNacimientoCtrl: ['', Validators.required],
+      nacionalidadCtrl: ['', Validators.required],
+      tipoDocumentoCtrl: ['', Validators.required],
+      numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]]*/
+    });
+
     // crea los formsGroup
     this.secondFormGroup = this.formBuilder.group({
       firstNameCtrl: ['', Validators.required],
@@ -379,6 +410,15 @@ export class FormComponent implements OnInit {
     }
   }
 
+  //nuevas funciones Jorge:
+  planeaEstarEnColombia($event:any):void{
+    console.log('SELECCION PLANEA ESTAR EN COLOMBIA: ',$event);
+  }
+  /*
+  selectFechaLlegadaPais($event: any): void {
+    
+  }*/
+
 // creo boton mati con parametros
   botonMati(): void {
     this.mati.setAttribute('clientid', '5f91a78600ef73001be85cf4');
@@ -389,6 +429,7 @@ export class FormComponent implements OnInit {
 
 // Guardo información
   enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama, finalizar: boolean): void {
+    /*
     const data = {
       paso,
       infoencuesta: grupo.value,
@@ -471,6 +512,6 @@ export class FormComponent implements OnInit {
         }
         this.saving = false;
       });
-    }
+    }*/
   }
 }
