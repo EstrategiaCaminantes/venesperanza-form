@@ -156,10 +156,10 @@
 
             <div class="margin-bottom-10">
               <p>¿En qué fecha tu y tu grupo familiar llegaron al país?*</p>
-              <mat-form-field >
-                <mat-label>Seleccione una opción</mat-label>
-              <mat-select formControlName="fechaLlegadaAlPaisCtrl"  required>
-                <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
+              <mat-form-field class="datosllegada">
+                <mat-label>Seleccionar una opción</mat-label>
+              <mat-select formControlName="llegadaDestinofechaLlegadaCtrl"  required>
+                <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.value">
                   {{fechallegada.name}}
                 </mat-option>
               </mat-select>
@@ -169,9 +169,9 @@
 
             <div class="margin-bottom-10">
               <p>¿En los próximos seis meses planeas estar dentro de Colombia?*</p>
-              <mat-form-field >
-                <mat-label>Seleccione una opción</mat-label>
-              <mat-select formControlName="planeaEstarEnColombiaCtrl" (selectionChange)="planeaEstarEnColombia($event)"  required>
+              <mat-form-field class="datosllegada">
+                <mat-label>Seleccionar una opción</mat-label>
+              <mat-select formControlName="llegadaDestinoPlaneaEstarEnColombiaCtrl" (selectionChange)="planeaEstarEnColombia($event)"  required>
                 <!--<mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
                   {{fechallegada.name}}
                 </mat-option>-->
@@ -188,6 +188,47 @@
             </mat-form-field>
 
             </div>
+
+
+            <div class="margin-bottom-10" *ngIf="dentroDeColombiaNO">
+              <p>¿Cuál es tu destino final?*</p>
+              <mat-form-field  class="datosllegada">
+                <!--<mat-label>¿Cuál es tu destino final?</mat-label>-->
+                <input matInput placeholder="País: " formControlName="llegadaDestinoDestinoFinalFueraColombiaCtrl" required>
+              </mat-form-field>
+            </div>
+
+            
+            <div class="margin-bottom-10" *ngIf="dentroDeColombia">
+              <p>¿Cuál es tu destino final dentro de Colombia?*</p>
+              
+                
+              <mat-form-field class="datosllegada">
+                <mat-label>Departamento:</mat-label>
+                <mat-select formControlName="llegadaDestinoDepartamentoCtrl" (selectionChange)="selectDepartamentoLlegadaDestino($event)" required>
+                  <mat-option [value]="'nodefinido'">No sé</mat-option>
+                  <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
+                    {{departamento.nombre}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="datosllegada" *ngIf="llegadaDestinoFormGroup.controls.llegadaDestinoDepartamentoCtrl.value != '' && llegadaDestinoFormGroup.controls.llegadaDestinoDepartamentoCtrl.value != 'nodefinido'">
+                <mat-label>Ciudad:</mat-label>
+                
+                <mat-select formControlName="llegadaDestinoCiudadCtrl" (selectionChange)="selectCiudadLlegadaDestino($event)" required>
+                  <mat-option [value]="'nodefinido'">No sé</mat-option>
+                  <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
+                    {{municipio.nombre}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+
+            
+
+           
             <!--
             <mat-form-field class="fechaLlegada">
               
@@ -199,10 +240,326 @@
               </mat-select>
             </mat-form-field>
             -->
+            <div *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
+              <button color="primary" mat-raised-button [disabled]="saving"
+                      (click)="enviarInfo(llegadaDestinoFormGroup,'paso1',stepper,true,stepper, false)">
+                {{saving ? 'Guardando...' : 'Siguiente'}}
+              </button>
+              <p>
+                Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
+              </p>
+            </div>
+            <p *ngIf="llegadaDestinoFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+            <p class="text-blue text-bold">#VenEsperanza</p>
             
           </form>
       </mat-step>
 
+      
+
+
+      <mat-step [stepControl]="fourFormGroup" *ngIf="form === 1">
+        <form [formGroup]="fourFormGroup">
+          <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
+          <!--<p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro de tu hogar*</p>-->
+
+          <p class="text-bold">¿Cuántas personas de tu familia (incluyéndote) están contigo en este momento?
+            Por ejemplo si viajas solo responde 1.
+            <br>
+            A continuación, se deben agregar los datos personales de cada miembro de tu hogar (incluyéndote)*
+            </p>
+          
+            <div formArrayName="miembrosFamilia">
+            <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;" class="margin-top-20">
+              <div [formGroup]="miembroinfo">
+                <div>
+                  <label class="text-bold">{{i + 1}}. Miembro de tu hogar</label>
+                </div>
+                <mat-form-field>
+                  <mat-label>Primer Nombre</mat-label>
+                  <input matInput placeholder="Primer Nombre" formControlName="primernombreCtrl" required>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Segundo Nombre</mat-label>
+                  <input matInput placeholder="Segundo Nombre" formControlName="segundonombreCtrl">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Primer Apellido</mat-label>
+                  <input matInput placeholder="Primer Apellido" formControlName="primerapellidoCtrl" required>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Segundo Apellido</mat-label>
+                  <input matInput placeholder="Segundo Apellido" formControlName="segundoapellidoCtrl">
+                </mat-form-field>
+                <div>
+                  <p>Sexo*: </p>
+                  <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl" required
+                                   (change)="seleccionSexo(i)">
+                    <div>
+                      <mat-radio-button value="mujer">Mujer</mat-radio-button>
+                      <mat-radio-button value="hombre">Hombre</mat-radio-button>
+                    </div>
+                  </mat-radio-group>
+                </div>
+                <mat-form-field>
+                  <mat-label>Fecha de Nacimiento:</mat-label>
+                  <input matInput [matDatepicker]="pickertres_i" [max]="myDate" formControlName="fechaCtrl" required>
+                  <mat-datepicker-toggle matSuffix [for]="pickertres_i"></mat-datepicker-toggle>
+                  <mat-datepicker #pickertres_i></mat-datepicker>
+                </mat-form-field>
+
+                <!--nacionalidad-->
+                <mat-form-field>
+                  <mat-label>Nacionalidad:</mat-label>
+                  <mat-select formControlName="nacionalidadCtrl" (selectionChange)="selectNacionalidadMiembro($event, i)" required>
+                    <mat-option *ngFor="let nacionalidad of nacionalidades" [value]="nacionalidad.name">
+                      {{nacionalidad.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="miembrosFamilia.controls[i].controls.nacionalidadCtrl.value == 'Otro' ">
+                  <mat-label>¿Cuál? *(Indicar nacionalidad, ejemplo: Peruana)*</mat-label>
+                  <input matInput placeholder="Ejemplo: Peruana" formControlName="otroNacionalidadCtrl" required>
+                </mat-form-field>
+
+                <!--tipo documento-->
+
+                <mat-form-field>
+                  <mat-label>Tipo de Documento:</mat-label>
+                  <mat-select formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumentoMiembro($event,i)" required>
+                    <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
+                      {{documento.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="miembrosFamilia.controls[i].controls.tipoDocumentoCtrl.value == 'Otro' ">
+                  <mat-label>¿Cuál? *(Indicar tipo, ejemplo: pasaporte)*</mat-label>
+                  <input matInput placeholder="Ejemplo: Pasaporte" formControlName="otroTipoDocumentoCtrl" required>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="miembrosFamilia.controls[i].controls.tipoDocumentoCtrl.value !== 'Indocumentado' &&  miembrosFamilia.controls[i].controls.numeroDocumentoCtrl">
+                  <mat-label>Número de Documento</mat-label>
+                  <input matInput placeholder="Número de Documento" type="number" formControlName="numeroDocumentoCtrl"
+                         required minlength="3">
+                </mat-form-field>
+
+
+          
+
+                <div class="margin-bottom-10">
+                  <p>¿Podrías compartir una fotografía de tu documento?*</p>
+                  <mat-form-field class="datosllegada">
+                      <mat-label>Seleccionar una opción</mat-label>
+                      <mat-select formControlName="compartirFotoDocumentoCtrl"   required>
+                        <!--
+                          (selectionChange)="selectCompartirFotoDocumento($event)"
+                          -->
+                        <mat-option [value]="1">
+                          Sí
+                        </mat-option>
+                        <mat-option  [value]="0">
+                          No
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+    
+                </div>
+
+                <div class="margin-bottom-10" *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
+                  <p>Por favor carga una fotografía de tu documento aquí</p>
+
+
+                </div>
+
+
+                
+
+
+
+
+              </div>
+              <button mat-mini-fab color="warn" aria-label="Eliminar miembro" (click)="EliminarMiembro(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="margin-top-20" *ngIf="!fourFormGroup.value.unicoMiembro">
+            <label (click)="agregarNuevoMiembro()">Añade un miembro de tu hogar</label>
+            <button class="margin-left-10" mat-mini-fab color="accent" aria-label="Otro miembro"
+                    (click)="agregarNuevoMiembro()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <!--
+          <div class="margin-bottom-10 margin-top-10" *ngIf="fourFormGroup.value.miembrosFamilia.length == 0">
+            <mat-checkbox class="example-margin" color="primary" (change)="toggleMiembro($event)">
+              Soy el único miembro del hogar
+            </mat-checkbox>
+          </div>-->
+          <div class="margin-top-20"
+               *ngIf="fourFormGroup.value.unicoMiembro || (fourFormGroup.value.miembrosFamilia.length > 0 && fourFormGroup.status == 'VALID')">
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(fourFormGroup,'paso2',stepper,true,stepper, false)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
+            </button>
+            <p>
+              Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            </p>
+          </div>
+          <p *ngIf="fourFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
+        </form>
+      </mat-step>
+
+
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <!--<ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>-->
+          <ng-template matStepLabel>DATOS DE CONTACTO</ng-template>
+
+          <p class="text-bold">
+            Recuerda que es muy importante que proporciones en este formulario todos tus datos personales de contacto,
+            para poder localizarte en caso de resultar elegido para el programa. 
+            </p>
+
+          <!--
+          <mat-form-field>
+            <mat-label>Departamento:</mat-label>
+            <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
+              <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
+                {{departamento.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Municipio:</mat-label>
+            <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event.value)" required>
+              <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
+                {{municipio.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value != 820">
+            <mat-label>Barrio donde resides:</mat-label>
+            <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside" required>
+          </mat-form-field>
+          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value == 820">
+            <mat-label>Barrio donde resides:</mat-label>
+            <mat-select formControlName="barrioCtrl" required>
+              <mat-option *ngFor="let barrio of barriosVillaRosarioList" [value]="barrio.nombre">
+                {{barrio.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Dirección completa:</mat-label>
+            <input matInput formControlName="direccionCtrl" placeholder="Dirección completa">
+          </mat-form-field>
+          -->
+          <mat-form-field>
+            <mat-label>Número de Contacto principal:</mat-label>
+            <input matInput type="number" formControlName="numeroContactoCtrl" placeholder="Ej: 3131234567" required
+                   minlength="7" maxlength="10">
+          </mat-form-field>
+          <div class="margin-bottom-10">
+            <label>¿Esta línea de contacto es propia?*:</label>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="lineaContactoPropiaCtrl"
+                             (change)="lineaContactoPropia($event)" required>
+              <div>
+                <mat-radio-button value="si">Si</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+
+          <div class="margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
+            <label>¿Esta línea de contacto está asociada a WhatsApp?*:</label>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName
+              ="lineaContactoAsociadaAWhatsappCtrl" required>
+              <div>
+                <mat-radio-button value="si">Si</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+          
+          <mat-form-field  *ngIf='contactoAlternativoInput'>
+            <mat-label>Número de contacto alternativo*</mat-label>
+            <input matInput type="number" formControlName="contactoAlternativoCtrl" placeholder="Ej: 3131234567"
+            minlength="7" maxlength="10">
+          </mat-form-field>
+
+          <div class="margin-bottom-10" *ngIf='contactoAlternativoInput'>
+            <label>¿Esta línea de contacto es propia?*:</label>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="lineaContactoAlternativoCtrl"
+                             (change)="lineaContactoAlternativo($event)" required>
+              <div>
+                <mat-radio-button value="si">Si</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+
+          <div class="margin-bottom-10" *ngIf='lineacontactoAlternativaWhatsappInput'>
+            <label>¿Esta línea de contacto está asociada a WhatsApp?*:</label>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName
+              ="lineaContactoAlternativoAsociadaAWhatsappCtrl" required>
+              <div>
+                <mat-radio-button value="si">Si</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+
+          
+          <mat-form-field class="contactoAlternativo">
+            <mat-label>Escribe un correo electrónico donde te podamos contactar</mat-label>
+            <input matInput formControlName="correoCtrl" placeholder="">
+          </mat-form-field>
+
+          <div class="margin-bottom-10" >
+            <label>¿Tienes cuenta en Facebook?:</label>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName
+              ="cuentaFacebook" >
+              <div>
+                <mat-radio-button value="si">Si</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+
+
+          <mat-form-field class="contactoAlternativo">
+            <mat-label>
+              ¿Escribe cualquier comentario adicional sobre la mejor forma o la forma preferida para contactarte?
+            </mat-label>
+            <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
+          </mat-form-field>
+          <div *ngIf="thirdFormGroup.status == 'VALID' && form===2">
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper, true)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
+            </button>
+            <p>Oprime el botón "Siguiente" para salvar la información y finalizar.</p>
+          </div>
+          <div *ngIf="thirdFormGroup.status == 'VALID' && form===1">
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(thirdFormGroup,'paso3',stepper,true, stepper, true)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
+            </button>
+            <p>
+              <!--Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.-->
+              Oprime el botón "Siguiente" para salvar la información y finalizar
+            </p>
+          </div>
+          <p *ngIf="thirdFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
+        </form>
+      </mat-step>
+      
+
+      <!--
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>DATOS DEL ENCUESTADO</ng-template>
@@ -273,102 +630,10 @@
           <p *ngIf="secondFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
           <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
-      </mat-step>
-      <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>DATOS GEOGRÁFICOS Y DE CONTACTO</ng-template>
-          <mat-form-field>
-            <mat-label>Departamento:</mat-label>
-            <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
-              <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
-                {{departamento.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Municipio:</mat-label>
-            <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event.value)" required>
-              <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
-                {{municipio.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value != 820">
-            <mat-label>Barrio donde resides:</mat-label>
-            <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside" required>
-          </mat-form-field>
-          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value == 820">
-            <mat-label>Barrio donde resides:</mat-label>
-            <mat-select formControlName="barrioCtrl" required>
-              <mat-option *ngFor="let barrio of barriosVillaRosarioList" [value]="barrio.nombre">
-                {{barrio.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+      </mat-step>-->
 
-          <mat-form-field>
-            <mat-label>Dirección completa:</mat-label>
-            <input matInput formControlName="direccionCtrl" placeholder="Dirección completa">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Número de Contacto:</mat-label>
-            <input matInput type="number" formControlName="numeroContactoCtrl" placeholder="Ej: 3131234567" required
-                   minlength="7" maxlength="10">
-          </mat-form-field>
-          <div class="margin-bottom-10">
-            <label>¿Esta línea de contacto es propia?*:</label>
-            <mat-radio-group aria-label="Selecciona una opción" formControlName="lineaContactoPropiaCtrl"
-                             (change)="lineaContactoPropia($event)" required>
-              <div>
-                <mat-radio-button value="si">Si</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-              </div>
-            </mat-radio-group>
-          </div>
-          <mat-form-field class="contactoAlternativo" *ngIf='contactoAlternativoInput'>
-            <mat-label>¿Por quién preguntar en caso de llamar?*</mat-label>
-            <input matInput formControlName="contactoAlternativoCtrl" placeholder="">
-          </mat-form-field>
-          <div class="margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
-            <label>¿Tu línea de contacto está asociada a WhatsApp?*:</label>
-            <mat-radio-group aria-label="Selecciona una opción" formControlName
-              ="lineaContactoAsociadaAWhatsappCtrl" required>
-              <div>
-                <mat-radio-button value="si">Si</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-              </div>
-            </mat-radio-group>
-          </div>
-          <mat-form-field class="contactoAlternativo">
-            <mat-label>Escribe tu correo electrónico donde te podamos contactar</mat-label>
-            <input matInput formControlName="correoCtrl" placeholder="">
-          </mat-form-field>
-          <mat-form-field class="contactoAlternativo">
-            <mat-label>
-              ¿Escribe cualquier comentario adicional sobre la mejor forma o la forma preferida para contactarte?
-            </mat-label>
-            <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
-          </mat-form-field>
-          <div *ngIf="thirdFormGroup.status == 'VALID' && form===2">
-            <button color="primary" mat-raised-button [disabled]="saving"
-                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper, true)">
-              {{saving ? 'Guardando...' : 'Siguiente'}}
-            </button>
-            <p>Oprime el botón "Siguiente" para salvar la información y finalizar.</p>
-          </div>
-          <div *ngIf="thirdFormGroup.status == 'VALID' && form===1">
-            <button color="primary" mat-raised-button [disabled]="saving"
-                    (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper, false)">
-              {{saving ? 'Guardando...' : 'Siguiente'}}
-            </button>
-            <p>
-              Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
-            </p>
-          </div>
-          <p *ngIf="thirdFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
-          <p class="text-blue text-bold">#VenEsperanza</p>
-        </form>
-      </mat-step>
+
+      <!--
       <mat-step [stepControl]="fourFormGroup" *ngIf="form === 1">
         <form [formGroup]="fourFormGroup">
           <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
@@ -424,6 +689,7 @@
               <mat-icon>add</mat-icon>
             </button>
           </div>
+          
           <div class="margin-bottom-10 margin-top-10" *ngIf="fourFormGroup.value.miembrosFamilia.length == 0">
             <mat-checkbox class="example-margin" color="primary" (change)="toggleMiembro($event)">
               Soy el único miembro del hogar
@@ -443,12 +709,17 @@
           <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
+    -->
+      
+     
+      <!--
       <mat-step [stepControl]="tenFormGroup"
                 *ngIf="form === 1 && secondFormGroup.value.tipoDocumentoCtrl != 'Indocumentado'">
         <form [formGroup]="tenFormGroup">
-          <ng-template matStepLabel>VALIDACIÓN DE IDENTIDAD</ng-template>
+         <ng-template matStepLabel>VALIDACIÓN DE IDENTIDAD</ng-template>
           <h3>Ahora verificaremos tus datos</h3>
           <div id="mati"></div>
+          <ng-template matStepLabel>FINAL DE LA ENCUESTA</ng-template>
           <div class="margin-top-20">
             <button color="primary" mat-raised-button [disabled]="saving" (click)="finalizar()">
               {{saving ? 'Guardando...' : 'Siguiente'}}
@@ -457,6 +728,7 @@
           </div>
         </form>
       </mat-step>
+      -->
     </mat-vertical-stepper>
   </div>
 </div>

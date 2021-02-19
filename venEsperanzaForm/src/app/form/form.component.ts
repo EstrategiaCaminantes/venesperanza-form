@@ -30,7 +30,14 @@ export class FormComponent implements OnInit {
   numeroDocumento = true;
   contactoAlternativoInput = false;
   lineacontactoWhatsappInput = false;
+
+  //variable jorge:
+  lineacontactoAlternativaWhatsappInput = false;
+
   saving = false;
+
+
+  otroNacionalidad = false;//agregadoJorge
 
   otroSexoEncuestado = false;
 
@@ -54,14 +61,16 @@ export class FormComponent implements OnInit {
 
   //nuevas listas Jorge:
   listaFechasLlegadaPais = [
-    {name: 'Menos de un mes'},
-    {name: 'Entre uno y dos meses'},
-    {name: 'Dos y tres meses'},
-    {name: '3-6 meses'},
-    {name: 'más de 6 meses'}
+    {name: 'Menos de un mes', value: 'menos_de_un_mes'},
+    {name: 'Entre uno y dos meses', value: 'entre_uno_y_dos_meses'},
+    {name: 'Dos y tres meses', value:'dos_y_tres_meses'},
+    {name: '3-6 meses', value:'3_6_meses'},
+    {name: 'más de 6 meses', value:'mas_de_6_meses'}
 
   ]
 
+  dentroDeColombiaNO = false;
+  dentroDeColombia = false;
 
   public autorizacionSeleccionada: number;
 
@@ -122,11 +131,11 @@ export class FormComponent implements OnInit {
       this.formService.validateUser(datos).subscribe(res => {
         this.form = (res.valid == true) ? 1 : 2;
       }, error => {
-        console.log('error', error);
+        //console.log('error', error);
         this.form = 2;
       });
     }, error => {
-      console.log(error);
+      //console.log(error);
       this.form = 2;
     }, {timeout: 8000});
 
@@ -160,8 +169,11 @@ export class FormComponent implements OnInit {
 
     //nuevos formgroup
     this.llegadaDestinoFormGroup = this.formBuilder.group({
-      fechaLlegadaAlPaisCtrl: ['', Validators.required],
-      planeaEstarEnColombiaCtrl: ['', Validators.required]
+      llegadaDestinofechaLlegadaCtrl: ['', Validators.required],
+      llegadaDestinoPlaneaEstarEnColombiaCtrl: ['', Validators.required],
+      llegadaDestinoDestinoFinalFueraColombiaCtrl: ['', Validators.required],
+      llegadaDestinoDepartamentoCtrl: ['', Validators.required],
+      llegadaDestinoCiudadCtrl:['', Validators.required]
       /*
       firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
@@ -189,13 +201,15 @@ export class FormComponent implements OnInit {
 
 
     this.thirdFormGroup = this.formBuilder.group({
-      departamentoCtrl: ['', Validators.required],
+     /* departamentoCtrl: ['', Validators.required],
       municipioCtrl: ['', Validators.required],
       barrioCtrl: ['', Validators.required],
-      direccionCtrl: [''],
+      direccionCtrl: [''],*/
       numeroContactoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
       lineaContactoPropiaCtrl: ['', Validators.required],
+      //lineaContactoAlternativoCtrl:['', Validators.required], //verificar
       correoCtrl: [''],
+      cuentaFacebook: [''],
       comentarioAdicionalCtrl: ['']
     });
 
@@ -321,12 +335,19 @@ export class FormComponent implements OnInit {
     if ($event.value === 'si') { // si la linea de contacto es propia, oculta contacto alternativo y muestra linea whatsapp
       this.contactoAlternativoInput = false;
       this.lineacontactoWhatsappInput = true;
+      this.lineacontactoAlternativaWhatsappInput = false;
       // crea controlador de lineacontactowhatsapp
       this.thirdFormGroup.addControl('lineaContactoAsociadaAWhatsappCtrl', new FormControl('',
         [Validators.required, Validators.min(1000000), Validators.max(9999999999)]));
       if (this.thirdFormGroup.contains('contactoAlternativoCtrl')) {
         // elimina controlador si existe
         this.thirdFormGroup.removeControl('contactoAlternativoCtrl');
+
+        this.thirdFormGroup.removeControl('lineaContactoAlternativoCtrl');
+
+         if(this.thirdFormGroup.contains('lineaContactoAlternativoAsociadaAWhatsappCtrl')){
+          this.thirdFormGroup.removeControl('lineaContactoAlternativoAsociadaAWhatsappCtrl');
+         }
       }
     } else if ($event.value === 'no') { // si linea de contacto no es propia
       this.contactoAlternativoInput = true;  // muestra contacto alternativo
@@ -334,10 +355,48 @@ export class FormComponent implements OnInit {
       this.thirdFormGroup.addControl('contactoAlternativoCtrl',
         new FormControl('', [Validators.required, Validators.min(1000000),
           Validators.max(9999999999)])); // crea controlador para contactoalternativo
+
+          this.thirdFormGroup.addControl('lineaContactoAlternativoCtrl',
+          new FormControl('', [Validators.required])); // crea controlador para lineaContactoAlternativoCtrl
+
       if (this.thirdFormGroup.contains('contactoAlternativoCtrl')) { // si ya existe contacto alternativo elimina linea whatsapp
         this.thirdFormGroup.removeControl('lineaContactoAsociadaAWhatsappCtrl');
       }
     }
+
+    //console.log('THIRD FORM GROUP CONTACTO PROPIA: ', this.thirdFormGroup);
+  }
+
+  //nueva funcion jorge:
+  lineaContactoAlternativo($event: any): void{
+    if ($event.value === 'si') { // si la linea de contacto es propia, oculta contacto alternativo y muestra linea whatsapp
+      //his.contactoAlternativoInput = false;
+      this.lineacontactoAlternativaWhatsappInput = true;
+      // crea controlador de lineacontactowhatsapp
+      this.thirdFormGroup.addControl('lineaContactoAlternativoAsociadaAWhatsappCtrl', new FormControl('',
+        [Validators.required, Validators.min(1000000), Validators.max(9999999999)]));
+      /*if (this.thirdFormGroup.contains('contactoAlternativoCtrl')) {
+        // elimina controlador si existe
+        this.thirdFormGroup.removeControl('contactoAlternativoCtrl');
+
+        this.thirdFormGroup.removeControl('lineaContactoAlternativoCtrl');
+      }*/
+    } else if ($event.value === 'no') { // si linea de contacto no es propia
+      //this.contactoAlternativoInput = true;  // muestra contacto alternativo
+      this.lineacontactoAlternativaWhatsappInput = false; // oculta linea contacto whatsapp
+      /*this.thirdFormGroup.addControl('contactoAlternativoCtrl',
+        new FormControl('', [Validators.required, Validators.min(1000000),
+          Validators.max(9999999999)])); // crea controlador para contactoalternativo
+
+          this.thirdFormGroup.addControl('lineaContactoAlternativoCtrl',
+          new FormControl('', [Validators.required])); // crea controlador para lineaContactoAlternativoCtrl
+      */
+      
+      if (this.thirdFormGroup.contains('lineaContactoAlternativoAsociadaAWhatsappCtrl')) { // si ya existe contacto alternativo elimina linea whatsapp
+        this.thirdFormGroup.removeControl('lineaContactoAlternativoAsociadaAWhatsappCtrl');
+      }
+    }
+    //console.log('THIRD FORM GROUP CONTACTO ALTERNATIVO: ', this.thirdFormGroup);
   }
 
 // validacion de seleccion si es mujer
@@ -377,10 +436,17 @@ export class FormComponent implements OnInit {
       primerapellidoCtrl: new FormControl('', Validators.required),
       segundoapellidoCtrl: new FormControl(''),
       sexoCtrl: new FormControl('', Validators.required),
-      fechaCtrl: new FormControl('', Validators.required)
+      fechaCtrl: new FormControl('', Validators.required),
+      nacionalidadCtrl: new FormControl('', Validators.required),
+      tipoDocumentoCtrl: new FormControl('', Validators.required),
+      numeroDocumentoCtrl: new FormControl ('', [Validators.required, Validators.min(100)]),
+      compartirFotoDocumentoCtrl: new FormControl('', Validators.required)
+
     });
     chekgroup.push(controle);
     this.mostrarOtroSexoMiembrosFamilia.push(false);
+
+    //console.log('MIEMBROS FAMILIA : ', this.fourFormGroup.controls.miembrosFamilia);
   }
 
 // elimina miembro del hogar
@@ -389,6 +455,83 @@ export class FormComponent implements OnInit {
     this.seleccionSexo(index);
     this.mostrarOtroSexoMiembrosFamilia.splice(index, 1);
   }
+
+  //seleccion nacionalidad miembro
+  selectNacionalidadMiembro($event:any,index):void{
+    /*
+    console.log('SELECT NACIONALIDAD MIEMBRO: ');
+    console.log('EVENTO: ', $event);
+    console.log('INDEX MIEMBRO: ', index);
+
+    console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);
+
+    console.log('SELECT TIPO DOCUMENTO MIEMBRO: ');
+    console.log('$event: ', $event);
+    console.log('INDEX: ', index);
+    console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);*/
+
+    if ($event.value == 'Otro') { // si es Otro agrega el controlador
+      
+     
+      //console.log('MIEMBRO FAMILIA EN OTRO NACIONALIDAD ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('otroNacionalidadCtrl', new FormControl('', Validators.required));
+    } else if ($event.value != 'Otro' && this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('otroNacionalidadCtrl')) {
+      // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
+      
+      //console.log('MIEMBRO FAMILIA NACIONALIDAD DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+
+      
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('otroNacionalidadCtrl');
+    }
+
+    
+  }
+
+  //seleccion tipodocumento miembro
+  
+
+  selectTipoDocumentoMiembro($event: any,index): void {
+
+    /*
+    console.log('SELECT TIPO DOCUMENTO MIEMBRO: ');
+    console.log('$event: ', $event);
+    console.log('INDEX: ', index);
+    console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);*/
+
+    if ($event.value == 'Otro') { // si es Otro agrega el controlador
+      
+      //this.otroTipoDocumento = true;
+      //console.log('MIEMBRO FAMILIA EN OTRO TIPO DOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
+    } else if ($event.value != 'Otro' && this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('otroTipoDocumentoCtrl')) {
+      // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
+      
+      //console.log('MIEMBRO FAMILIA TIPO DOCUMENTO DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+
+      //this.otroTipoDocumento = false;
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('otroTipoDocumentoCtrl');
+    }
+
+    if ($event.value == 'Indocumentado') { // Si es indocumentado elimina controlador de numero documento
+      
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('numeroDocumentoCtrl');
+      //this.secondFormGroup.removeControl('numeroDocumentoCtrl');
+      //console.log('MIEMBRO FAMILIA INDOCUMENTADO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+
+      //this.numeroDocumento = false;
+    } else if ($event.value != 'Indocumentado' && !this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('numeroDocumentoCtrl')) {
+      // si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
+      
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
+      //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
+      //this.numeroDocumento = true;
+      //console.log('MIEMBRO DIFERENTE A INDOCUMENTADO Y CONTIENE NUMERODOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+
+    }
+  }
+
+
+  //compartir
 
 // funcion para cambiar de paso
   stepChange(e, stepper): void {
@@ -412,12 +555,86 @@ export class FormComponent implements OnInit {
 
   //nuevas funciones Jorge:
   planeaEstarEnColombia($event:any):void{
-    console.log('SELECCION PLANEA ESTAR EN COLOMBIA: ',$event);
+    //console.log('SELECCION PLANEA ESTAR EN COLOMBIA: ',$event);
+    if($event.value == 0){ //si selecciona NO planea estar en colombia
+        this.dentroDeColombiaNO =true;
+        this.dentroDeColombia = false;
+
+        //valida si existe el controlador llegadaDestinoDestinoFinalFueraColombiaCtrl no existe, para crearlo
+        this.llegadaDestinoFormGroup.addControl('llegadaDestinoDestinoFinalFueraColombiaCtrl', new FormControl('', [Validators.required]));
+
+        //valida si existe el controlador llegadaDestinoDepartamentoCtrl, si existe lo elimina
+        if(this.llegadaDestinoFormGroup.contains('llegadaDestinoDepartamentoCtrl')){
+          this.llegadaDestinoFormGroup.removeControl('llegadaDestinoDepartamentoCtrl');
+        }
+        
+        //valida si existe el controlador llegadaDestinoCiudadCtrl, si existe lo elimina
+        if(this.llegadaDestinoFormGroup.contains('llegadaDestinoCiudadCtrl')){
+          this.llegadaDestinoFormGroup.removeControl('llegadaDestinoCiudadCtrl');
+        }
+        //console.log('LLEGADA FORMGROUP NO PLANEA ESTAR EN COLOMBIA',this.llegadaDestinoFormGroup)
+
+      
+    }else{//si selecciona SI planea estar en colombia
+      this.dentroDeColombiaNO = false;
+      this.dentroDeColombia = true;
+
+      //valida si controlador llegadaDestinoDestinoFinalFueraColombiaCtrl existe, para eliminarlo
+      if(this.llegadaDestinoFormGroup.contains('llegadaDestinoDestinoFinalFueraColombiaCtrl')){
+        this.llegadaDestinoFormGroup.removeControl('llegadaDestinoDestinoFinalFueraColombiaCtrl');
+      }
+
+      //valida si controlador llegadaDestinoDepartamentoCtrl no existe, para crearlo
+      if(!this.llegadaDestinoFormGroup.contains('llegadaDestinoDepartamentoCtrl')){
+        this.llegadaDestinoFormGroup.addControl('llegadaDestinoDepartamentoCtrl', new FormControl('', [Validators.required]));
+      }
+
+     // console.log('LLEGADA FORMGROUP SI PLANEA ESTAR EN COLOMBIA',this.llegadaDestinoFormGroup)
+    }
   }
-  /*
-  selectFechaLlegadaPais($event: any): void {
+
+  selectDepartamentoLlegadaDestino($event:any):void{
+
+    //console.log('SELECCION DEPARTAMENTO: ', $event.value);
+    //console.log('LLEGADA A DESTINO FORM GROUP: ',this.llegadaDestinoFormGroup);
+
+    if($event.value != 'nodefinido'){ //selecciona algun departamento
+
+        //console.log('DEPARTAMENTO SELECCIONADO DEFINIDO DEBE MOSTRAR CIUDAD');
+
+        if(!this.llegadaDestinoFormGroup.contains('llegadaDestinoCiudadCtrl')){ //valida si controlador llegadaDestinoCiudadCtrl no existe, lo crea
+          this.llegadaDestinoFormGroup.addControl('llegadaDestinoCiudadCtrl', new FormControl('', [Validators.required]));
+          
+        }
+
+        this.municipiosFilter = this.municipiosList;
+        const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
+        this.municipiosFilter = municipiosnuevo;
+        //console.log('MUNICIPIOS FILTRADOS: ', this.municipiosFilter);
+        this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue(null);
+      
+
+    }else{ //selecciona nodefinido, ya no puede seleccionar ciudad
+       //console.log('NO DEFINIDO DEBE OCULTAR CIUDAD');
+        if(this.llegadaDestinoFormGroup.contains('llegadaDestinoCiudadCtrl')){ //si contiene controlador Ciudad, lo elimina
+          this.llegadaDestinoFormGroup.removeControl('llegadaDestinoCiudadCtrl');
+        }
+      /*console.log('NO DEFINIDO DEBE OCULTAR CIUDAD');
+      this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue('');
+      this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.clearValidators();
+      console.log('LLEGADA A DESTINO FORM GROUP DESPUES DE SET VALUE vacio: ',this.llegadaDestinoFormGroup);*/
+    }
     
-  }*/
+  }
+
+  selectCiudadLlegadaDestino($event:any):void{
+   // console.log('SELECCION MUNICIPIO: ', $event);
+   // if($event.value == 'nodefinido'){
+//this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue('');
+    //}
+    //console.log('LLEGADAS DESTINO: ',this.llegadaDestinoFormGroup);
+   
+  }
 
 // creo boton mati con parametros
   botonMati(): void {
@@ -429,7 +646,7 @@ export class FormComponent implements OnInit {
 
 // Guardo información
   enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama, finalizar: boolean): void {
-    /*
+    
     const data = {
       paso,
       infoencuesta: grupo.value,
@@ -441,7 +658,7 @@ export class FormComponent implements OnInit {
       this.formService.postForm(data).subscribe(res => {
         this.id = res;
         if (grupo.value.tipoDocumentoCtrl != 'Indocumentado' && this.form === 1) {
-          this.botonMati(); //  Llamo a función para agregar bloque botón mati
+         // this.botonMati(); //  Llamo a función para agregar bloque botón mati
         }
         this.snackBar.open('Información almacenada correctamente.', 'X', {
           duration: 2000
@@ -512,6 +729,6 @@ export class FormComponent implements OnInit {
         }
         this.saving = false;
       });
-    }*/
+    }
   }
 }
