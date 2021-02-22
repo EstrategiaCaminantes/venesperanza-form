@@ -60,6 +60,15 @@ export class FormComponent implements OnInit {
   llegadaDestinoFormGroup: FormGroup;
 
   //nuevas listas Jorge:
+
+  opcionesComoLlegoAlFormulario = [
+    {name: 'Publicidad en el camino' ,value:'publicidad_en_el_camino'},
+    {name: 'Recibí el enlace por chat', value: 'recibi_el_enlace_por_chat'},
+    {name: 'Encontré el enlace en Facebook', value: 'encontre_el_enlace_en_facebook'},
+    {name: 'Código QR', value:'codigo_qr'}
+  ];
+ 
+
   listaFechasLlegadaPais = [
     {name: 'Menos de un mes', value: 'menos_de_un_mes'},
     {name: 'Entre uno y dos meses', value: 'entre_uno_y_dos_meses'},
@@ -169,6 +178,7 @@ export class FormComponent implements OnInit {
 
     //nuevos formgroup
     this.llegadaDestinoFormGroup = this.formBuilder.group({
+      comoLlegoAlFormularioCtrl: ['', Validators.required],
       llegadaDestinofechaLlegadaCtrl: ['', Validators.required],
       llegadaDestinoPlaneaEstarEnColombiaCtrl: ['', Validators.required],
       llegadaDestinoDestinoFinalFueraColombiaCtrl: ['', Validators.required],

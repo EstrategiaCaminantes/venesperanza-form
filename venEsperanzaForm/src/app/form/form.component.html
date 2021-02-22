@@ -153,17 +153,29 @@
           <form [formGroup]="llegadaDestinoFormGroup">
             <ng-template matStepLabel>DATOS DE LLEGADA Y DESTINO</ng-template>
            
+            <div class="margin-bottom-10">
+              <p>¿Cómo llegó a este formulario?*</p>
+                <mat-form-field class="datosllegada">
+                  <mat-label>Seleccionar una opción</mat-label>
+                <mat-select formControlName="comoLlegoAlFormularioCtrl"  required>
+                  <mat-option *ngFor="let opcion of opcionesComoLlegoAlFormulario" [value]="opcion.name">
+                    {{opcion.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
 
             <div class="margin-bottom-10">
               <p>¿En qué fecha tu y tu grupo familiar llegaron al país?*</p>
-              <mat-form-field class="datosllegada">
-                <mat-label>Seleccionar una opción</mat-label>
-              <mat-select formControlName="llegadaDestinofechaLlegadaCtrl"  required>
-                <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.value">
-                  {{fechallegada.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                <mat-form-field class="datosllegada">
+                  <mat-label>Seleccionar una opción</mat-label>
+                  <mat-select formControlName="llegadaDestinofechaLlegadaCtrl"  required>
+                    <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
+                    {{fechallegada.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
             </div>
 
@@ -352,7 +364,7 @@
                       <mat-label>Seleccionar una opción</mat-label>
                       <mat-select formControlName="compartirFotoDocumentoCtrl"  required>
                         <!--
-                          (selectionChange)="selectCompartirFotoDocumento($event)"
+                          (selectionChange)="compartirFotoDocumento($event,i)"
                           -->
                         <mat-option [value]="1">
                           Sí
