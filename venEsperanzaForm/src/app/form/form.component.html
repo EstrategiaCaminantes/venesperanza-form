@@ -2,127 +2,92 @@
   <section class="titleheader mat-typography">
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
       <div fxFlex="0 0 40%" fxFlex.lt-sm="0 0 60%" fxFlex.gt-lg="0 0 30%">
-        <img class="margin-top-10 logo-wv" src="assets/img/logowv.png" alt="World Vision">
+        <img class="margin-top-10 logo-wv" src="assets/img/logoUSAID.png" alt="USAID">
+      </div>
+      <div fxFlex="0 0 25%" fxFlex.lt-sm="0 0 35%" fxFlex.gt-lg="0 0 20%">
+        <img class="margin-top-10 logo-wv" src="assets/img/logovenes.png" alt="VenEsperanza">
       </div>
     </div>
     <h2 *ngIf="titleheader" class="text-blue text-bold margin-top-20">
-      Formulario de identificación de familias migrantes venezolanas, colombianas retornadas y comunidades de acogida.
+      Formulario NO oficial de identificación para familias migrantes venezolanas y colombianas retornadas recién
+      llegadas a Colombia
+    </h2>
+    <h2 *ngIf="titleheader" class="text-blue text-bold margin-top-20">
+      Para programas humanitarios ofrecidos por organizaciones no gubernamentales, completar este formulario no modifica
+      tu estatus migratorio en Colombia
     </h2>
     <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
     <h3 class="text-bold" *ngIf="thanksmessage && form === 1">
-      Si eres preseleccionado/a World Vision se comunicará contigo
+      Si eres preseleccionado/a el programa <span class="text-blue text-bold">#VenEsperanza</span> se comunicará contigo
     </h3>
     <h3 class="text-bold margin-bottom-0" *ngIf="thanksmessage">
       Recuerda:
     </h3>
     <h3 class="text-bold" *ngIf="thanksmessage">
-      En World Vision no cobramos ni pedimos remuneración por ningún servicio a la comunidad, no tenemos intermediarios.
+      En el programa <span class="text-blue text-bold">#VenEsperanza</span> no cobramos ni pedimos remuneración por
+      ningún servicio a la comunidad, no tenemos intermediarios.
     </h3>
   </section>
   <section *ngIf="termnsandconditions" fxLayout="row">
     <div class="termnsandconditions" fxFlex="100%">
-      <h3 class="text-underline">Términos de participación</h3>
+      <h3 class="text-underline">
+        Términos de participación
+      </h3>
+      <p>
+        El objetivo de esta encuesta es valorar si es posible que seas elegido/a para ingresar a programas de asistencia
+        humanitaria en el momento en que llegas a tu destino.
+      </p>
       <p class="text-bold text-red">
         Este proceso es gratuito.
       </p>
-      <p class="text-bold">
-        ¡Tu participación es voluntaria!
-      </p>
-      <p class="text-bold">
-        Esta iniciativa de identificación de familias vulnerables es realizada hasta enero de 2021.
-      </p>
-      <p class="text-bold">
-        Ten presente que si algún miembro de tu familia ya se registró o hizo parte del proyecto
-        <span class="text-blue">#VenEsperanza</span> no se podrá volver a registrar.
-      </p>
-      <p class="text-bold">
-        Puedes decidir no participar o retirarte en cualquier momento.
-      </p>
-      <p class="text-bold">
-        La información brindada no tendrá ninguna implicación en tu condición migratoria.
-      </p>
-      <p class="text-bold">
-        Este proceso de identificación está únicamente habilitado de forma virtual para los usuarios de Facebook
-        ubicados en Villa del Rosario. Si el enlace del formulario fue compartido, copiado o reenviado, no podrás
-        ingresar.
+      <p>
+        Somos un programa de atención humanitaria y <strong>no compartiremos tus datos personales con el Gobierno
+        Colombiano,</strong> por lo que completar este formulario <strong>no tiene ningún efecto legal sobre tu
+        condición migratoria o tu estatus legal en Colombia.</strong>
       </p>
       <p>
-        El objetivo de esta encuesta es valorar si es posible que seas elegido para ingresar a programas de asistencia
-        humanitaria.
+        <strong>Ten presente que solo te puedes registrar una única vez en este proceso.</strong> Hacer registros
+        múltiples podría <strong>ponerte en riesgo de quedar descalificado del programa <span
+        class="text-blue text-bold">#VenEsperanza</span>.</strong>
+        Por favor registra en este mismo formulario a todos los miembros de tu familia que actualmente te acompañan,
+        <strong>no hagas registros individuales pues podría resultar en registros duplicados que serían
+          descalificados.</strong>
       </p>
       <p>
-        Estos programas pueden incluir asistencia multipropósito, servicios de protección y otros servicios
-        humanitarios.
+        Tu participación es voluntaria. Puedes decidir no participar o retirarte en cualquier momento del proceso.
+        Diligenciar este formulario te tomará aproximadamente 10 minutos.
       </p>
       <p>
         Responder a estas preguntas no quiere decir que tú y tu familia serán automáticamente seleccionados. Si eres
-        preseleccionado, serás contactado por la organización para continuar con el proceso.
+        preseleccionado, serás contactado por la organización que represente el programa <span
+        class="text-blue text-bold">#VenEsperanza</span> para continuar con
+        el proceso, por eso <strong>es muy importante que proporciones en este formulario todos tus datos personales de
+        contacto, para poder localizarte en caso de resultar elegido para el programa.</strong>
       </p>
       <p>
-        Tu información es confidencial, sin embargo, la organización podría tener que compartir parte de tus datos, de
-        manera segura, con otras organizaciones. Estas podrían ser nuestro donante, las Naciones Unidas y ONG’s
-        nacionales e internacionales. Esto con el fin de no tener posibles casos duplicados, de fraude o para referir tu
-        hogar a servicios adicionales, y contribuir en iniciativas de investigación conjuntas de carácter humanitario.
+        Tu información es confidencial, sin embargo, el programa <span class="text-blue text-bold">#VenEsperanza</span>
+        podría tener que compartir parte de tus
+        datos de manera segura con otras organizaciones humanitarias, nuestro donante, las Naciones Unidas y otras ONG’s
+        nacionales e internacionales, para evitar posibles casos de atención duplicada o fraude, para referir tu hogar a
+        servicios adicionales y para contribuir en iniciativas de investigación conjuntas de carácter humanitario.
       </p>
       <p>
-        Este proceso de identificación de datos incluye preguntas sobre tu situación actual. La información que
-        entregues será verificada por la organización.
+        Este proceso de identificación de datos incluye preguntas sobre tu situación actual. <strong>La información que
+        entregues será verificada por la organización.</strong>
       </p>
-      <p class="text-bold">
-        Por favor responde con tus datos reales.
-      </p>
-      <h3 class="text-underline">Autorización para el tratamiento de Datos Personales</h3>
-      <p>
-        Cuando haces clic en la casilla “Si autorizo”, aceptas el tratamiento de tus datos personales a Visión Mundial
-        Internacional, como responsable de tu información, para las siguientes finalidades:
-      </p>
-      <ul>
-        <li>Validar los requisitos que determinarán si eres elegible para recibir los beneficios del programa.</li>
-        <li>Identificar si eres un posible participante del programa.</li>
-        <li>Entregar vía telefónica o por medios digitales información adicional para que puedas participar en el
-          programa.
-        </li>
-        <li>Confirmar tus datos personales.</li>
-        <li>Recibir asistencias multipropósito en caso de seas seleccionado como participante del programa.</li>
-        <li>Hacer parte de la base de datos de familias vulnerables afectadas por la crisis migratoria.</li>
-        <li>Participar en encuestas para identificar elementos de vulnerabilidad de la población beneficiaria.</li>
-        <li>Participar en investigaciones, análisis o prestación de servicio humanitario.</li>
-        <li>Recibir comunicaciones físicas y/o electrónicas.</li>
-      </ul>
-      <p>
-        Entiendo que me pueden llegar a realizar preguntas relacionadas con datos personales sensibles y datos
-        personales de mi núcleo familiar. Me han informado que no me encuentro obligado a suministrar dichos datos
-        personales. No obstante, se me ha explicado la importancia de suministrar dicha información con el propósito de
-        poder acceder a los beneficios del programa.
-      </p>
-      <p>
-        Entiendo y autorizo el tratamiento de mis datos personales y los datos personales de mi núcleo familiar, quienes
-        previamente me han otorgado su autorización para entregar sus datos personales, para la posibilidad de
-        participar en el programa, según las finalidades aquí descritas.
-      </p>
-      <p>
-        Autorizo y entiendo que la información personal que suministro será almacenada en servidores externos a cargo de
-        terceros en un país que tiene un nivel adecuado de seguridad de los datos, y que mi información personal puede
-        llegar a ser transmitida a otras organizaciones que participan en el programa, conforme a lo establecido en la
-        Política de Tratamiento de Datos Personales.
-      </p>
-      <p>
-        Declaro que Visión Mundial Internacional ha puesto en mi conocimiento, el derecho que poseo como titular de la
-        información entregada, de recibir en cualquier momento información acerca del tratamiento dado a los datos
-        entregados, y/o de solicitar la actualización, rectificación, y/o supresión de los datos personales
-        recolectados, o la revocatoria de la autorización otorgada, lo cual podré solicitar mediante un correo
-        electrónico enviado a juridica_colombia@wvi.org , o a través de una comunicación dirigida a la sede principal
-        ubicada en la Cra. 7 No. 60 a –24 de la ciudad de Bogotá D.C.
-      </p>
+      <h3 class="text-underline">Por favor responde con tus datos reales</h3>
       <p class="url-text">
-        Conozco que Visión Mundial Internacional para efectos del presente programa, cuenta con una política de
-        Protección de Datos Personales la cual podré consultar en la página web
+        Si quieres conocer la política de tratamiento de datos personales visita el enlace:
         <a target="_blank" href="https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf">
           https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf</a>.
       </p>
     </div>
   </section>
   <div *ngIf="form && quentionaccepttermns">
+    <p>
+      Cuando haces clic en la casilla <strong>"Si autorizo"</strong>, aceptas el tratamiento de tus datos personales al
+      programa <span class="text-blue text-bold">#VenEsperanza</span>, como responsable de tu información
+    </p>
     <p>
       <mat-checkbox class="example-margin" color="primary" (change)="toggleAutorTrat($event)">
       </mat-checkbox>
@@ -133,8 +98,14 @@
       </mat-checkbox>
       Entiendo y acepto los términos y condiciones establecidos para participar en el programa.
     </p>
+    <p *ngIf="autorizationPolicy && autorizationConditions">
+      A continuación, te pediremos completar los datos de todas las personas de tu familia que están viajando contigo,
+      empezando por tus datos. Recuerda que este formulario debe ser completado por familia y no de forma individual,
+      pues los datos duplicados podrían correr el riesgo de quedar descalificados del programa.
+    </p>
     <h3 *ngIf="autorizationPolicy && autorizationConditions" class="text-bold text-blue">
-      ¿Estás de acuerdo con las condiciones explicadas?
+      ¿Estás de acuerdo con las condiciones expuestas anteriormente y autorizas a el programa <span
+      class="text-blue text-bold">#VenEsperanza</span> para tratar tus datos personales?
     </h3>
     <div *ngIf="autorizationPolicy && autorizationConditions" class="margin-top-20 text-center">
       <button mat-raised-button color="primary" (click)="termsAccept(true)" class="accept-button">SI</button>
@@ -177,111 +148,108 @@
                   </mat-select>
                 </mat-form-field>
 
-            </div>
+          </div>
 
-            <div class="margin-bottom-10">
-              <p>¿En los próximos seis meses planeas estar dentro de Colombia?*</p>
-              <mat-form-field class="datosllegada">
-                <mat-label>Seleccionar una opción</mat-label>
-              <mat-select formControlName="llegadaDestinoPlaneaEstarEnColombiaCtrl" (selectionChange)="planeaEstarEnColombia($event)"  required>
+          <div class="margin-bottom-10">
+            <p>¿En los próximos seis meses planeas estar dentro de Colombia?*</p>
+            <mat-form-field class="datosllegada">
+              <mat-label>Seleccionar una opción</mat-label>
+              <mat-select formControlName="llegadaDestinoPlaneaEstarEnColombiaCtrl"
+                          (selectionChange)="planeaEstarEnColombia($event)" required>
                 <!--<mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
                   {{fechallegada.name}}
                 </mat-option>-->
                 <mat-option [value]="1">
                   Sí
                 </mat-option>
-                <mat-option  [value]="0">
+                <mat-option [value]="0">
                   No
                 </mat-option>
-                <mat-option  [value]="2">
+                <mat-option [value]="2">
                   No estoy seguro
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
-            </div>
+          </div>
 
 
-            <div class="margin-bottom-10" *ngIf="dentroDeColombiaNO">
-              <p>¿Cuál es tu destino final?*</p>
-              <mat-form-field  class="datosllegada">
-                <!--<mat-label>¿Cuál es tu destino final?</mat-label>-->
-                <input matInput placeholder="País: " formControlName="llegadaDestinoDestinoFinalFueraColombiaCtrl" required>
-              </mat-form-field>
-            </div>
+          <div class="margin-bottom-10" *ngIf="dentroDeColombiaNO">
+            <p>¿Cuál es tu destino final?*</p>
+            <mat-form-field class="datosllegada">
+              <!--<mat-label>¿Cuál es tu destino final?</mat-label>-->
+              <input matInput placeholder="País: " formControlName="llegadaDestinoDestinoFinalFueraColombiaCtrl"
+                     required>
+            </mat-form-field>
+          </div>
 
-            
-            <div class="margin-bottom-10" *ngIf="dentroDeColombia">
-              <p>¿Cuál es tu destino final dentro de Colombia?*</p>
-              
-                
-              <mat-form-field class="datosllegada">
-                <mat-label>Departamento:</mat-label>
-                <mat-select formControlName="llegadaDestinoDepartamentoCtrl" (selectionChange)="selectDepartamentoLlegadaDestino($event)" required>
-                  <mat-option [value]="'nodefinido'">No sé</mat-option>
-                  <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
-                    {{departamento.nombre}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
 
-              <mat-form-field class="datosllegada" *ngIf="llegadaDestinoFormGroup.controls.llegadaDestinoDepartamentoCtrl.value != '' && llegadaDestinoFormGroup.controls.llegadaDestinoDepartamentoCtrl.value != 'nodefinido'">
-                <mat-label>Ciudad:</mat-label>
-                
-                <mat-select formControlName="llegadaDestinoCiudadCtrl" (selectionChange)="selectCiudadLlegadaDestino($event)" required>
-                  <mat-option [value]="'nodefinido'">No sé</mat-option>
-                  <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
-                    {{municipio.nombre}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+          <div class="margin-bottom-10" *ngIf="dentroDeColombia">
+            <p>¿Cuál es tu destino final dentro de Colombia?*</p>
 
-            </div>
 
-            
-
-           
-            <!--
-            <mat-form-field class="fechaLlegada">
-              
-              <mat-label>¿En qué fecha tu y tu grupo familiar llegaron al país?</mat-label>
-              <mat-select formControlName="fechaLlegadaAlPaisCtrl"  required>
-                <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
-                  {{fechallegada.name}}
+            <mat-form-field class="datosllegada">
+              <mat-label>Departamento:</mat-label>
+              <mat-select formControlName="llegadaDestinoDepartamentoCtrl"
+                          (selectionChange)="selectDepartamentoLlegadaDestino($event)" required>
+                <mat-option [value]="'nodefinido'">No sé</mat-option>
+                <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
+                  {{departamento.nombre}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            -->
-            <div *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
-              <button color="primary" mat-raised-button [disabled]="saving"
-                      (click)="enviarInfo(llegadaDestinoFormGroup,'paso1',stepper,true,stepper, false)">
-                {{saving ? 'Guardando...' : 'Siguiente'}}
-              </button>
-              <p>
-                Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
-              </p>
-            </div>
-            <p *ngIf="llegadaDestinoFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta obligatoria</p>
-            <p class="text-blue text-bold">#VenEsperanza</p>
-            
-          </form>
+
+            <mat-form-field class="datosllegada"
+                            *ngIf="llegadaDestinoFormGroup.controls.llegadaDestinoDepartamentoCtrl.value != '' && llegadaDestinoFormGroup.controls.llegadaDestinoDepartamentoCtrl.value != 'nodefinido'">
+              <mat-label>Ciudad:</mat-label>
+
+              <mat-select formControlName="llegadaDestinoCiudadCtrl"
+                          (selectionChange)="selectCiudadLlegadaDestino($event)" required>
+                <mat-option [value]="'nodefinido'">No sé</mat-option>
+                <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
+                  {{municipio.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+
+          <!--
+          <mat-form-field class="fechaLlegada">
+
+            <mat-label>¿En qué fecha tu y tu grupo familiar llegaron al país?</mat-label>
+            <mat-select formControlName="fechaLlegadaAlPaisCtrl"  required>
+              <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
+                {{fechallegada.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          -->
+          <div *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
+            <button color="primary" mat-raised-button [disabled]="saving"
+                    (click)="enviarInfo(llegadaDestinoFormGroup,'paso1',stepper,true,stepper, false)">
+              {{saving ? 'Guardando...' : 'Siguiente'}}
+            </button>
+            <p>
+              Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
+            </p>
+          </div>
+          <p *ngIf="llegadaDestinoFormGroup.status != 'VALID'"><span class="text-red text-bold">*</span>Pregunta
+            obligatoria</p>
+          <p class="text-blue text-bold">#VenEsperanza</p>
+        </form>
       </mat-step>
-
-      
-
-
       <mat-step [stepControl]="fourFormGroup" *ngIf="form === 1">
         <form [formGroup]="fourFormGroup">
           <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
           <!--<p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro de tu hogar*</p>-->
-
           <p class="text-bold">¿Cuántas personas de tu familia (incluyéndote) están contigo en este momento?
             Por ejemplo si viajas solo responde 1.
             <br>
             A continuación, se deben agregar los datos personales de cada miembro de tu hogar (incluyéndote)*
-            </p>
-          
-            <div formArrayName="miembrosFamilia">
+          </p>
+          <div formArrayName="miembrosFamilia">
             <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;" class="margin-top-20">
               <div [formGroup]="miembroinfo">
                 <div>
@@ -323,7 +291,8 @@
                 <!--nacionalidad-->
                 <mat-form-field>
                   <mat-label>Nacionalidad:</mat-label>
-                  <mat-select formControlName="nacionalidadCtrl" (selectionChange)="selectNacionalidadMiembro($event, i)" required>
+                  <mat-select formControlName="nacionalidadCtrl"
+                              (selectionChange)="selectNacionalidadMiembro($event, i)" required>
                     <mat-option *ngFor="let nacionalidad of nacionalidades" [value]="nacionalidad.name">
                       {{nacionalidad.name}}
                     </mat-option>
@@ -338,7 +307,8 @@
 
                 <mat-form-field>
                   <mat-label>Tipo de Documento:</mat-label>
-                  <mat-select formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumentoMiembro($event,i)" required>
+                  <mat-select formControlName="tipoDocumentoCtrl"
+                              (selectionChange)="selectTipoDocumentoMiembro($event,i)" required>
                     <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
                       {{documento.name}}
                     </mat-option>
@@ -349,14 +319,13 @@
                   <input matInput placeholder="Ejemplo: Pasaporte" formControlName="otroTipoDocumentoCtrl" required>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="miembrosFamilia.controls[i].controls.tipoDocumentoCtrl.value !== 'Indocumentado' &&  miembrosFamilia.controls[i].controls.numeroDocumentoCtrl">
+                <mat-form-field
+                  *ngIf="miembrosFamilia.controls[i].controls.tipoDocumentoCtrl.value !== 'Indocumentado' &&  miembrosFamilia.controls[i].controls.numeroDocumentoCtrl">
                   <mat-label>Número de Documento</mat-label>
                   <input matInput placeholder="Número de Documento" type="number" formControlName="numeroDocumentoCtrl"
                          required minlength="3">
                 </mat-form-field>
 
-
-          
 
                 <div class="margin-bottom-10">
                   <p>¿Podrías compartir una fotografía de tu documento?*</p>
@@ -374,12 +343,13 @@
                         </mat-option>
                       </mat-select>
                   </mat-form-field>
-    
+
                 </div>
 
                 <!--
 
-                <div class="margin-bottom-10" *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
+                <div class="margin-bottom-10" 
+                *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
                   <p>Por favor carga una fotografía de tu documento aquí</p>
 
                   
@@ -388,11 +358,6 @@
 
 
               </div>-->
-
-
-                
-
-
 
 
               </div>
@@ -437,8 +402,8 @@
 
           <p class="text-bold">
             Recuerda que es muy importante que proporciones en este formulario todos tus datos personales de contacto,
-            para poder localizarte en caso de resultar elegido para el programa. 
-            </p>
+            para poder localizarte en caso de resultar elegido para el programa.
+          </p>
 
           
           <mat-form-field>
@@ -503,11 +468,11 @@
               </div>
             </mat-radio-group>
           </div>
-          
-          <mat-form-field  *ngIf='contactoAlternativoInput'>
+
+          <mat-form-field *ngIf='contactoAlternativoInput'>
             <mat-label>Número de contacto alternativo*</mat-label>
             <input matInput type="number" formControlName="contactoAlternativoCtrl" placeholder="Ej: 3131234567"
-            minlength="7" maxlength="10">
+                   minlength="7" maxlength="10">
           </mat-form-field>
 
           <div class="margin-bottom-10" *ngIf='contactoAlternativoInput'>
@@ -532,16 +497,16 @@
             </mat-radio-group>
           </div>
 
-          
+
           <mat-form-field class="contactoAlternativo">
             <mat-label>Escribe un correo electrónico donde te podamos contactar</mat-label>
             <input matInput formControlName="correoCtrl" placeholder="">
           </mat-form-field>
 
-          <div class="margin-bottom-10" >
+          <div class="margin-bottom-10">
             <label>¿Tienes cuenta en Facebook?:</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName
-              ="cuentaFacebook" >
+              ="cuentaFacebook">
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
@@ -577,7 +542,7 @@
           <p class="text-blue text-bold">#VenEsperanza</p>
         </form>
       </mat-step>
-      
+
 
       <!--
       <mat-step [stepControl]="secondFormGroup">
@@ -709,7 +674,7 @@
               <mat-icon>add</mat-icon>
             </button>
           </div>
-          
+
           <div class="margin-bottom-10 margin-top-10" *ngIf="fourFormGroup.value.miembrosFamilia.length == 0">
             <mat-checkbox class="example-margin" color="primary" (change)="toggleMiembro($event)">
               Soy el único miembro del hogar
@@ -730,8 +695,8 @@
         </form>
       </mat-step>
     -->
-      
-     
+
+
       <!--
       <mat-step [stepControl]="tenFormGroup"
                 *ngIf="form === 1 && secondFormGroup.value.tipoDocumentoCtrl != 'Indocumentado'">
