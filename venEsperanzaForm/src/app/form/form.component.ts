@@ -129,14 +129,13 @@ export class FormComponent implements OnInit {
       const coords = {latitud: position.coords.latitude, longitud: position.coords.longitude};
       const datos = {coordenadas: coords, adf: isv, ref: this.referrer};
       this.formService.validateUser(datos).subscribe(res => {
-        this.form = (res.valid == true) ? 1 : 2;
+        this.form = 1;
       }, error => {
-        //console.log('error', error);
-        this.form = 2;
+        // console.log('error', error);
+        this.form = 1;
       });
     }, error => {
-      //console.log(error);
-      this.form = 2;
+      this.form = 1;
     }, {timeout: 8000});
 
     this.formService.Login().subscribe(res => {
@@ -391,7 +390,7 @@ export class FormComponent implements OnInit {
           this.thirdFormGroup.addControl('lineaContactoAlternativoCtrl',
           new FormControl('', [Validators.required])); // crea controlador para lineaContactoAlternativoCtrl
       */
-      
+
       if (this.thirdFormGroup.contains('lineaContactoAlternativoAsociadaAWhatsappCtrl')) { // si ya existe contacto alternativo elimina linea whatsapp
         this.thirdFormGroup.removeControl('lineaContactoAlternativoAsociadaAWhatsappCtrl');
       }
@@ -471,24 +470,24 @@ export class FormComponent implements OnInit {
     console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);*/
 
     if ($event.value == 'Otro') { // si es Otro agrega el controlador
-      
-     
+
+
       //console.log('MIEMBRO FAMILIA EN OTRO NACIONALIDAD ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('otroNacionalidadCtrl', new FormControl('', Validators.required));
     } else if ($event.value != 'Otro' && this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('otroNacionalidadCtrl')) {
       // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
-      
+
       //console.log('MIEMBRO FAMILIA NACIONALIDAD DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
 
-      
+
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('otroNacionalidadCtrl');
     }
 
-    
+
   }
 
   //seleccion tipodocumento miembro
-  
+
 
   selectTipoDocumentoMiembro($event: any,index): void {
 
@@ -499,13 +498,13 @@ export class FormComponent implements OnInit {
     console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);*/
 
     if ($event.value == 'Otro') { // si es Otro agrega el controlador
-      
+
       //this.otroTipoDocumento = true;
       //console.log('MIEMBRO FAMILIA EN OTRO TIPO DOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
     } else if ($event.value != 'Otro' && this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('otroTipoDocumentoCtrl')) {
       // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
-      
+
       //console.log('MIEMBRO FAMILIA TIPO DOCUMENTO DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
 
       //this.otroTipoDocumento = false;
@@ -513,7 +512,7 @@ export class FormComponent implements OnInit {
     }
 
     if ($event.value == 'Indocumentado') { // Si es indocumentado elimina controlador de numero documento
-      
+
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('numeroDocumentoCtrl');
       //this.secondFormGroup.removeControl('numeroDocumentoCtrl');
       //console.log('MIEMBRO FAMILIA INDOCUMENTADO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
@@ -521,7 +520,7 @@ export class FormComponent implements OnInit {
       //this.numeroDocumento = false;
     } else if ($event.value != 'Indocumentado' && !this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('numeroDocumentoCtrl')) {
       // si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
-      
+
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
       //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
       //this.numeroDocumento = true;
@@ -567,14 +566,14 @@ export class FormComponent implements OnInit {
         if(this.llegadaDestinoFormGroup.contains('llegadaDestinoDepartamentoCtrl')){
           this.llegadaDestinoFormGroup.removeControl('llegadaDestinoDepartamentoCtrl');
         }
-        
+
         //valida si existe el controlador llegadaDestinoCiudadCtrl, si existe lo elimina
         if(this.llegadaDestinoFormGroup.contains('llegadaDestinoCiudadCtrl')){
           this.llegadaDestinoFormGroup.removeControl('llegadaDestinoCiudadCtrl');
         }
         //console.log('LLEGADA FORMGROUP NO PLANEA ESTAR EN COLOMBIA',this.llegadaDestinoFormGroup)
 
-      
+
     }else{//si selecciona SI planea estar en colombia
       this.dentroDeColombiaNO = false;
       this.dentroDeColombia = true;
@@ -604,7 +603,7 @@ export class FormComponent implements OnInit {
 
         if(!this.llegadaDestinoFormGroup.contains('llegadaDestinoCiudadCtrl')){ //valida si controlador llegadaDestinoCiudadCtrl no existe, lo crea
           this.llegadaDestinoFormGroup.addControl('llegadaDestinoCiudadCtrl', new FormControl('', [Validators.required]));
-          
+
         }
 
         this.municipiosFilter = this.municipiosList;
@@ -612,7 +611,7 @@ export class FormComponent implements OnInit {
         this.municipiosFilter = municipiosnuevo;
         //console.log('MUNICIPIOS FILTRADOS: ', this.municipiosFilter);
         this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue(null);
-      
+
 
     }else{ //selecciona nodefinido, ya no puede seleccionar ciudad
        //console.log('NO DEFINIDO DEBE OCULTAR CIUDAD');
@@ -624,7 +623,7 @@ export class FormComponent implements OnInit {
       this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.clearValidators();
       console.log('LLEGADA A DESTINO FORM GROUP DESPUES DE SET VALUE vacio: ',this.llegadaDestinoFormGroup);*/
     }
-    
+
   }
 
   selectCiudadLlegadaDestino($event:any):void{
@@ -633,7 +632,7 @@ export class FormComponent implements OnInit {
 //this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue('');
     //}
     //console.log('LLEGADAS DESTINO: ',this.llegadaDestinoFormGroup);
-   
+
   }
 
 // creo boton mati con parametros
@@ -646,7 +645,7 @@ export class FormComponent implements OnInit {
 
 // Guardo información
   enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama, finalizar: boolean): void {
-    
+
     const data = {
       paso,
       infoencuesta: grupo.value,

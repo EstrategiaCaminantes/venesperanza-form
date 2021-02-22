@@ -18,13 +18,14 @@
     </h2>
     <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
     <h3 class="text-bold" *ngIf="thanksmessage && form === 1">
-      Si eres preseleccionado/a World Vision se comunicará contigo
+      Si eres preseleccionado/a el programa <span class="text-blue text-bold">#VenEsperanza</span> se comunicará contigo
     </h3>
     <h3 class="text-bold margin-bottom-0" *ngIf="thanksmessage">
       Recuerda:
     </h3>
     <h3 class="text-bold" *ngIf="thanksmessage">
-      En World Vision no cobramos ni pedimos remuneración por ningún servicio a la comunidad, no tenemos intermediarios.
+      En el programa <span class="text-blue text-bold">#VenEsperanza</span> no cobramos ni pedimos remuneración por
+      ningún servicio a la comunidad, no tenemos intermediarios.
     </h3>
   </section>
   <section *ngIf="termnsandconditions" fxLayout="row">
