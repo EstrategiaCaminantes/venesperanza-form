@@ -201,9 +201,9 @@ export class FormComponent implements OnInit {
 
 
     this.thirdFormGroup = this.formBuilder.group({
-     /* departamentoCtrl: ['', Validators.required],
+      departamentoCtrl: ['', Validators.required],
       municipioCtrl: ['', Validators.required],
-      barrioCtrl: ['', Validators.required],
+      /*barrioCtrl: ['', Validators.required],
       direccionCtrl: [''],*/
       numeroContactoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
       lineaContactoPropiaCtrl: ['', Validators.required],
@@ -324,9 +324,10 @@ export class FormComponent implements OnInit {
   }
 
   selectMunicipio($event: any): void {
-    if ($event != 820) {
+    /*if ($event != 820) {
       this.thirdFormGroup.controls.barrioCtrl.setValue('');
-    }
+    }*/
+   // console.log('FORM DATOS CONTACTO: ', this.thirdFormGroup);
   }
 
 
@@ -440,7 +441,8 @@ export class FormComponent implements OnInit {
       nacionalidadCtrl: new FormControl('', Validators.required),
       tipoDocumentoCtrl: new FormControl('', Validators.required),
       numeroDocumentoCtrl: new FormControl ('', [Validators.required, Validators.min(100)]),
-      compartirFotoDocumentoCtrl: new FormControl('', Validators.required)
+      compartirFotoDocumentoCtrl: new FormControl('', Validators.required), 
+      //fotoDocumentoCtrl: new FormControl('',Validators.required)
 
     });
     chekgroup.push(controle);
@@ -528,6 +530,29 @@ export class FormComponent implements OnInit {
       //console.log('MIEMBRO DIFERENTE A INDOCUMENTADO Y CONTIENE NUMERODOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
 
     }
+  }
+
+
+  compartirFotoDocumento($event,index){
+
+    console.log('EVENTO FOTO: ', $event.value);
+     if($event.value == 1){
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('fotoDocumentoCtrl', new FormControl('', [Validators.required]));
+      
+     }else if($event.value ==0){
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('fotoDocumentoCtrl');
+     }
+
+     console.log('FORM MIEMBROS DESPUES DE OPCION: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+  }
+
+
+  subirArchivo($event: Event,index){
+    console.log( $event );
+    this.fourFormGroup.controls.miembrosFamilia['controls'][index]['fotoDocumentoCtrl'].setValue($event.target);
+
+    console.log('ARCHIVO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+
   }
 
 

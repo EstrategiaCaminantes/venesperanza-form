@@ -350,7 +350,7 @@
                   <p>¿Podrías compartir una fotografía de tu documento?*</p>
                   <mat-form-field class="datosllegada">
                       <mat-label>Seleccionar una opción</mat-label>
-                      <mat-select formControlName="compartirFotoDocumentoCtrl"   required>
+                      <mat-select formControlName="compartirFotoDocumentoCtrl"  required>
                         <!--
                           (selectionChange)="selectCompartirFotoDocumento($event)"
                           -->
@@ -365,11 +365,17 @@
     
                 </div>
 
+                <!--
+
                 <div class="margin-bottom-10" *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
                   <p>Por favor carga una fotografía de tu documento aquí</p>
 
+                  
+                    <input  type="file" (Change)="subirArchivo($event, i)">
+                  
 
-                </div>
+
+              </div>-->
 
 
                 
@@ -422,7 +428,7 @@
             para poder localizarte en caso de resultar elegido para el programa. 
             </p>
 
-          <!--
+          
           <mat-form-field>
             <mat-label>Departamento:</mat-label>
             <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
@@ -439,6 +445,8 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+
+          <!--
           <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value != 820">
             <mat-label>Barrio donde resides:</mat-label>
             <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside" required>
