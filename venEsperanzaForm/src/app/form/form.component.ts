@@ -71,10 +71,10 @@ export class FormComponent implements OnInit {
 
   listaFechasLlegadaPais = [
     {name: 'Menos de un mes', value: 'menos_de_un_mes'},
-    {name: 'Entre uno y dos meses', value: 'entre_uno_y_dos_meses'},
-    {name: 'Dos y tres meses', value:'dos_y_tres_meses'},
-    {name: '3-6 meses', value:'3_6_meses'},
-    {name: 'más de 6 meses', value:'mas_de_6_meses'}
+    {name: '1 - 2 meses', value: '1_2_meses'},
+    {name: '2 - 3 meses', value:'2_3_meses'},
+    {name: '3 - 6 meses', value:'3_6_meses'},
+    {name: 'Más de 6 meses', value:'mas_de_6_meses'}
 
   ]
 
@@ -86,6 +86,7 @@ export class FormComponent implements OnInit {
   nacionalidades = [
     {name: 'Colombiana'},
     {name: 'Venezolana'},
+    {name: 'Colombo-venezolana'},
     {name: 'Otro'}
   ];
 
@@ -225,6 +226,7 @@ export class FormComponent implements OnInit {
 
     this.fourFormGroup = this.formBuilder.group({
       unicoMiembro: [''],
+      totalMiembrosHogar: ['', Validators.required],
       miembrosFamilia: new FormArray([])
 
     });
@@ -457,7 +459,7 @@ export class FormComponent implements OnInit {
     chekgroup.push(controle);
     this.mostrarOtroSexoMiembrosFamilia.push(false);
 
-    //console.log('MIEMBROS FAMILIA : ', this.fourFormGroup.controls.miembrosFamilia);
+  console.log('MIEMBROS FAMILIA : ', this.fourFormGroup);
   }
 
 // elimina miembro del hogar
@@ -526,14 +528,28 @@ export class FormComponent implements OnInit {
     if ($event.value == 'Indocumentado') { // Si es indocumentado elimina controlador de numero documento
 
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('numeroDocumentoCtrl');
+
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('compartirFotoDocumentoCtrl');
+
       //this.secondFormGroup.removeControl('numeroDocumentoCtrl');
       //console.log('MIEMBRO FAMILIA INDOCUMENTADO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
 
       //this.numeroDocumento = false;
-    } else if ($event.value != 'Indocumentado' && !this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('numeroDocumentoCtrl')) {
+    }
+     if ($event.value != 'Indocumentado' && !this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('numeroDocumentoCtrl')) {
       // si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
 
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
+      //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
+      //this.numeroDocumento = true;
+      //console.log('MIEMBRO DIFERENTE A INDOCUMENTADO Y CONTIENE NUMERODOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+
+    }
+
+    if ($event.value != 'Indocumentado' && !this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('compartirFotoDocumentoCtrl')) {
+      // si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
+
+      this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('compartirFotoDocumentoCtrl', new FormControl('', Validators.required));
       //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
       //this.numeroDocumento = true;
       //console.log('MIEMBRO DIFERENTE A INDOCUMENTADO Y CONTIENE NUMERODOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );

@@ -13,8 +13,9 @@
       llegadas a Colombia
     </h2>
     <h2 *ngIf="titleheader" class="text-blue text-bold margin-top-20">
-      Para programas humanitarios ofrecidos por organizaciones no gubernamentales, completar este formulario no modifica
-      tu estatus migratorio en Colombia
+      Para programas humanitarios ofrecidos por organizaciones no gubernamentales.
+      <br>
+      Completar este formulario no modifica tu estatus migratorio en Colombia
     </h2>
     <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
     <h3 class="text-bold" *ngIf="thanksmessage && form === 1">
@@ -77,7 +78,7 @@
       </p>
       <h3 class="text-underline">Por favor responde con tus datos reales</h3>
       <p class="url-text">
-        Si quieres conocer la política de tratamiento de datos personales visita el enlace:
+        Para conocer la política de tratamiento de datos personales visita el enlace:
         <a target="_blank" href="https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf">
           https://venesperanza.immap.org/assets/politica_tratamiento_informacion_personal.pdf</a>.
       </p>
@@ -246,8 +247,15 @@
           <!--<p class="text-bold">A continuación, se deben agregar los datos personales de cada miembro de tu hogar*</p>-->
           <p class="text-bold">¿Cuántas personas de tu familia (incluyéndote) están contigo en este momento?
             Por ejemplo si viajas solo responde 1.
-            <br>
-            A continuación, se deben agregar los datos personales de cada miembro de tu hogar (incluyéndote)*
+          </p>
+
+          <mat-form-field>
+            <input type="number" matInput placeholder="Total miembros hogar" formControlName="totalMiembrosHogar" required>
+          </mat-form-field>
+          
+          <p>
+            A continuación, se deben agregar los datos personales de cada miembro de tu hogar (por favor inicia con tus datos y
+             luego con los datos de los demás miembros de tu familia)*
           </p>
           <div formArrayName="miembrosFamilia">
             <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;" class="margin-top-20">
@@ -272,7 +280,8 @@
                   <input matInput placeholder="Segundo Apellido" formControlName="segundoapellidoCtrl">
                 </mat-form-field>
                 <div>
-                  <p>Sexo*: </p>
+                  <p class="sexoNoValidado" *ngIf="miembroinfo.controls['sexoCtrl'].status =='INVALID' ">Sexo*: </p>
+                  <p  *ngIf="miembroinfo.controls['sexoCtrl'].status =='VALID' ">Sexo*:</p>
                   <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl" required
                                    (change)="seleccionSexo(i)">
                     <div>
@@ -327,8 +336,8 @@
                 </mat-form-field>
 
 
-                <div class="margin-bottom-10">
-                  <p>¿Podrías compartir una fotografía de tu documento?*</p>
+                <div class="margin-bottom-10" *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl">
+                  <p>¿Podrías compartir una fotografía del documento de identidad de este miembro del hogar?*</p>
                   <mat-form-field class="datosllegada">
                       <mat-label>Seleccionar una opción</mat-label>
                       <mat-select formControlName="compartirFotoDocumentoCtrl"  required>
@@ -366,7 +375,9 @@
               </button>
             </div>
           </div>
-          <div class="margin-top-20" *ngIf="!fourFormGroup.value.unicoMiembro">
+          <!--<div class="margin-top-20" *ngIf="!fourFormGroup.value.unicoMiembro">-->
+            <div class="margin-top-20" *ngIf="fourFormGroup.value.miembrosFamilia.length < fourFormGroup.value.totalMiembrosHogar">
+          
             <label (click)="agregarNuevoMiembro()">Añade un miembro de tu hogar</label>
             <button class="margin-left-10" mat-mini-fab color="accent" aria-label="Otro miembro"
                     (click)="agregarNuevoMiembro()">
@@ -517,7 +528,8 @@
 
           <mat-form-field class="contactoAlternativo">
             <mat-label>
-              ¿Escribe cualquier comentario adicional sobre la mejor forma o la forma preferida para contactarte?
+              ¿Podrías darnos alguna información adicional para contactarte? Por ejemplo, el teléfono de algún familiar o amigo y
+               por quién preguntar, las horas más adecuadas para llamarte o los días de la semana en los que te podremos encontrar. 
             </mat-label>
             <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
           </mat-form-field>
