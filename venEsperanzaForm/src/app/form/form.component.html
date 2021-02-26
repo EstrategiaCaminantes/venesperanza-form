@@ -126,16 +126,24 @@
             <ng-template matStepLabel>DATOS DE LLEGADA Y DESTINO</ng-template>
            
             <div class="margin-bottom-10">
-              <p>¿Cómo llegó a este formulario?*</p>
+              <p>Por favor selecciona una opción, ¿Cómo encontraste este formulario?*</p>
                 <mat-form-field class="datosllegada">
                   <mat-label>Seleccionar una opción</mat-label>
-                <mat-select formControlName="comoLlegoAlFormularioCtrl"  required>
+                <mat-select formControlName="comoLlegoAlFormularioCtrl" (selectionChange)="comoLlegoAlFormulario($event)"  required>
                   <mat-option *ngFor="let opcion of opcionesComoLlegoAlFormulario" [value]="opcion.name">
                     {{opcion.name}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
 
+            </div>
+
+            <div class="margin-bottom-10" *ngIf="llegadaDestinoFormGroup.controls['dondeEncontroFormularioCtrl']">
+              <p> Si tu respuesta fue otro, ¿Dónde encontraste este formulario?*</p>
+              <mat-form-field class="datosllegada">
+                <!--<mat-label>¿Cuál es tu destino final?</mat-label>-->
+                <input matInput placeholder="Lo encontré en: " formControlName="dondeEncontroFormularioCtrl" required>
+              </mat-form-field>
             </div>
 
             <div class="margin-bottom-10">
@@ -177,10 +185,17 @@
 
           <div class="margin-bottom-10" *ngIf="dentroDeColombiaNO">
             <p>¿Cuál es tu destino final?*</p>
-            <mat-form-field class="datosllegada">
-              <!--<mat-label>¿Cuál es tu destino final?</mat-label>-->
+            <!--<mat-form-field class="datosllegada">
               <input matInput placeholder="País: " formControlName="llegadaDestinoDestinoFinalFueraColombiaCtrl"
                      required>
+            </mat-form-field>-->
+            <mat-form-field>
+              <mat-label>País:</mat-label>
+              <mat-select formControlName="llegadaDestinoDestinoFinalFueraColombiaCtrl" required>
+                <mat-option *ngFor="let pais of paisesLista" [value]="pais.name">
+                  {{pais.name}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 
@@ -250,7 +265,7 @@
           </p>
 
           <mat-form-field>
-            <input type="number" matInput placeholder="Total miembros hogar" formControlName="totalMiembrosHogar" required>
+            <input type="number" [min]="1" matInput placeholder="Total miembros hogar" formControlName="totalMiembrosHogar" required>
           </mat-form-field>
           
           <p>
@@ -331,7 +346,7 @@
                 <mat-form-field
                   *ngIf="miembrosFamilia.controls[i].controls.tipoDocumentoCtrl.value !== 'Indocumentado' &&  miembrosFamilia.controls[i].controls.numeroDocumentoCtrl">
                   <mat-label>Número de Documento</mat-label>
-                  <input matInput placeholder="Número de Documento" type="number" formControlName="numeroDocumentoCtrl"
+                  <input matInput placeholder="Número de Documento" type="text" maxlength="3" maxlength="10"  formControlName="numeroDocumentoCtrl"
                          required minlength="3">
                 </mat-form-field>
 
@@ -340,7 +355,7 @@
                   <p>¿Podrías compartir una fotografía del documento de identidad de este miembro del hogar?*</p>
                   <mat-form-field class="datosllegada">
                       <mat-label>Seleccionar una opción</mat-label>
-                      <mat-select formControlName="compartirFotoDocumentoCtrl"  required>
+                      <mat-select formControlName="compartirFotoDocumentoCtrl" (selectionChange)="compartirFotoDocumento($event,i)"  required>
                         <!--
                           (selectionChange)="compartirFotoDocumento($event,i)"
                           -->
@@ -355,18 +370,15 @@
 
                 </div>
 
-                <!--
+                
 
                 <div class="margin-bottom-10" 
-                *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
+                     *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl && miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
                   <p>Por favor carga una fotografía de tu documento aquí</p>
 
-                  
-                    <input  type="file" (Change)="subirArchivo($event, i)">
-                  
+                    <input  type="file" name="fileSubir" (change)="subirArchivo($event, i)" accept="image/png, image/jpeg, application/pdf" required>
 
-
-              </div>-->
+                </div>
 
 
               </div>
@@ -412,27 +424,34 @@
           <ng-template matStepLabel>DATOS DE CONTACTO</ng-template>
 
           <p class="text-bold">
-            Recuerda que es muy importante que proporciones en este formulario todos tus datos personales de contacto,
-            para poder localizarte en caso de resultar elegido para el programa.
+            
+            Recuerda: es muy importante que proporciones TODOS tus datos personales de contacto,
+             para poder localizarte en caso de resultar elegido para el programa. 
           </p>
 
-          
-          <mat-form-field>
-            <mat-label>Departamento:</mat-label>
-            <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
-              <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
-                {{departamento.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Municipio:</mat-label>
-            <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event.value)" required>
-              <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
-                {{municipio.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="margin-top-10 margin-bottom-10">
+            <p>¿En dónde te encuentras en este momento?
+
+            </p>
+            <mat-form-field>
+              <mat-label>Departamento:</mat-label>
+              <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
+                <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
+                  {{departamento.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Municipio:</mat-label>
+              <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event.value)" required>
+                <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
+                  {{municipio.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+         
 
           <!--
           <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value != 820">
@@ -453,11 +472,15 @@
             <input matInput formControlName="direccionCtrl" placeholder="Dirección completa">
           </mat-form-field>
           -->
-          <mat-form-field>
-            <mat-label>Número de Contacto principal:</mat-label>
-            <input matInput type="number" formControlName="numeroContactoCtrl" placeholder="Ej: 3131234567" required
-                   minlength="7" maxlength="10">
-          </mat-form-field>
+          
+          <div class="margin-bottom-10">
+            <mat-form-field class="datoscontacto">
+              <mat-label>Número de Contacto principal:</mat-label>
+              <input matInput type="number" formControlName="numeroContactoCtrl" placeholder="Ej: 3131234567" required
+                     minlength="7" maxlength="10">
+            </mat-form-field>
+          </div>
+          
           <div class="margin-bottom-10">
             <label>¿Esta línea de contacto es propia?*:</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="lineaContactoPropiaCtrl"
@@ -469,10 +492,11 @@
             </mat-radio-group>
           </div>
 
-          <div class="margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>
+          <!--<div class="margin-bottom-10" *ngIf='lineacontactoWhatsappInput'>-->
+          <div class="margin-bottom-10">
             <label>¿Esta línea de contacto está asociada a WhatsApp?*:</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName
-              ="lineaContactoAsociadaAWhatsappCtrl" required>
+              ="lineaContactoAsociadaAWhatsappCtrl" (change)="lineaContactoPropiaAsociadaWhatsapp($event)" required>
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
@@ -480,16 +504,28 @@
             </mat-radio-group>
           </div>
 
-          <mat-form-field *ngIf='contactoAlternativoInput'>
-            <mat-label>Número de contacto alternativo*</mat-label>
+          <div class="margin-bottom-10" *ngIf="thirdFormGroup.controls.numeroWhatsappCtrl">
+           <!--<mat-form-field *ngIf='contactoAlternativoInput'>-->
+             <p>Por favor agrega tu número de whatsapp</p>
+            <mat-form-field>
+              <mat-label>Número de Whatsappp</mat-label>
+              <input matInput type="number" formControlName="numeroWhatsappCtrl" placeholder="Ej: 3131234567"
+                     minlength="7" maxlength="10" required>
+            </mat-form-field>
+          </div>
+
+          <!--<mat-form-field *ngIf='contactoAlternativoInput'>-->
+          <mat-form-field class="datoscontacto">
+            <mat-label>Número de contacto alternativo</mat-label>
             <input matInput type="number" formControlName="contactoAlternativoCtrl" placeholder="Ej: 3131234567"
                    minlength="7" maxlength="10">
           </mat-form-field>
 
-          <div class="margin-bottom-10" *ngIf='contactoAlternativoInput'>
-            <label>¿Esta línea de contacto es propia?*:</label>
+          <!--<div class="margin-bottom-10" *ngIf='contactoAlternativoInput'>-->
+          <div class="margin-bottom-10">
+            <label>¿Esta línea de contacto es propia?:</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="lineaContactoAlternativoCtrl"
-                             (change)="lineaContactoAlternativo($event)" required>
+                             (change)="lineaContactoAlternativo($event)" >
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
@@ -497,10 +533,11 @@
             </mat-radio-group>
           </div>
 
-          <div class="margin-bottom-10" *ngIf='lineacontactoAlternativaWhatsappInput'>
-            <label>¿Esta línea de contacto está asociada a WhatsApp?*:</label>
+          <!--<div class="margin-bottom-10" *ngIf='lineacontactoAlternativaWhatsappInput'>-->
+          <div class="margin-bottom-10">
+            <label>¿Esta línea de contacto está asociada a WhatsApp?:</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName
-              ="lineaContactoAlternativoAsociadaAWhatsappCtrl" required>
+              ="lineaContactoAlternativoAsociadaAWhatsappCtrl" >
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
@@ -511,13 +548,13 @@
 
           <mat-form-field class="contactoAlternativo">
             <mat-label>Escribe un correo electrónico donde te podamos contactar</mat-label>
-            <input matInput formControlName="correoCtrl" placeholder="">
+            <input matInput formControlName="correoCtrl" type="email" pattern="[a-zA-Z0-9_-]+([.][a-zA-Z0-9_-]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" placeholder="">
           </mat-form-field>
 
           <div class="margin-bottom-10">
             <label>¿Tienes cuenta en Facebook?:</label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName
-              ="cuentaFacebook">
+              ="tieneCuentaFacebook" (change)="tieneCuentaFacebook($event)">
               <div>
                 <mat-radio-button value="si">Si</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
@@ -525,14 +562,56 @@
             </mat-radio-group>
           </div>
 
-
-          <mat-form-field class="contactoAlternativo">
-            <mat-label>
-              ¿Podrías darnos alguna información adicional para contactarte? Por ejemplo, el teléfono de algún familiar o amigo y
-               por quién preguntar, las horas más adecuadas para llamarte o los días de la semana en los que te podremos encontrar. 
-            </mat-label>
-            <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
+          <mat-form-field class="contactoAlternativo" *ngIf="thirdFormGroup.controls.cuentaFacebookCtrl">
+            <mat-label>¿Cuál es la cuenta?</mat-label>
+            <input matInput formControlName="cuentaFacebookCtrl" placeholder="">
           </mat-form-field>
+
+
+          <div class="margin-bottom-10">
+            <label>¿Podemos contactarte el momento en el que llegues a tu destino final?:</label>
+            <mat-radio-group aria-label="Selecciona una opción" 
+            formControlName="podemosContactarte" (change)="podemosContactarte($event)">
+              <div>
+                <mat-radio-button value="si">Si</mat-radio-button>
+                <mat-radio-button value="no">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+
+          <div class="margin-bottom-10" *ngIf="thirdFormGroup.controls.formaContactarteCtrl">
+            <p>¿Cuál sería la mejor forma para contactarte?</p>
+            <mat-form-field class="datosllegada">
+              <mat-label>Mejor forma para contactarte:</mat-label>
+              <mat-select formControlName="formaContactarteCtrl" (selectionChange)="selectFormaContactarte($event)"  >
+                <mat-option *ngFor="let forma of formasDeContactarte" [value]="forma.name">
+                  {{forma.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field class="contactoAlternativo" *ngIf="thirdFormGroup.controls.otraFormaContactarteCtrl">
+            <mat-label>Otra opción para contactarte</mat-label>
+            <input matInput formControlName="otraFormaContactarteCtrl" placeholder="">
+          </mat-form-field>
+
+
+          <div class="margin-bottom-10">
+            <p>
+              ¿Podrías darnos alguna información adicional para contactarte? 
+              Por ejemplo, el teléfono de algún familiar o amigo y por quién preguntar, 
+              las horas más adecuadas para llamarte o los días de la semana en los que te podremos encontrar. 
+            </p>
+            <mat-form-field class="contactoAlternativo">
+              <mat-label>
+              Información adicional para contactarte
+              </mat-label>
+              <input matInput formControlName="comentarioAdicionalCtrl" placeholder="">
+            </mat-form-field>
+          </div>
+
+
           <div *ngIf="thirdFormGroup.status == 'VALID' && form===2">
             <button color="primary" mat-raised-button [disabled]="saving"
                     (click)="enviarInfo(thirdFormGroup,'paso2',stepper,true, stepper, true)">
