@@ -376,7 +376,7 @@
                      *ngIf="miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl && miembrosFamilia.controls[i].controls.compartirFotoDocumentoCtrl.value == 1 ">
                   <p>Por favor carga una fotografía de tu documento aquí</p>
 
-                    <input  type="file" name="fileSubir" (change)="subirArchivo($event, i)" accept="image/png, image/jpeg, application/pdf" required>
+                    <input  type="file" name="image" (change)="subirArchivo($event, i)" accept="image/png, image/jpeg, application/pdf" required>
 
                 </div>
 

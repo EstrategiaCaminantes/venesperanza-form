@@ -13,6 +13,9 @@ import {MatStepper} from '@angular/material/stepper';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+
+  unicafoto:any; //variable dinamica que va asignando cada foto seleccionada al miembro de hogar respectivo
+
   mati: any = document.createElement('mati-button'); // boton mati
   infoencuesta = {}; // datos de la encuesta
   id = null; // id del formulario
@@ -448,7 +451,7 @@ export class FormComponent implements OnInit {
   lineaContactoPropiaAsociadaWhatsapp($event:any):void{
 
     //si la linea de contacto propia no esta asociada a Whatsapp agrega numerowhatsapp al controlador
-    console.log('EVENTO LINEA CONTACTO PROPIA WHATSAPP: ', $event.value);
+    //console.log('EVENTO LINEA CONTACTO PROPIA WHATSAPP: ', $event.value);
     if($event.value === 'no'){
       this.thirdFormGroup.addControl('numeroWhatsappCtrl', new FormControl('',
         [Validators.required, Validators.min(1000000), Validators.max(9999999999)]));
@@ -460,7 +463,7 @@ export class FormComponent implements OnInit {
 
     }
 
-    console.log('FORM THIRD: ', this.thirdFormGroup);
+    //console.log('FORM THIRD: ', this.thirdFormGroup);
   }
 
   //nueva funcion jorge:
@@ -683,7 +686,7 @@ export class FormComponent implements OnInit {
 
   compartirFotoDocumento($event,index){
 
-    console.log('EVENTO FOTO: ', $event.value);
+    //console.log('EVENTO FOTO: ', $event.value);
      if($event.value == 1){
       //this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('fotoDocumentoCtrl', 
      // new FormControl('', [Validators.required, requiredFileType(["jpg", "png", "txt"])]));
@@ -691,53 +694,46 @@ export class FormComponent implements OnInit {
      this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('fotoDocumentoCtrl', 
       new FormControl('', [Validators.required]));
       
-
-      
       
      }else if($event.value ==0){
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('fotoDocumentoCtrl');
      }
 
-     console.log('FORM MIEMBROS DESPUES DE OPCION: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+     //console.log('FORM MIEMBROS DESPUES DE OPCION: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
   }
 
 
   subirArchivo($event,index):void{
-    console.log('INDEX: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+    //console.log('INDEX: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+    //console.log('EVENTO: ', $event);
+    //console.log('EVENTO TARGET: ', $event.target.files);
+    let elemento = $event.target.files[0]; //tomo la foto seleccionada
 
-    // json = JSON.stringify($event.target['files'][0]);
-
-    console.log('EVENTO: ', $event);
-    console.log('EVENTO TARGET: ', $event.target.files);
-    let elemento = <File>$event.target.files[0];
-    let data = new FormData();
-    //let file = <File>$event.target['files'][0];
-    console.log('EL ELEMENTO: ', elemento);
-    console.log('EL ELEMENTO FILES: ', elemento);
-    //console.log('EL ELEMENTO FILES 0: ', elemento['files'] );
-    //console.log('EL ELEMENTO FILES 0 con llaves: ', elemento['files'][0]);
-    data.append('image',elemento, elemento.name);
-
-    console.log('DATA APPEND: ', data);
-
-    /*
-    if ($event.target.files && $event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.fourFormGroup.controls.miembrosFamilia['controls'][index].controls.fotoDocumentoCtrl.setValue($event.target.files[0]);
-      };
-      reader.readAsDataURL($event.target.files[0]);
-    }*/
-
+    this.unicafoto = $event.target.files[0];
     
-    //console.log('FORM DATA VALUES: ', data.values());
+    this.fourFormGroup.controls.miembrosFamilia['controls'][index].controls.fotoDocumentoCtrl.setValue(elemento);
 
-   //this.fourFormGroup.controls.miembrosFamilia['controls'][index].controls.fotoDocumentoCtrl.setValue(<File>$event.target['files'][0]);
+    //console.log('ARCHIVO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
 
-    this.fourFormGroup.controls.miembrosFamilia['controls'][index].controls.fotoDocumentoCtrl.setValue(data);
+    //Funcionalidad que asigna el archivo seleccionado a variable dinamica this.unicafoto y la relaciona con 
+    //el campo fotoDocumentoCtrl del miembro de hogar respectivo
+      var files = $event.target.files;
+      var file = files[0];
+      this.unicafoto.nombreArchivo = file.name;
+      this.unicafoto.tipo = file.type;
+  
+      if(files && file) {
+        var reader = new FileReader();
+        reader.onload = this._handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(file);
+      }
+    
 
-    console.log('ARCHIVO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+  }
 
+  _handleReaderLoaded(readerEvent) {
+    var binaryString = readerEvent.target.result;
+    this.unicafoto.base64textString = btoa(binaryString);
   }
 
 
@@ -877,7 +873,7 @@ export class FormComponent implements OnInit {
 // Guardo información
   enviarInfo(grupo, paso, stepper: MatStepper, next: boolean, pasoquellama, finalizar: boolean): void {
 
-    const data = {
+    let data = {
       paso,
       infoencuesta: grupo.value,
       autorizacion_id: this.autorizacionActual
@@ -931,26 +927,6 @@ export class FormComponent implements OnInit {
         const cantidadMiembros = this.fourFormGroup.controls.miembrosFamilia.value.length + 1;
         data.infoencuesta.cantidad_miembros = cantidadMiembros;
       }
-
-      //prueba FormData para paso 2 de miembros:
-      /*if (data.paso == 'paso2'){
-       // const uploadData = new FormData();
-        //uploadData.append('email', this.yourForm.get('email').value);
-        //uploadData.append('file', this.yourForm.get('file').value);
-        //this.http.post('your-route', uploadData);
-      //https://www.youtube.com/watch?v=YkvqLNcJz3Y
-        const myFormValue = this.fourFormGroup.controls.miembrosFamilia.value;
-      console.log('MY FORM VALUE: ', myFormValue);
-        const myFormData = new FormData();
-        for ( let i = 0; i < myFormValue.length; i++ ) {         
-          for ( let key of myFormValue) {
-            myFormData.append(key, myFormValue[key]);
-          }
-        }
-         
-        data.infoencuesta = myFormData;
-      }*/
-      
 
       this.saving = true;
       this.formService.updateForm(this.id, data).subscribe(res => {
