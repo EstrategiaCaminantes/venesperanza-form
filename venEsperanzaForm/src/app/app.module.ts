@@ -17,6 +17,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
+import { HomeComponent } from './home/home.component';
+import {
+  ActualizarDatosComponent
+ } from './actualizar-datos/actualizar-datos.component';
+ 
+ import {
+   ReportarLlegadaComponent
+  } from './reportar-llegada/reportar-llegada.component';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -27,10 +35,21 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
+
+import {RouterModule} from '@angular/router';
+
+//Routing
+import {AppRoutes} from './app.routing';
+
 @NgModule({
   declarations: [
     AppComponent,
-    FormComponent
+    FormComponent,
+    HomeComponent,
+    ActualizarDatosComponent,
+    ReportarLlegadaComponent
   ],
     imports: [
         BrowserModule, BrowserAnimationsModule,
@@ -39,7 +58,10 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatButtonModule, MatRadioModule, MatGridListModule, FlexLayoutModule,
         CommonModule, MatDatepickerModule, MatNativeDateModule,
         MatSelectModule, MatCheckboxModule,
-        HttpClientModule, MatSnackBarModule, MatProgressSpinnerModule, MatCardModule, MatIconModule, MatSlideToggleModule
+        HttpClientModule, MatSnackBarModule, MatProgressSpinnerModule,
+        MatCardModule, MatIconModule, MatSlideToggleModule,
+        RouterModule.forRoot(AppRoutes),
+        MatAutocompleteModule
 
     ],
   providers: [MatDatepickerModule,MatNativeDateModule],

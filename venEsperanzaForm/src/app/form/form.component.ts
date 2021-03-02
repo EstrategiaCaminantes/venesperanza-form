@@ -3,9 +3,12 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 import {FormService} from '../services/form.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatStepper} from '@angular/material/stepper';
-
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 //import { requiredFileType } from "./requireFileTypeValidators";
-
+export interface Municipio {
+  nombre: string;
+}
 
 @Component({
   selector: 'form-encuesta',
@@ -144,8 +147,24 @@ export class FormComponent implements OnInit {
     {name: 'Facebook'},
     {name: 'Correo electrónico'},
     {name: 'Otro'}
-  ]
+  ];
 
+  municipiosListaCorta: Municipio[] = [
+    {nombre: "BOCHALEMA"},
+    {nombre: "BERLÍN"},
+    {nombre: "BUCARAMANGA"},
+    {nombre: "CÚCUTA"},
+    {nombre: "PAMPLONA"},
+    {nombre: "BOGOTÁ"},
+    {nombre: "CALI"},
+    {nombre: "PASTO"},
+    {nombre: "MEDELLÍN"}
+  ]; 
+
+  filteredMunicipiosListaCorta: Observable<Municipio[]>;
+
+  selectedMunicipioUbicacion = null;
+  nuevo_municipio_ubicacion = true;
 
 
  
@@ -268,8 +287,11 @@ export class FormComponent implements OnInit {
 
 
     this.thirdFormGroup = this.formBuilder.group({
-      departamentoCtrl: ['', Validators.required],
-      municipioCtrl: ['', Validators.required],
+
+      //departamentoCtrl: ['', Validators.required],
+      //municipioCtrl: ['', Validators.required],
+      ubicacionCtrl: ['', Validators.required],
+      //nuevoMunicipioUbicacionCtrl: ['', Validators.required],
       /*barrioCtrl: ['', Validators.required],
       direccionCtrl: [''],*/
       numeroContactoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
@@ -335,8 +357,98 @@ export class FormComponent implements OnInit {
       tenCtrl: ['', Validators.required]
     });
 
+      //filtro municipios DATOS CONTACTO
+      this.filteredMunicipiosListaCorta = this.thirdFormGroup.controls.ubicacionCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(nombre => nombre ? this._filter(nombre) : this.municipiosListaCorta.slice())
+      );
+            
+  }
+
+  //funcion muestra municipio en mat-autocomplete 
+  displayFn(municipio: Municipio): string {
+    //console.log('MUNICIPIO DISPLAY FN: ', municipio);
+    return municipio && municipio.nombre ? municipio.nombre : '';
+  }
+
+  //filtro mat-autocomplete 
+  private _filter(name: string): Municipio[] {
+
+    //console.log('FILTERVALUE NAME:: ', name);
+    const filterValue = name.toLowerCase();
+
+    //return this.municipiosListaCorta.filter(option => option.nombre.toLowerCase().includes(filterValue));
+    let valores = this.municipiosListaCorta.filter(option => option.nombre.toLowerCase().includes(filterValue));
+    //console.log('VALORES FILTRADOS: ', valores);
+    return valores;
 
   }
+
+  selectMunicipio(event){
+    /*
+    //console.log('OPTION SELECCIONADA: ', option);
+    console.log('ENTRA A SELECT MUNICIPIO: ', this.thirdFormGroup.controls.ubicacionCtrl);
+    if (this.thirdFormGroup.controls.ubicacionCtrl.value != "") {
+      console.log('ENTRA A NUEVO MUNICIPIO? ');
+      this.thirdFormGroup.controls['nuevoMunicipioUbicacionCtrl'].clearValidators();
+      this.thirdFormGroup.controls['nuevoMunicipioUbicacionCtrl'].updateValueAndValidity();
+
+      console.log('THIRD FORM NUEVO MUNI: ', this.thirdFormGroup.controls['nuevoMunicipioUbicacionCtrl']);
+      //this.thirdFormGroup.removeControl('nuevoMunicipioUbicacionCtrl');
+       //setControl('nuevoMunicipioUbicacionCtrl', new FormControl('')); 
+
+    }else if(!this.thirdFormGroup.contains('nuevoMunicipioUbicacionCtrl')){
+      console.log('ENTRA A EL THIRDFORM NO CONTIENE NUEVOMUNICPIO');
+      this.thirdFormGroup.addControl('nuevoMunicipioUbicacionCtrl',new FormControl('', Validators.required));
+    }else{
+      console.log('ENTR A SET VALIDATORS REQUIRED de NUEVO MUNI');
+      this.thirdFormGroup.controls['nuevoMunicipioUbicacionCtrl'].setValidators(Validators.required);
+    }
+
+    //console.log('OPTION1: ', event.option);
+    //console.log('OPTION2: ', event.option.value);
+    console.log('OPTION3: ', event.option.value.nombre);
+
+    console.log('TERCER FORM: ', this.thirdFormGroup.controls.ubicacionCtrl.value['nombre']);
+    if (event.option.value.nombre === "Otro") {
+     //if(this.thirdFormGroup.controls.ubicacionCtrl.value['nombre'] === "Otro"){
+       console.log('ENTRA A OTRO?');
+      //this.thirdFormGroup.controls.ubicacionCtrl.setValue(option);
+      this.thirdFormGroup.addControl('ubicacionOtroCtrl', new FormControl('', Validators.required));
+
+    }else if(event.option.value.nombre !== "Otro" && this.thirdFormGroup.contains('ubicacionOtroCtrl')){
+      
+      this.thirdFormGroup.removeControl('ubicacionOtroCtrl');
+
+    }*/
+
+    
+  }
+
+/*
+  validarNuevaUbicacion() {
+    if (this.thirdFormGroup.controls.nuevoMunicipioUbicacionCtrl.value !== '') {
+    
+        this.thirdFormGroup.removeControl('ubicacionCtrl');
+        //this.thirdFormGroup.removeControl('ubicacionOtroCtrl');      
+      
+    }else{
+       
+      //this.thirdFormGroup.setControl('nuevoMunicipioUbicacionCtrl', new FormControl('')); 
+      this.thirdFormGroup.addControl('ubicacionCtrl', new FormControl('',Validators.required));
+
+      this.filteredMunicipiosListaCorta = this.thirdFormGroup.controls.ubicacionCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(nombre => nombre ? this._filter(nombre) : this.municipiosListaCorta.slice())
+      );
+    }
+
+    //console.log('EN VALIDAR NUEVA UBI: ', )
+  }*/
 
 // Primer paso aceptar terminos
   termsAccept($event: any): void {
@@ -402,16 +514,11 @@ export class FormComponent implements OnInit {
     this.thirdFormGroup.controls.municipioCtrl.setValue(null);
   }
 
-  selectMunicipio($event: any): void {
-    /*if ($event != 820) {
-      this.thirdFormGroup.controls.barrioCtrl.setValue('');
-    }*/
-   // console.log('FORM DATOS CONTACTO: ', this.thirdFormGroup);
-  }
-
+  
 
 // validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
   lineaContactoPropia($event: any): void {
+    //console.log('LINEA CONTACTO: ', this.thirdFormGroup);
     /*if ($event.value === 'si') { // si la linea de contacto es propia, oculta contacto alternativo y muestra linea whatsapp
       //this.contactoAlternativoInput = false;
       this.lineacontactoWhatsappInput = true;
@@ -443,8 +550,6 @@ export class FormComponent implements OnInit {
         this.thirdFormGroup.removeControl('lineaContactoAsociadaAWhatsappCtrl');
       }
     }*/
-
-    //console.log('THIRD FORM GROUP CONTACTO PROPIA: ', this.thirdFormGroup);
   }
 
 
@@ -460,10 +565,7 @@ export class FormComponent implements OnInit {
       if (this.thirdFormGroup.contains('numeroWhatsappCtrl')) { // si ya existe contacto alternativo elimina linea whatsapp
         this.thirdFormGroup.removeControl('numeroWhatsappCtrl');
       }
-
     }
-
-    //console.log('FORM THIRD: ', this.thirdFormGroup);
   }
 
   //nueva funcion jorge:
@@ -516,11 +618,9 @@ export class FormComponent implements OnInit {
       this.thirdFormGroup.removeControl('formaContactarteCtrl');
 
     }
-    console.log('THIRD FOM EN PODEMOS CONTACTARTE ???: ', this.thirdFormGroup);
   }
 
   selectFormaContactarte($event:any):void{
-    console.log('FORMA CONTACTARTE: ', $event.value);
     if($event.value === "Otro"){
       this.thirdFormGroup.addControl('otraFormaContactarteCtrl', new FormControl(''));
     }else{
@@ -528,7 +628,7 @@ export class FormComponent implements OnInit {
 
     }
 
-    console.log('THIRD FOM EN FORMA CONTACTO: ', this.thirdFormGroup);
+    //console.log('THIRD FOM EN FORMA CONTACTO: ', this.thirdFormGroup);
   }
 
 // validacion de seleccion si es mujer
@@ -581,7 +681,7 @@ export class FormComponent implements OnInit {
     chekgroup.push(controle);
     this.mostrarOtroSexoMiembrosFamilia.push(false);
 
-  console.log('MIEMBROS FAMILIA : ', this.fourFormGroup);
+   //console.log('MIEMBROS FAMILIA : ', this.fourFormGroup);
   }
 
 // elimina miembro del hogar
@@ -597,16 +697,9 @@ export class FormComponent implements OnInit {
     console.log('SELECT NACIONALIDAD MIEMBRO: ');
     console.log('EVENTO: ', $event);
     console.log('INDEX MIEMBRO: ', index);
-
-    console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);
-
-    console.log('SELECT TIPO DOCUMENTO MIEMBRO: ');
-    console.log('$event: ', $event);
-    console.log('INDEX: ', index);
     console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);*/
 
     if ($event.value == 'Otro') { // si es Otro agrega el controlador
-
 
       //console.log('MIEMBRO FAMILIA EN OTRO NACIONALIDAD ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('otroNacionalidadCtrl', new FormControl('', Validators.required));
@@ -614,17 +707,12 @@ export class FormComponent implements OnInit {
       // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
 
       //console.log('MIEMBRO FAMILIA NACIONALIDAD DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
-
-
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('otroNacionalidadCtrl');
     }
-
 
   }
 
   //seleccion tipodocumento miembro
-
-
   selectTipoDocumentoMiembro($event: any,index): void {
 
     /*
@@ -640,9 +728,7 @@ export class FormComponent implements OnInit {
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
     } else if ($event.value != 'Otro' && this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('otroTipoDocumentoCtrl')) {
       // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
-
       //console.log('MIEMBRO FAMILIA TIPO DOCUMENTO DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
-
       //this.otroTipoDocumento = false;
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('otroTipoDocumentoCtrl');
     }
@@ -657,7 +743,6 @@ export class FormComponent implements OnInit {
 
       //this.secondFormGroup.removeControl('numeroDocumentoCtrl');
       //console.log('MIEMBRO FAMILIA INDOCUMENTADO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
-
       //this.numeroDocumento = false;
     }
      if ($event.value != 'Indocumentado' && !this.fourFormGroup.controls.miembrosFamilia['controls'][index].contains('numeroDocumentoCtrl')) {
@@ -665,7 +750,6 @@ export class FormComponent implements OnInit {
 
       //this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(1), Validators.max(9999999999)]));
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]));
-
       //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(100)]));
       //this.numeroDocumento = true;
       //console.log('MIEMBRO DIFERENTE A INDOCUMENTADO Y CONTIENE NUMERODOCUMENTO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
@@ -699,7 +783,6 @@ export class FormComponent implements OnInit {
       this.fourFormGroup.controls.miembrosFamilia['controls'][index].removeControl('fotoDocumentoCtrl');
      }
 
-     //console.log('FORM MIEMBROS DESPUES DE OPCION: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
   }
 
 
@@ -763,12 +846,12 @@ export class FormComponent implements OnInit {
 
   //como encontraste el formulario:
   comoLlegoAlFormulario($event:any):void{
-    console.log('COMO LLEGO AL FORM: ', $event);
+    //console.log('COMO LLEGO AL FORM: ', $event);
     if($event.value == 'Otro'){
         this.llegadaDestinoFormGroup.addControl('dondeEncontroFormularioCtrl', new FormControl('', [Validators.required]));
         
 
-        console.log('LLEGADA DESTINO FORM: ', this.llegadaDestinoFormGroup);
+        //console.log('LLEGADA DESTINO FORM: ', this.llegadaDestinoFormGroup);
     }else{
 
       this.llegadaDestinoFormGroup.removeControl('dondeEncontroFormularioCtrl');
@@ -796,10 +879,6 @@ export class FormComponent implements OnInit {
           this.llegadaDestinoFormGroup.removeControl('llegadaDestinoCiudadCtrl');
         }
         //console.log('LLEGADA FORMGROUP NO PLANEA ESTAR EN COLOMBIA',this.llegadaDestinoFormGroup)
-        
-
-       
-
 
     }else{//si selecciona SI planea estar en colombia
       this.dentroDeColombiaNO = false;
@@ -822,8 +901,6 @@ export class FormComponent implements OnInit {
   selectDepartamentoLlegadaDestino($event:any):void{
 
     //console.log('SELECCION DEPARTAMENTO: ', $event.value);
-    //console.log('LLEGADA A DESTINO FORM GROUP: ',this.llegadaDestinoFormGroup);
-
     if($event.value != 'nodefinido'){ //selecciona algun departamento
 
         //console.log('DEPARTAMENTO SELECCIONADO DEFINIDO DEBE MOSTRAR CIUDAD');
@@ -856,7 +933,7 @@ export class FormComponent implements OnInit {
   selectCiudadLlegadaDestino($event:any):void{
    // console.log('SELECCION MUNICIPIO: ', $event);
    // if($event.value == 'nodefinido'){
-//this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue('');
+    //this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue('');
     //}
     //console.log('LLEGADAS DESTINO: ',this.llegadaDestinoFormGroup);
 

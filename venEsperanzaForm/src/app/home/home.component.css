@@ -1,0 +1,23 @@
+
+.flexcolumn {
+    padding: 20px 40px 20px 40px;
+  }
+  
+.titleheader {
+    text-align: center;
+  
+  }
+  
+  .accept-button {
+    margin-right: 10px;
+  }
+  
+  .margin-top-20 {
+    margin-top: 20px;
+  }
+  
+  
+  a{
+    color:#ffff;
+      text-decoration: none;
+  }

@@ -429,10 +429,69 @@
              para poder localizarte en caso de resultar elegido para el programa. 
           </p>
 
-          <div class="margin-top-10 margin-bottom-10">
-            <p>¿En dónde te encuentras en este momento?
+          <div class="margin-top-10 margin-bottom-10" >
+            <p>¿En qué Municipio te encuentras en este momento?
+
 
             </p>
+
+            <!--
+            <mat-form-field>
+              <mat-label>Municipio:</mat-label>
+              <mat-select formControlName="ubicacionCtrl" (selectionChange)="selectMunicipio($event.value)" required>
+                <mat-option *ngFor="let municipio of municipiosListaCorta" [value]="municipio.nombre">
+                  {{municipio.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          -->
+            <mat-form-field  *ngIf="thirdFormGroup.controls.ubicacionCtrl">
+              <mat-label>Municipio</mat-label>
+              <input type="text"
+                     placeholder=""
+                     aria-label="Municipio"
+                     matInput
+                     formControlName="ubicacionCtrl"
+                     required
+                     [matAutocomplete]="auto" >
+                     <!--formControlName="ubicacionCtrl"
+                    [formControl]="thirdFormGroup.controls.ubicacionCtrl"-->
+            
+              <!--(optionSelected)="selectMunicipio($event)" -->
+              <!--(onSelectionChange)="selectMunicipio(option.nombre)"-->
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" >
+                <mat-option *ngFor="let option of filteredMunicipiosListaCorta | async"
+                 [value]="option"
+                 >
+                  {{option.nombre}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+
+          <!--
+          <div class="margin-bottom-10" *ngIf="thirdFormGroup.controls.ubicacionCtrl && thirdFormGroup.controls.ubicacionCtrl.value['nombre'] == 'Otro' ">
+            
+            
+            <mat-form-field class="datosllegada" >
+              <mat-label>¿Cuál?</mat-label>
+              <input matInput formControlName="ubicacionOtroCtrl" placeholder="" required>
+            </mat-form-field>
+          </div>
+
+          
+          <div class="margin-bottom-10" 
+          *ngIf="!thirdFormGroup.controls.ubicacionCtrl || !thirdFormGroup.controls.ubicacionCtrl.value['nombre'] ">
+            <p>Si no encuentra el Municipio ingrese el nombre:</p>
+            <mat-form-field class="datosllegada" >
+              <mat-label>Municipio:</mat-label>
+              <input matInput placeholder="Municipio"
+              (change)="validarNuevaUbicacion()"
+              formControlName="nuevoMunicipioUbicacionCtrl" required>
+            </mat-form-field>
+           
+            
             <mat-form-field>
               <mat-label>Departamento:</mat-label>
               <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
@@ -450,28 +509,10 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            
           </div>
-         
-
-          <!--
-          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value != 820">
-            <mat-label>Barrio donde resides:</mat-label>
-            <input matInput formControlName="barrioCtrl" placeholder="Barrio donde reside" required>
-          </mat-form-field>
-          <mat-form-field *ngIf="thirdFormGroup.controls.municipioCtrl.value == 820">
-            <mat-label>Barrio donde resides:</mat-label>
-            <mat-select formControlName="barrioCtrl" required>
-              <mat-option *ngFor="let barrio of barriosVillaRosarioList" [value]="barrio.nombre">
-                {{barrio.nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Dirección completa:</mat-label>
-            <input matInput formControlName="direccionCtrl" placeholder="Dirección completa">
-          </mat-form-field>
           -->
+         
           
           <div class="margin-bottom-10">
             <mat-form-field class="datoscontacto">

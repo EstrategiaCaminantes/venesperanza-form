@@ -1,0 +1,74 @@
+
+
+<div fxLayout="column" fxLayoutAlign="center" class="flexcolumn" >
+    <section class="titleheader mat-typography ">
+      
+            <h2  class="text-bold">
+                A continuación puede actualizar los datos de la Encuesta
+            </h2>
+
+            <form [formGroup]="actualizarFormGroup" class="margin-top-20">
+
+                
+                
+
+                <div  class="margin-top-20" >
+                    <mat-form-field class="datoscontacto">
+                        <mat-label>Número de Documento</mat-label>
+                        <input matInput placeholder="Número de Documento" type="text" maxlength="3" maxlength="10"
+                          formControlName="numeroDocumentoCtrl"
+                               required minlength="3">
+                      </mat-form-field>
+
+                </div>
+
+                <div  class="margin-top-20">
+                    <mat-form-field class="datoscontacto">
+                        <mat-label>Tipo de Documento:</mat-label>
+                        <mat-select formControlName="tipoDocumentoCtrl"
+                                    (selectionChange)="selectTipoDocumentoMiembro($event)" required>
+                          <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
+                            {{documento.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                </div>
+
+                <div class="margin-top-20">
+                    <mat-form-field class="datoscontacto">
+                      <mat-label>Teléfono: </mat-label>
+                      <input matInput type="number" formControlName="telefonoCtrl" 
+                      placeholder="Ej: 3131234567" required
+                             minlength="7" maxlength="10">
+                    </mat-form-field>
+                </div>
+
+                <div class="margin-top-20">
+
+                    <mat-form-field class="datoscontacto">
+                        <mat-label>Correo electrónico: </mat-label>
+                        <input matInput formControlName="correoCtrl" type="email" 
+                        pattern="[a-zA-Z0-9_-]+([.][a-zA-Z0-9_-]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                         placeholder="Ej: nombreusuario@gmail.com"
+                         required>
+                    </mat-form-field>
+                </div>
+                    
+
+                <div *ngIf="actualizarFormGroup.status == 'VALID'" class="margin-top-20">
+                    <button color="primary" mat-raised-button [disabled]="saving"
+                            (click)="enviarInfo()">
+                      {{saving ? 'Guardando...' : 'Guardar'}}
+                    </button>
+                    <p>
+                      Oprime el botón "Guardar" para salvar la información.
+                    </p>
+                  </div>
+
+            </form>
+
+            
+      
+    </section>
+</div>
