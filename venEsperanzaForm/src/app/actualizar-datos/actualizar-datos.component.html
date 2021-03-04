@@ -16,14 +16,6 @@
     <form [formGroup]="actualizarFormGroup" class="margin-top-20">
       <div class="margin-top-20">
         <mat-form-field class="datoscontacto">
-          <mat-label>Número de Documento</mat-label>
-          <input matInput placeholder="Número de Documento" type="text" maxlength="3" maxlength="10"
-                 formControlName="numeroDocumentoCtrl"
-                 required minlength="3">
-        </mat-form-field>
-      </div>
-      <div class="margin-top-20">
-        <mat-form-field class="datoscontacto">
           <mat-label>Tipo de Documento:</mat-label>
           <mat-select formControlName="tipoDocumentoCtrl"
                       (selectionChange)="selectTipoDocumentoMiembro($event)" required>
@@ -31,6 +23,14 @@
               {{documento.name}}
             </mat-option>
           </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Número de Documento</mat-label>
+          <input matInput placeholder="Número de Documento" type="text" maxlength="3" maxlength="10"
+                 formControlName="numeroDocumentoCtrl"
+                 required minlength="3">
         </mat-form-field>
       </div>
       <div class="margin-top-20">

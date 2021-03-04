@@ -97,6 +97,7 @@ export class ReportarLlegadaComponent implements OnInit {
         this.snackBar.open('Gracias por reportar tu llegada.', 'X', {
           duration: 5000
         });
+        this.router.navigate(['/']);
         this.saving = false;
         this.reportarLlegadaFormGroup = this.formBuilder.group({
           tipoDocumentoCtrl: ['', Validators.required],

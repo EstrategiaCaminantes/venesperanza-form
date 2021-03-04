@@ -52,6 +52,7 @@ export class ActualizarDatosComponent implements OnInit {
         this.snackBar.open('Información actualizada correctamente.', 'X', {
           duration: 5000
         });
+        this.router.navigate(['/']);
         this.saving = false;
         this.actualizarFormGroup = this.formBuilder.group({
           tipoDocumentoCtrl: ['', Validators.required],
