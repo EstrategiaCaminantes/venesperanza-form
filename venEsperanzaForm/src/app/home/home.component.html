@@ -1,31 +1,34 @@
-
-<div fxLayout="column" fxLayoutAlign="center" class="flexcolumn" >
-    <section class="titleheader mat-typography ">
-      
-            <h2  class="text-bold">
-                Seleccione una de las siguientes opciones
-            </h2>
-
-            <div class="margin-top-20 text-center">
-                <button mat-raised-button color="primary" class="accept-button" routerLink="/encuesta">
-                    Llenar Formulario
-                </button>
-            </div>
-
-            <div class="margin-top-20 text-center">
-                <button mat-raised-button color="primary" class="accept-button" routerLink="/actualizar" >
-                    Actualizar Datos
-                </button>
-            </div>
-
-
-            <div class="margin-top-20 text-center">
-                <button mat-raised-button color="primary" class="accept-button" routerLink="/llegada">
-                   Reportar Llegada
-                </button>
-            </div>
-      
-    </section>
+<div fxLayout="column" fxLayoutAlign="center" class="flexcolumn">
+  <section class="titleheader mat-typography margin-bottom-20">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
+      <div fxFlex="0 0 40%" fxFlex.lt-sm="0 0 60%" fxFlex.gt-lg="0 0 30%">
+        <img class="margin-top-10 logo-wv" src="assets/img/logoUSAID.png" alt="USAID">
+      </div>
+      <div fxFlex="0 0 25%" fxFlex.lt-sm="0 0 35%" fxFlex.gt-lg="0 0 20%">
+        <img class="margin-top-10 logo-wv" src="assets/img/logovenes.png" alt="VenEsperanza">
+      </div>
+    </div>
+  </section>
+  <section class="titleheader mat-typography">
+    <div class="margin-top-20 text-center">
+      <button mat-raised-button color="primary" class="home-button" routerLink="/encuesta">
+        <mat-icon>assignment</mat-icon>
+        Llenar Formulario
+      </button>
+    </div>
+    <div class="margin-top-20 text-center">
+      <button mat-raised-button color="primary" class="home-button" routerLink="/actualizar">
+        <mat-icon>note_alt</mat-icon>
+        Actualizar Datos
+      </button>
+    </div>
+    <div class="margin-top-20 text-center">
+      <button mat-raised-button color="primary" class="home-button" routerLink="/llegada">
+        <mat-icon>assignment_turned_in</mat-icon>
+        Reportar Llegada
+      </button>
+    </div>
+  </section>
 </div>
 
 

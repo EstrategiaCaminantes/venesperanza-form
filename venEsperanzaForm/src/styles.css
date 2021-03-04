@@ -1,5 +1,4 @@
 
-
 html, body {
   height: 100%;
 }
@@ -7,4 +6,133 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-stepper-vertical {
+  margin-top: 8px;
+}
+
+.mat-form-field {
+  margin: 5px;
+}
+
+.content {
+  display: flex;
+  margin: 82px auto 32px;
+  padding: 0 16px;
+  max-width: 960px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.card-container-miembrohogar {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.flexcolumn {
+  padding: 20px 40px 20px 40px;
+}
+
+.titleheader {
+  text-align: center;
+}
+
+.termnsandconditions {
+  text-align: justify;
+}
+
+.contactoAlternativo {
+  width: 85%;
+}
+
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+
+.margin-top-20 {
+  margin-top: 20px !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.margin-bottom-0 {
+  margin-bottom: 0 !important;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px !important;
+}
+
+
+.margin-bottom-20 {
+  margin-bottom: 20px !important;
+}
+
+.margin-left-10 {
+  margin-left: 10px !important;
+}
+
+.accept-button {
+  margin-right: 10px !important;
+}
+
+.text-bold {
+  font-weight: bold !important;
+}
+
+.text-red {
+  color: #F36A21;
+}
+
+.text-blue {
+  color: #1B51A2;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.logo-venes, .logo-wv {
+  max-width: 100%;
+}
+
+.url-text {
+  overflow-wrap: break-word;
+}
+
+.btn-save {
+  width: 100%;
+  max-width: 300px;
+  height: 45px;
+  font-size: 16px;
+}
+
+
+/*clases jorge*/
+.datosllegada {
+  width: 200px
+}
+
+.datoscontacto {
+  width: 250px;
+}
+
+
+.sexoNoValidado {
+  color: red;
 }

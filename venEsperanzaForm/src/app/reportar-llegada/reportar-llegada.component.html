@@ -1,90 +1,75 @@
-
-
-<div fxLayout="column" fxLayoutAlign="center" class="flexcolumn" >
-    <section class="titleheader mat-typography ">
-      
-            <h2  class="text-bold">
-                Ingresa los datos requeridos para Reportar Llegada a destino
-                <br>
-                (Debe permitir compartir ubicación)
-            </h2>
-
-            <form [formGroup]="reportarLlegadaFormGroup" class="margin-top-20">
-
-                
-                
-
-                <div  class="margin-top-20" >
-                    <mat-form-field class="datoscontacto">
-                        <mat-label>Número de Documento</mat-label>
-                        <input matInput placeholder="Número de Documento" type="text" maxlength="3" maxlength="10"
-                          formControlName="numeroDocumentoCtrl"
-                               required minlength="3">
-                      </mat-form-field>
-
-                </div>
-
-                <div  class="margin-top-20">
-                    <mat-form-field class="datoscontacto">
-                        <mat-label>Tipo de Documento:</mat-label>
-                        <mat-select formControlName="tipoDocumentoCtrl"
-                                    (selectionChange)="selectTipoDocumentoMiembro($event)" required>
-                          <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
-                            {{documento.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-
-                </div>
-
-                <div class="margin-top-20">
-                    <mat-form-field class="datoscontacto">
-                      <mat-label>Teléfono: </mat-label>
-                      <input matInput type="number" formControlName="telefonoCtrl" 
-                      placeholder="Ej: 3131234567" required
-                             minlength="7" maxlength="10">
-                    </mat-form-field>
-                </div>
-
-                <div class="margin-top-20">
-                    <mat-form-field class="datoscontacto">
-                        <mat-label>Departamento:</mat-label>
-                        <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
-                          <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
-                            {{departamento.nombre}}
-                          </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <div class="margin-top-20">
-          
-                      <mat-form-field class="datoscontacto">
-                        <mat-label>Municipio:</mat-label>
-                        <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event)" required>
-                          <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
-                            {{municipio.nombre}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                </div>
-
-               
-                    
-
-                <div *ngIf="reportarLlegadaFormGroup.status == 'VALID' && coordenadas" class="margin-top-20">
-                    <button color="primary" mat-raised-button [disabled]="saving"
-                            (click)="enviarInfo()">
-                      {{saving ? 'Guardando...' : 'Guardar'}}
-                    </button>
-                    <p>
-                      Oprime el botón "Guardar" para salvar la información.
-                    </p>
-                  </div>
-
-            </form>
-
-            
-      
-    </section>
+<div fxLayout="column" fxLayoutAlign="center" class="flexcolumn">
+  <section class="titleheader mat-typography margin-bottom-20">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-around center">
+      <div fxFlex="0 0 40%" fxFlex.lt-sm="0 0 60%" fxFlex.gt-lg="0 0 30%">
+        <img class="margin-top-10 logo-wv" src="assets/img/logoUSAID.png" alt="USAID">
+      </div>
+      <div fxFlex="0 0 25%" fxFlex.lt-sm="0 0 35%" fxFlex.gt-lg="0 0 20%">
+        <img class="margin-top-10 logo-wv" src="assets/img/logovenes.png" alt="VenEsperanza">
+      </div>
+    </div>
+    <h2 class="text-blue text-bold margin-top-20">
+      Ingresa los datos requeridos para Reportar Llegada a destino
+    </h2>
+  </section>
+  <section class="titleheader mat-typography">
+    <form [formGroup]="reportarLlegadaFormGroup" class="margin-top-20">
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Número de Documento</mat-label>
+          <input matInput placeholder="Número de Documento" type="text" maxlength="3" maxlength="10"
+                 formControlName="numeroDocumentoCtrl"
+                 required minlength="3">
+        </mat-form-field>
+      </div>
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Tipo de Documento:</mat-label>
+          <mat-select formControlName="tipoDocumentoCtrl"
+                      (selectionChange)="selectTipoDocumentoMiembro($event)" required>
+            <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
+              {{documento.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Teléfono:</mat-label>
+          <input matInput type="number" formControlName="telefonoCtrl"
+                 placeholder="Ej: 3131234567" required
+                 minlength="7" maxlength="10">
+        </mat-form-field>
+      </div>
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Departamento:</mat-label>
+          <mat-select formControlName="departamentoCtrl" (selectionChange)="selectDepartamento($event)" required>
+            <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
+              {{departamento.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Municipio:</mat-label>
+          <mat-select formControlName="municipioCtrl" (selectionChange)="selectMunicipio($event)" required>
+            <mat-option *ngFor="let municipio of municipiosFilter" [value]="municipio.id">
+              {{municipio.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="margin-top-20">
+        <button color="primary" mat-raised-button [disabled]="saving || !(reportarLlegadaFormGroup.status == 'VALID')"
+                (click)="enviarInfo()" class="btn-save">
+          {{saving ? 'Guardando...' : 'Guardar'}}
+        </button>
+        <p class="margin-top-10">
+          Oprime el botón "Guardar" para salvar la información.
+        </p>
+      </div>
+    </form>
+  </section>
 </div>

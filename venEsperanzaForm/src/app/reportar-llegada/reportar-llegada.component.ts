@@ -1,8 +1,8 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 //import { requiredFileType } from "./requireFileTypeValidators";
-import { ActualizarDatosService } from '../services/actualizar-datos.service';
+import {ActualizarDatosService} from '../services/actualizar-datos.service';
 import {FormService} from '../services/form.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -34,97 +34,85 @@ export class ReportarLlegadaComponent implements OnInit {
 
   coordenadas = null;
 
-  constructor(private formBuilder: FormBuilder,private elementRef: ElementRef, 
-    private actualizarDatosService:ActualizarDatosService,
-    public formService:FormService, 
-    private router: Router, private activatedRouter:ActivatedRoute,
-    private snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private elementRef: ElementRef,
+              private actualizarDatosService: ActualizarDatosService,
+              public formService: FormService,
+              private router: Router, private activatedRouter: ActivatedRoute,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
     this.reportarLlegadaFormGroup = this.formBuilder.group({
       tipoDocumentoCtrl: ['', Validators.required],
-      numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]],
+      numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
       telefonoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
       departamentoCtrl: ['', Validators.required],
       municipioCtrl: ['', Validators.required]
     });
 
     this.actualizarDatosService.getDepartamentos()
-        .subscribe((data: any[]) => {
-          this.departamentosList = data;
-        });
+      .subscribe((data: any[]) => {
+        this.departamentosList = data;
+      });
 
-      this.actualizarDatosService.getMunicipios()
-        .subscribe((data: any[]) => {
-          this.municipiosList = data;
-          this.municipiosFilter = this.municipiosList;
-        });
+    this.actualizarDatosService.getMunicipios()
+      .subscribe((data: any[]) => {
+        this.municipiosList = data;
+        this.municipiosFilter = this.municipiosList;
+      });
 
-        navigator.geolocation.getCurrentPosition((position) => {
-          const coords = {latitud: position.coords.latitude, longitud: position.coords.longitude};
-    
-          //coordenadas global para guardar en autorizacion
-          this.coordenadas = coords;
-        });
+    navigator.geolocation.getCurrentPosition((position) => {
+      const coords = {latitud: position.coords.latitude, longitud: position.coords.longitude};
+
+      //coordenadas global para guardar en autorizacion
+      this.coordenadas = coords;
+    });
   }
 
-  selectTipoDocumentoMiembro($event:any):void{
-    
+  selectTipoDocumentoMiembro($event: any): void {
+
   }
 
   selectDepartamento($event: any): void {
     this.municipiosFilter = this.municipiosList;
-    const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
-    this.municipiosFilter = municipiosnuevo;
+    this.municipiosFilter = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
     this.reportarLlegadaFormGroup.controls.municipioCtrl.setValue(null);
   }
 
-  selectMunicipio($event:any):void{
-    //console.log('REPORTAR: ', this.reportarLlegadaFormGroup);
+  selectMunicipio($event: any): void {
   }
 
-  enviarInfo(){
+  enviarInfo(): void {
 
-    //console.log('ENVIAR INFO: ');
     this.saving = true;
 
     let data = {
-      'formData' : this.reportarLlegadaFormGroup.value,
+      'formData': this.reportarLlegadaFormGroup.value,
       'coordenadas': this.coordenadas
-    }
-    
-    this.actualizarDatosService.reportarLlegada(data).subscribe(res=>{
+    };
 
-      if(res['res']){
-        this.snackBar.open('Reporte de llegada almacenado correctamente', 'X', {
-          duration: 2000
+    this.actualizarDatosService.reportarLlegada(data).subscribe(res => {
+
+      if (res['res']) {
+        this.snackBar.open('Gracias por reportar tu llegada.', 'X', {
+          duration: 5000
         });
         this.saving = false;
         this.reportarLlegadaFormGroup = this.formBuilder.group({
           tipoDocumentoCtrl: ['', Validators.required],
-          numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]],
+          numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
           telefonoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
           departamentoCtrl: ['', Validators.required],
           municipioCtrl: ['', Validators.required]
         });
       }
-        
-    },error=>{
-      
+    }, error => {
       this.snackBar.open('Verifique los datos e intente nuevamente', 'X', {
-        duration: 2000
+        duration: 3000
       });
       this.saving = false;
-      /*this.reportarLlegadaFormGroup = this.formBuilder.group({
-        tipoDocumentoCtrl: ['', Validators.required],
-        numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]],
-        telefonoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
-        departamentoCtrl: ['', Validators.required],
-        municipioCtrl: ['', Validators.required]
-      });*/
     });
 
-    
+
   }
 }

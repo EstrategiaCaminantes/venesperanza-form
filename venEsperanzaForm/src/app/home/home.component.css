@@ -1,23 +1,29 @@
 
 .flexcolumn {
-    padding: 20px 40px 20px 40px;
-  }
-  
+  padding: 20px 40px 20px 40px;
+}
+
 .titleheader {
-    text-align: center;
-  
-  }
-  
-  .accept-button {
-    margin-right: 10px;
-  }
-  
-  .margin-top-20 {
-    margin-top: 20px;
-  }
-  
-  
-  a{
-    color:#ffff;
-      text-decoration: none;
-  }
+  text-align: center;
+}
+
+.home-button {
+  width: 100%;
+  max-width: 500px;
+  height: 100px;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.home-button mat-icon {
+  padding-bottom: 5px;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+a {
+  color: #ffff;
+  text-decoration: none;
+}
