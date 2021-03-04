@@ -116,7 +116,10 @@
   <div *ngIf="!form" class="margin-top-20 text-center">
     <mat-spinner></mat-spinner>
   </div>
-
+  <button *ngIf="!autorizationPolicy || !autorizationConditions" mat-raised-button color="warn"
+          class="btn-save margin-top-20" routerLink="/">
+    Cancelar
+  </button>
   <div class="card-container" *ngIf="formPrincipal" fxLayout="row">
     <mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper
                           fxFlex="100%">
