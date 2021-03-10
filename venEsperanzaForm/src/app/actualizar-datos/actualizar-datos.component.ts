@@ -45,6 +45,45 @@ export class ActualizarDatosComponent implements OnInit {
 
   }
 
+  validarTelefono($event: any):void{
+
+    if(this.actualizarFormGroup.controls['telefonoCtrl'].status === 'VALID'){
+
+      //this.actualizarFormGroup.setControl('correoCtrl', new FormControl(''));
+      this.actualizarFormGroup.controls['correoCtrl'].clearValidators();
+      this.actualizarFormGroup.controls['correoCtrl'].updateValueAndValidity();
+      //this.actualizarFormGroup.controls['correoCtrl'].updateValueAndValidity();
+
+    }else if(this.actualizarFormGroup.controls['telefonoCtrl'].status === 'INVALID'){
+
+      this.actualizarFormGroup.setControl('correoCtrl', new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9_-]+([.][a-zA-Z0-9_-]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}')]));
+    }
+    //console.log('CAMBIO TELEFONO: ', this.actualizarFormGroup);
+  
+  }
+
+  validarCorreo($event: any):void{
+    
+  var expreg = new RegExp("[a-zA-Z0-9_-]+([.][a-zA-Z0-9_-]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}");
+  
+    if(expreg.test($event)){
+      //console.log('CORRECTO!');
+      this.actualizarFormGroup.controls['telefonoCtrl'].setValidators([]);
+      this.actualizarFormGroup.controls['telefonoCtrl'].updateValueAndValidity();
+    }else{
+      //console.log('INCORRECTO');
+      this.actualizarFormGroup.setControl('telefonoCtrl',new FormControl('',[Validators.required, Validators.min(1000000), Validators.max(9999999999)]));
+
+      //this.actualizarFormGroup.setControl('correoCtrl', new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9_-]+([.][a-zA-Z0-9_-]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}')]));
+
+    }
+
+    //console.log('CAMBIO CORREO: ', this.actualizarFormGroup);
+
+  }
+
+  
+
   enviarInfo(): void {
     this.saving = true;
     this.actualizarDatosService.actualizarDatos(this.actualizarFormGroup.value).subscribe(res => {

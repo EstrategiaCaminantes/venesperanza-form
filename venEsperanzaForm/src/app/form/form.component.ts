@@ -294,6 +294,7 @@ export class FormComponent implements OnInit {
       //nuevoMunicipioUbicacionCtrl: ['', Validators.required],
       /*barrioCtrl: ['', Validators.required],
       direccionCtrl: [''],*/
+      numeroEntregadoVenEsperanzaCtrl: ['', Validators.required],
       numeroContactoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
       lineaContactoPropiaCtrl: ['', Validators.required],
       lineaContactoAsociadaAWhatsappCtrl: [''],
@@ -515,6 +516,11 @@ export class FormComponent implements OnInit {
   }
 
   
+  numeroEntregadoVenEsperanza($event:any):void{
+
+    //console.log('LA SELECCION DE NUMEOR VENESPE SI_NO: ', $event);
+    //console.log('VALOR DEL CONTROLADOR: ', this.thirdFormGroup.controls.numeroEntregadoVenEsperanzaCtrl);
+  }
 
 // validacion de linea de contacto propia, muestra o oculta los campos segun la seleccion
   lineaContactoPropia($event: any): void {

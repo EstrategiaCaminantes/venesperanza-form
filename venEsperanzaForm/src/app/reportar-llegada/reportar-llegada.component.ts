@@ -45,7 +45,7 @@ export class ReportarLlegadaComponent implements OnInit {
     this.reportarLlegadaFormGroup = this.formBuilder.group({
       tipoDocumentoCtrl: ['', Validators.required],
       numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      telefonoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
+      telefonoCtrl: [''],
       departamentoCtrl: ['', Validators.required],
       municipioCtrl: ['', Validators.required]
     });
@@ -102,7 +102,7 @@ export class ReportarLlegadaComponent implements OnInit {
         this.reportarLlegadaFormGroup = this.formBuilder.group({
           tipoDocumentoCtrl: ['', Validators.required],
           numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-          telefonoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
+          telefonoCtrl: [''],
           departamentoCtrl: ['', Validators.required],
           municipioCtrl: ['', Validators.required]
         });

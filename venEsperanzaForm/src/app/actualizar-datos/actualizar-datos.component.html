@@ -36,7 +36,7 @@
       <div class="margin-top-20">
         <mat-form-field class="datoscontacto">
           <mat-label>Teléfono:</mat-label>
-          <input matInput type="number" formControlName="telefonoCtrl"
+          <input matInput type="number" formControlName="telefonoCtrl" (ngModelChange)="validarTelefono($event)"
                  placeholder="Ej: 3131234567" required
                  minlength="7" maxlength="10">
         </mat-form-field>
@@ -46,6 +46,7 @@
           <mat-label>Correo electrónico:</mat-label>
           <input matInput formControlName="correoCtrl" type="email"
                  pattern="[a-zA-Z0-9_-]+([.][a-zA-Z0-9_-]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                 (ngModelChange)="validarCorreo($event)"
                  placeholder="Ej: nombreusuario@gmail.com"
                  required>
         </mat-form-field>
