@@ -78,9 +78,12 @@ body {
   margin-bottom: 10px !important;
 }
 
-
 .margin-bottom-20 {
   margin-bottom: 20px !important;
+}
+
+.margin-bottom-40 {
+  margin-bottom: 40px !important;
 }
 
 .margin-left-10 {
@@ -93,6 +96,10 @@ body {
 
 .text-bold {
   font-weight: bold !important;
+}
+
+.text-normal {
+  font-weight: normal !important;
 }
 
 .text-red {

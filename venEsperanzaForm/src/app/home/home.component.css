@@ -12,7 +12,13 @@
   max-width: 500px;
   height: 100px;
   font-size: 24px;
-  margin-bottom: 20px;
+}
+
+.text-button-help {
+  max-width: 700px;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .home-button mat-icon {
@@ -26,4 +32,8 @@
 a {
   color: #ffff;
   text-decoration: none;
+}
+
+.list-none li {
+  list-style: none;
 }

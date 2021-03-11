@@ -9,12 +9,10 @@
       </div>
     </div>
     <h2 *ngIf="titleheader" class="text-blue text-bold margin-top-20">
-      Formulario NO oficial de identificación para familias migrantes venezolanas y colombianas retornadas recién
-      llegadas a Colombia
+      Encuesta de identificación para familias migrantes venezolanas y colombianas retornadas recién llegadas a
+      Colombia, para programas humanitarios ofrecidos por organizaciones no gubernamentales.
     </h2>
     <h2 *ngIf="titleheader" class="text-blue text-bold margin-top-20">
-      Para programas humanitarios ofrecidos por organizaciones no gubernamentales.
-      <br>
       Completar este formulario no modifica tu estatus migratorio en Colombia
     </h2>
     <h2 *ngIf="thanksmessage || finishmessage" class="margin-top-20">¡Gracias por participar!</h2>
@@ -405,12 +403,12 @@
 
           <div class="margin-bottom-10">
             <mat-form-field class="numerocontacto">
-              
+
               <mat-label>
-                <span  *ngIf="thirdFormGroup.controls.numeroEntregadoVenEsperanzaCtrl.value == 1 ">
+                <span *ngIf="thirdFormGroup.controls.numeroEntregadoVenEsperanzaCtrl.value == 1 ">
                   Número de Contacto VenEsperanza:
                 </span>
-                <span  *ngIf="thirdFormGroup.controls.numeroEntregadoVenEsperanzaCtrl.value == 0 || 
+                <span *ngIf="thirdFormGroup.controls.numeroEntregadoVenEsperanzaCtrl.value == 0 ||
                   thirdFormGroup.controls.numeroEntregadoVenEsperanzaCtrl.value == '' ">
                   Número de Contacto principal:
                 </span>
