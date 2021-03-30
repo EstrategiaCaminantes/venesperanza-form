@@ -93,6 +93,13 @@ export class FormComponent implements OnInit {
 
   ]
 
+  listaRazonesElegirDestinoFinal = [
+    {name: 'Algún amigo o familiar me espera', value: 'algun_amigo_familiar_me_espera'},
+    {name: 'Conozco personas que me pueden dar trabajo', value: 'conozco_personas_que_me_pueden_dar_trabajo'},
+    {name: 'He escuchado que puedo tener trabajo allá', value:'he_escuchado_que_puedo_tener_trabajo_alla'},
+    {name: 'Otra', value:'otra'}
+  ];
+
   dentroDeColombiaNO = false;
   dentroDeColombia = false;
 
@@ -259,7 +266,9 @@ export class FormComponent implements OnInit {
       llegadaDestinoPlaneaEstarEnColombiaCtrl: ['', Validators.required],
       llegadaDestinoDestinoFinalFueraColombiaCtrl: ['', Validators.required],
       llegadaDestinoDepartamentoCtrl: ['', Validators.required],
-      llegadaDestinoCiudadCtrl:['', Validators.required]
+      llegadaDestinoCiudadCtrl:['', Validators.required],
+      razonElegirDestinoFinalCtrl: ['', Validators.required],
+      hogarRecibeTransporteHumanitarioCtrl:['',Validators.required]
       /*
       firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
@@ -943,6 +952,18 @@ export class FormComponent implements OnInit {
     //}
     //console.log('LLEGADAS DESTINO: ',this.llegadaDestinoFormGroup);
 
+  }
+
+  selectRazonElegirDestino($event:any):void{
+
+    if($event.value === 'Otra'){
+      //console.log('$EVENT OTRA: ', $event);
+            this.llegadaDestinoFormGroup.addControl('otraRazonElegirDestinoFinalCtrl', new FormControl('', [Validators.required]))
+
+    }else{
+      //console.log('ELEGIR RAZON: ', $event);
+      this.llegadaDestinoFormGroup.removeControl('otraRazonElegirDestinoFinalCtrl');
+    }
   }
 
 // creo boton mati con parametros

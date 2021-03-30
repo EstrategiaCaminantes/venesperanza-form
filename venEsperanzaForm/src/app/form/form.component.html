@@ -146,12 +146,19 @@
           <div class="margin-bottom-10">
             <p>¿En qué fecha tu y tu grupo familiar llegaron al país?*</p>
             <mat-form-field class="datosllegada">
+              <!--
               <mat-label>Seleccionar una opción</mat-label>
               <mat-select formControlName="llegadaDestinofechaLlegadaCtrl" required>
                 <mat-option *ngFor="let fechallegada of listaFechasLlegadaPais" [value]="fechallegada.name">
                   {{fechallegada.name}}
                 </mat-option>
-              </mat-select>
+              </mat-select>-->
+             
+                <mat-label>Seleccionar fecha:</mat-label>
+                <input matInput [matDatepicker]="pickertres_i" [max]="myDate" Format="'YYYY-MM-DD'" formControlName="llegadaDestinofechaLlegadaCtrl" required>
+                <mat-datepicker-toggle matSuffix [for]="pickertres_i"></mat-datepicker-toggle>
+                <mat-datepicker #pickertres_i></mat-datepicker>
+         
             </mat-form-field>
           </div>
           <div class="margin-bottom-10">
@@ -207,6 +214,41 @@
               </mat-select>
             </mat-form-field>
           </div>
+
+          <div class="margin-bottom-10" *ngIf="llegadaDestinoFormGroup.controls.llegadaDestinoPlaneaEstarEnColombiaCtrl.status === 'VALID' ">
+            <p>¿Cuál es la razón para elegir este lugar como destino final?*</p>
+            <mat-form-field>
+              <mat-label>Seleccionar una opción:</mat-label>
+              <mat-select formControlName="razonElegirDestinoFinalCtrl" (selectionChange)="selectRazonElegirDestino($event)" required>
+                <mat-option *ngFor="let razon of listaRazonesElegirDestinoFinal" [value]="razon.name">
+                  {{razon.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="margin-bottom-10" *ngIf="llegadaDestinoFormGroup.controls.razonElegirDestinoFinalCtrl.value === 'Otra' ">
+            <p>¿Cuál?*</p>
+            <mat-form-field >
+              <mat-label>Otra razón: </mat-label>
+              <input matInput placeholder="Otra razón" formControlName="otraRazonElegirDestinoFinalCtrl" required>
+            </mat-form-field>
+
+          </div>
+
+          <div class="margin-bottom-10">
+          
+            <label>¿Tu hogar está recibiendo transporte humanitario?*: </label>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="hogarRecibeTransporteHumanitarioCtrl" required>
+              <div>
+                <mat-radio-button value="1">Si</mat-radio-button>
+                <mat-radio-button value="0">No</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+          
+
+
           <div *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
             <button color="primary" mat-raised-button [disabled]="saving"
                     (click)="enviarInfo(llegadaDestinoFormGroup,'paso1',stepper,true,stepper, false)">
