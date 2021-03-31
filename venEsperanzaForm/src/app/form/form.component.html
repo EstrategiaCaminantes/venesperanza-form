@@ -153,12 +153,12 @@
                   {{fechallegada.name}}
                 </mat-option>
               </mat-select>-->
-             
+
                 <mat-label>Seleccionar fecha:</mat-label>
                 <input matInput [matDatepicker]="pickertres_i" [max]="myDate" Format="'YYYY-MM-DD'" formControlName="llegadaDestinofechaLlegadaCtrl" required>
                 <mat-datepicker-toggle matSuffix [for]="pickertres_i"></mat-datepicker-toggle>
                 <mat-datepicker #pickertres_i></mat-datepicker>
-         
+
             </mat-form-field>
           </div>
           <div class="margin-bottom-10">
@@ -233,11 +233,9 @@
               <mat-label>Otra razón: </mat-label>
               <input matInput placeholder="Otra razón" formControlName="otraRazonElegirDestinoFinalCtrl" required>
             </mat-form-field>
-
           </div>
 
           <div class="margin-bottom-10">
-          
             <label>¿Tu hogar está recibiendo transporte humanitario?*: </label>
             <mat-radio-group aria-label="Selecciona una opción" formControlName="hogarRecibeTransporteHumanitarioCtrl" required>
               <div>
@@ -246,10 +244,8 @@
               </div>
             </mat-radio-group>
           </div>
-          
 
-
-          <div *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
+          <div class="margin-top-20" *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
             <button color="primary" mat-raised-button [disabled]="saving"
                     (click)="enviarInfo(llegadaDestinoFormGroup,'paso1',stepper,true,stepper, false)">
               {{saving ? 'Guardando...' : 'Siguiente'}}
