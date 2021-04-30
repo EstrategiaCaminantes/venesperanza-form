@@ -268,8 +268,8 @@ export class FormComponent implements OnInit {
       llegadaDestinoDepartamentoCtrl: ['', Validators.required],
       llegadaDestinoCiudadCtrl:['', Validators.required],
       razonElegirDestinoFinalCtrl: ['', Validators.required],
-      hogarRecibeTransporteHumanitarioCtrl:['',Validators.required]
-      /*
+      hogarRecibeTransporteHumanitarioCtrl:['',Validators.required],
+      
       firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
       lastNameCtrl: ['', Validators.required],
@@ -278,7 +278,9 @@ export class FormComponent implements OnInit {
       fechaNacimientoCtrl: ['', Validators.required],
       nacionalidadCtrl: ['', Validators.required],
       tipoDocumentoCtrl: ['', Validators.required],
-      numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]]*/
+      numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]],
+      compartirFotoDocumentoEncuestadoCtrl: new FormControl('', Validators.required), 
+
     });
 
     // crea los formsGroup
@@ -498,22 +500,46 @@ export class FormComponent implements OnInit {
   selectTipoDocumento($event: any): void {
     if ($event.value == 'Otro') { // si es Otro agrega el controlador
       this.otroTipoDocumento = true;
-      this.secondFormGroup.addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
-    } else if ($event.value != 'Otro' && this.secondFormGroup.contains('otroTipoDocumentoCtrl')) {
+      //this.secondFormGroup.addControl('otroTipoDocumentoCtrl', new FormControl('', Validators.required));
+      this.llegadaDestinoFormGroup.addControl('otroTipoDocumentoCtrl', new FormControl('',Validators.required));
+    } else if ($event.value != 'Otro' && this.llegadaDestinoFormGroup.contains('otroTipoDocumentoCtrl')) {
       // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
       this.otroTipoDocumento = false;
-      this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
+      //this.secondFormGroup.removeControl('otroTipoDocumentoCtrl');
+      this.llegadaDestinoFormGroup.removeControl('otroTipoDocumentoCtrl');
     }
     if ($event.value == 'Indocumentado') { // Si es indocumentado elimina controlador de numero documento
-      this.secondFormGroup.removeControl('numeroDocumentoCtrl');
+      //this.secondFormGroup.removeControl('numeroDocumentoCtrl');
+      this.llegadaDestinoFormGroup.removeControl('numeroDocumentoCtrl');
       this.numeroDocumento = false;
-    } else if ($event.value != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl')) {
+    //} else if ($event.value != 'Indocumentado' && !this.secondFormGroup.contains('numeroDocumentoCtrl')) {
+    } else if ($event.value != 'Indocumentado' && !this.llegadaDestinoFormGroup.contains('numeroDocumentoCtrl')) {
       // si es diferente a indocumentado y el formgroup no contiene numerodocumento, crea el controlador de numero documento
-      //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.min(1), Validators.max(9999999999)]));
-      this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]));
+      //this.secondFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]));
+      this.llegadaDestinoFormGroup.addControl('numeroDocumentoCtrl', new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10) ]));
 
       this.numeroDocumento = true;
     }
+  }
+
+  selectNacionalidad($event:any):void{
+    /*
+    console.log('SELECT NACIONALIDAD MIEMBRO: ');
+    console.log('EVENTO: ', $event);
+    console.log('INDEX MIEMBRO: ', index);
+    console.log('MIEMBOR SFAMILIA: ',this.fourFormGroup.controls.miembrosFamilia);*/
+
+    if ($event.value == 'Otro') { // si es Otro agrega el controlador
+
+      //console.log('MIEMBRO FAMILIA EN OTRO NACIONALIDAD ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+      this.llegadaDestinoFormGroup.addControl('otroNacionalidadCtrl', new FormControl('', Validators.required));
+    } else if ($event.value != 'Otro' && this.llegadaDestinoFormGroup.contains('otroNacionalidadCtrl')) {
+      // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
+
+      //console.log('MIEMBRO FAMILIA NACIONALIDAD DIFERENTE A OTRO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index] );
+      this.llegadaDestinoFormGroup.removeControl('otroNacionalidadCtrl');
+    }
+
   }
 
 // selecciona departamento y filtra lso municipios
@@ -522,6 +548,52 @@ export class FormComponent implements OnInit {
     const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
     this.municipiosFilter = municipiosnuevo;
     this.thirdFormGroup.controls.municipioCtrl.setValue(null);
+  }
+
+  compartirFotoDocumentoEncuestado($event){
+
+    //console.log('EVENTO FOTO: ', $event.value);
+     if($event.value == 1){
+      //this.fourFormGroup.controls.miembrosFamilia['controls'][index].addControl('fotoDocumentoCtrl', 
+     // new FormControl('', [Validators.required, requiredFileType(["jpg", "png", "txt"])]));
+
+     this.llegadaDestinoFormGroup.addControl('fotoDocumentoEncuestadoCtrl', 
+      new FormControl('', [Validators.required]));
+      
+      
+     }else if($event.value ==0){
+      this.llegadaDestinoFormGroup.removeControl('fotoDocumentoEncuestadoCtrl');
+     }
+
+  }
+
+
+  subirArchivoEncuestado($event):void{
+    //console.log('INDEX: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+    //console.log('EVENTO: ', $event);
+    //console.log('EVENTO TARGET: ', $event.target.files);
+    let elemento = $event.target.files[0]; //tomo la foto seleccionada
+
+    this.unicafoto = $event.target.files[0];
+    
+    this.llegadaDestinoFormGroup.controls.fotoDocumentoEncuestadoCtrl.setValue(elemento);
+
+    //console.log('ARCHIVO: ', this.fourFormGroup.controls.miembrosFamilia['controls'][index]);
+
+    //Funcionalidad que asigna el archivo seleccionado a variable dinamica this.unicafoto y la relaciona con 
+    //el campo fotoDocumentoCtrl del miembro de hogar respectivo
+      var files = $event.target.files;
+      var file = files[0];
+      this.unicafoto.nombreArchivo = file.name;
+      this.unicafoto.tipo = file.type;
+  
+      if(files && file) {
+        var reader = new FileReader();
+        reader.onload = this._handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(file);
+      }
+    
+
   }
 
   
@@ -652,7 +724,8 @@ export class FormComponent implements OnInit {
     this.fourFormGroup.controls.miembrosFamilia.value.forEach(item => {
       muj = (muj || item.sexoCtrl === 'mujer');
     });
-    this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
+    //this.mujeres = (muj || this.secondFormGroup.value.sexoCtrl === 'mujer');
+    this.mujeres = (muj || this.llegadaDestinoFormGroup.value.sexoCtrl === 'mujer');
   }
 
   toggleMiembro(e): void {

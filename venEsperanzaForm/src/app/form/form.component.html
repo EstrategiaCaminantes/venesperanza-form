@@ -123,7 +123,107 @@
                           fxFlex="100%">
       <mat-step [stepControl]="llegadaDestinoFormGroup">
         <form [formGroup]="llegadaDestinoFormGroup">
-          <ng-template matStepLabel>DATOS DE LLEGADA Y DESTINO</ng-template>
+          <ng-template matStepLabel>DATOS DEL ENCUESTADO, DATOS DE LLEGADA Y DESTINO</ng-template>
+
+          <!--Datos Encuestado-->
+
+          <div class="margin-bottom-10">
+          <mat-form-field>
+            <mat-label>Primer Nombre</mat-label>
+            <input matInput placeholder="Primer Nombre" formControlName="firstNameCtrl" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Segundo Nombre</mat-label>
+            <input matInput placeholder="Segundo Nombre" formControlName="secondNameCtrl">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Primer Apellido</mat-label>
+            <input matInput placeholder="Primer Apellido" formControlName="lastNameCtrl" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Segundo Apellido</mat-label>
+            <input matInput placeholder="Segundo Apellido" formControlName="secondLastNameCtrl">
+          </mat-form-field>
+          </div>
+          <div class="margin-bottom-10">
+            <p class="sexoNoValidado" *ngIf="llegadaDestinoFormGroup.controls['sexoCtrl'].status =='INVALID' ">Sexo*: </p>
+                  <p *ngIf="llegadaDestinoFormGroup.controls['sexoCtrl'].status =='VALID' ">Sexo*:</p>
+            <mat-radio-group aria-label="Selecciona una opción" formControlName="sexoCtrl"
+                             (change)="seleccionSexo('principal')" required>
+              <mat-radio-button value="mujer">Mujer</mat-radio-button>
+              <mat-radio-button value="hombre">Hombre</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="margin-bottom-10">
+          <mat-form-field>
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" [max]="myDate" formControlName="fechaNacimientoCtrl" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nacionalidad:</mat-label>
+            <mat-select formControlName="nacionalidadCtrl" 
+                        (selectionChange)="selectNacionalidad($event)"required>
+              <mat-option *ngFor="let nacionalidad of nacionalidades" [value]="nacionalidad.name">
+                {{nacionalidad.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="llegadaDestinoFormGroup.controls.nacionalidadCtrl.value == 'Otro' ">
+                  <mat-label>¿Cuál?* (Indicar nacionalidad, ejemplo: Peruana)</mat-label>
+                  <input matInput placeholder="Ejemplo: Peruana" formControlName="otroNacionalidadCtrl" required>
+                </mat-form-field>
+          </div>
+          <div class="margin-bottom-10">
+              <mat-form-field >
+                <mat-label>Tipo de Documento:</mat-label>
+                <mat-select formControlName="tipoDocumentoCtrl" (selectionChange)="selectTipoDocumento($event)" required>
+                  <mat-option *ngFor="let documento of tipoDocumentos" [value]="documento.name">
+                    {{documento.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field *ngIf="llegadaDestinoFormGroup.controls.tipoDocumentoCtrl.value == 'Otro' ">
+                <mat-label>¿Cuál?* (Indicar tipo, ejemplo: pasaporte)</mat-label>
+                <input matInput placeholder="Ejemplo: Pasaporte" formControlName="otroTipoDocumentoCtrl" required>
+              </mat-form-field>
+              
+              <mat-form-field *ngIf="numeroDocumento">
+                <mat-label>Número de Documento</mat-label>
+                <input matInput placeholder="Número de Documento" type="number" formControlName="numeroDocumentoCtrl"
+                      required minlength="3">
+              </mat-form-field>
+          </div>
+
+          <div class="margin-bottom-10" *ngIf="llegadaDestinoFormGroup.controls.compartirFotoDocumentoEncuestadoCtrl">
+            <p>¿Podrías compartir una fotografía de tu documento de identidad?*</p>
+            <mat-form-field class="datosllegada">
+              <mat-label>Seleccionar una opción</mat-label>
+              <mat-select formControlName="compartirFotoDocumentoEncuestadoCtrl"
+                          (selectionChange)="compartirFotoDocumentoEncuestado($event)" required>
+                <mat-option [value]="1">
+                  Sí
+                </mat-option>
+                <mat-option [value]="0">
+                  No
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="margin-foto-encuestado"
+               *ngIf="llegadaDestinoFormGroup.controls.compartirFotoDocumentoEncuestadoCtrl && llegadaDestinoFormGroup.controls.compartirFotoDocumentoEncuestadoCtrl.value == 1 ">
+            <p>Por favor carga una fotografía de tu documento aquí</p>
+            <input type="file" name="image" (change)="subirArchivoEncuestado($event)"
+                   accept="image/png, image/jpeg, application/pdf" required>
+          </div>
+
+
+
+          <!--Termina datos encuestado-->
+
+
           <div class="margin-bottom-10">
             <p>Por favor selecciona una opción, ¿Cómo encontraste este formulario?*</p>
             <mat-form-field class="datosllegada">
@@ -264,16 +364,18 @@
         <form [formGroup]="fourFormGroup">
           <ng-template matStepLabel>DATOS DE LOS MIEMBROS DEL HOGAR</ng-template>
           <p class="text-bold">
-            ¿Cuántas personas de tu familia (incluyéndote) están contigo en este momento? Por ejemplo si viajas solo
-            responde 1.
+            <!--¿Cuántas personas de tu familia (incluyéndote) están contigo en este momento? Por ejemplo si viajas solo
+            responde 1.-->
+            ¿Cuántas personas de tu familia están contigo en este momento?
           </p>
           <mat-form-field>
-            <input type="number" [min]="1" matInput placeholder="Total miembros hogar"
+            <input type="number" [min]="1" matInput
                    formControlName="totalMiembrosHogar" required>
           </mat-form-field>
           <p>
-            A continuación, se deben agregar los datos personales de cada miembro de tu hogar (por favor inicia con tus
-            datos y luego con los datos de los demás miembros de tu familia)*
+            <!--A continuación, se deben agregar los datos personales de cada miembro de tu hogar (por favor inicia con tus
+            datos y luego con los datos de los demás miembros de tu familia)*-->
+            A continuación, se deben agregar los datos personales de los demás miembros de tu hogar*
           </p>
           <div formArrayName="miembrosFamilia">
             <div *ngFor="let miembroinfo of miembrosFamilia.controls; let i = index;" class="margin-top-20">
