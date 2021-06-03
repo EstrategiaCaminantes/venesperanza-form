@@ -135,6 +135,14 @@ body {
   width: 200px
 }
 
+.cualotrotipodocumento{
+  width: 350px;
+}
+
+.fechallegadadestino{
+  width:430px;
+}
+
 .datoscontacto {
   width: 250px;
 }

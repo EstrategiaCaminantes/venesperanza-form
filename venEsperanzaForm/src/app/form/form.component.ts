@@ -263,23 +263,28 @@ export class FormComponent implements OnInit {
     this.llegadaDestinoFormGroup = this.formBuilder.group({
       comoLlegoAlFormularioCtrl: ['', Validators.required],
       llegadaDestinofechaLlegadaCtrl: ['', Validators.required],
-      llegadaDestinoPlaneaEstarEnColombiaCtrl: ['', Validators.required],
-      llegadaDestinoDestinoFinalFueraColombiaCtrl: ['', Validators.required],
+      //llegadaDestinoPlaneaEstarEnColombiaCtrl: ['', Validators.required],
+      //llegadaDestinoDestinoFinalFueraColombiaCtrl: ['', Validators.required],
       llegadaDestinoDepartamentoCtrl: ['', Validators.required],
-      llegadaDestinoCiudadCtrl:['', Validators.required],
-      razonElegirDestinoFinalCtrl: ['', Validators.required],
-      hogarRecibeTransporteHumanitarioCtrl:['',Validators.required],
+      //llegadaDestinoCiudadCtrl:['', Validators.required],
+      //razonElegirDestinoFinalCtrl: ['', Validators.required],
+      //hogarRecibeTransporteHumanitarioCtrl:['',Validators.required],
       
       firstNameCtrl: ['', Validators.required],
       secondNameCtrl: [''],
       lastNameCtrl: ['', Validators.required],
       secondLastNameCtrl: [''],
-      sexoCtrl: ['', Validators.required],
-      fechaNacimientoCtrl: ['', Validators.required],
-      nacionalidadCtrl: ['', Validators.required],
+      //sexoCtrl: ['', Validators.required],
+      //fechaNacimientoCtrl: ['', Validators.required],
+      //nacionalidadCtrl: ['', Validators.required],
       tipoDocumentoCtrl: ['', Validators.required],
       numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]],
-      compartirFotoDocumentoEncuestadoCtrl: new FormControl('', Validators.required), 
+      //compartirFotoDocumentoEncuestadoCtrl: new FormControl('', Validators.required), 
+      numeroContactoCtrl: ['', Validators.required],
+      numeroEntregadoVenEsperanzaCtrl: ['', Validators.required],
+      lineaContactoPropiaCtrl: ['', Validators.required],
+      lineaContactoAsociadaAWhatsappCtrl: ['', Validators.required],
+      correoCtrl: ['', Validators.required]
 
     });
 
@@ -993,16 +998,18 @@ export class FormComponent implements OnInit {
 
         //console.log('DEPARTAMENTO SELECCIONADO DEFINIDO DEBE MOSTRAR CIUDAD');
 
+        /*
         if(!this.llegadaDestinoFormGroup.contains('llegadaDestinoCiudadCtrl')){ //valida si controlador llegadaDestinoCiudadCtrl no existe, lo crea
           this.llegadaDestinoFormGroup.addControl('llegadaDestinoCiudadCtrl', new FormControl('', [Validators.required]));
 
-        }
+        }*/
 
         this.municipiosFilter = this.municipiosList;
         const municipiosnuevo = this.municipiosList.filter(muni => muni.id_departamento == $event.value);
         this.municipiosFilter = municipiosnuevo;
         //console.log('MUNICIPIOS FILTRADOS: ', this.municipiosFilter);
-        this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue(null);
+        
+        //this.llegadaDestinoFormGroup.controls.llegadaDestinoCiudadCtrl.setValue(null);
 
 
     }else{ //selecciona nodefinido, ya no puede seleccionar ciudad
@@ -1149,5 +1156,16 @@ export class FormComponent implements OnInit {
         this.saving = false;
       });
     }
+  }
+
+
+  enviarInfoFormulario(grupo):void{
+    console.log('GRUPO:: ', grupo);
+    let data = {
+      infoencuesta: grupo.value,
+      autorizacion_id: this.autorizacionActual
+    };
+
+    this.saving = true;
   }
 }
