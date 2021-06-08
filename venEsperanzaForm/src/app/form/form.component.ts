@@ -940,6 +940,7 @@ export class FormComponent implements OnInit {
   //como encontraste el formulario:
   comoLlegoAlFormulario($event:any):void{
     //console.log('COMO LLEGO AL FORM: ', $event);
+    /*
     if($event.value == 'Otro'){
         this.llegadaDestinoFormGroup.addControl('dondeEncontroFormularioCtrl', new FormControl('', [Validators.required]));
         
@@ -949,7 +950,7 @@ export class FormComponent implements OnInit {
 
       this.llegadaDestinoFormGroup.removeControl('dondeEncontroFormularioCtrl');
 
-    }
+    }*/
   }
 
     
@@ -1167,5 +1168,28 @@ export class FormComponent implements OnInit {
     };
 
     this.saving = true;
+
+    console.log('DATA:: ', data);
+    
+    
+    this.formService.postForm(data).subscribe(res => {
+      
+      this.snackBar.open('Información almacenada correctamente.', 'X', {
+        duration: 2000
+      });
+      
+        this.finalizar();
+
+      this.saving = false;
+    }, error => {
+     
+        this.snackBar.open('Error al almacenar información. Vuelva a intentarlo. ', 'X', {
+          duration: 2000
+        });
+      this.saving = false;
+    });
+
+
+
   }
 }

@@ -122,6 +122,7 @@
     <!--<mat-vertical-stepper [(linear)]="isLinear" (selectionChange)="stepChange($event, stepper)" #stepper
                           fxFlex="100%">
       <mat-step [stepControl]="llegadaDestinoFormGroup">-->
+      
         <form [formGroup]="llegadaDestinoFormGroup">
           <!--<ng-template matStepLabel>DATOS DEL ENCUESTADO, DATOS DE LLEGADA Y DESTINO</ng-template>-->
 
@@ -499,10 +500,10 @@
           <div class="margin-top-20" *ngIf="llegadaDestinoFormGroup.status == 'VALID'">
             <button color="primary" mat-raised-button [disabled]="saving"
                     (click)="enviarInfoFormulario(llegadaDestinoFormGroup)">
-              {{saving ? 'Guardando...' : 'Siguiente'}}
+              {{saving ? 'Guardando...' : 'Guardar'}}
             </button>
             <p>
-              Oprime el botón "Siguiente" para salvar la información e ir al siguiente paso.
+              Oprime el botón "Guardar" para salvar la información y finalizar.
             </p>
           </div>
 
