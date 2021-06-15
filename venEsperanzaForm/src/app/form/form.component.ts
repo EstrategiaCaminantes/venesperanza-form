@@ -1161,7 +1161,7 @@ export class FormComponent implements OnInit {
 
 
   enviarInfoFormulario(grupo):void{
-    console.log('GRUPO:: ', grupo);
+
     let data = {
       infoencuesta: grupo.value,
       autorizacion_id: this.autorizacionActual
@@ -1169,8 +1169,6 @@ export class FormComponent implements OnInit {
 
     this.saving = true;
 
-    console.log('DATA:: ', data);
-    
     
     this.formService.postForm(data).subscribe(res => {
       
