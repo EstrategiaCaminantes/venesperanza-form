@@ -36,14 +36,41 @@
                  required minlength="3">
         </mat-form-field>
       </div>
+
       <div class="margin-top-20">
         <mat-form-field class="datoscontacto">
-          <mat-label>Teléfono:</mat-label>
-          <input matInput type="number" formControlName="telefonoCtrl"
+          <mat-label>Nombre jefe de hogar</mat-label>
+          <input matInput placeholder="Nombre jefe de hogar" type="text" 
+          formControlName="nombreJefeHogarCtrl" required>
+        </mat-form-field>
+      </div>
+
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto" (change)="numeroContacto($event)" >
+          <mat-label>Número de Contacto:</mat-label>
+          <input matInput type="number" formControlName="numeroContactoCtrl"
                  placeholder="Ej: 3131234567"
                  minlength="7" maxlength="10">
         </mat-form-field>
       </div>
+
+      <div class="margin-top-20" *ngIf="numeroContactoAsociadoWA==true">
+
+        <!--lineaContactoAsociadaAWhatsappCtrl-->
+        <mat-radio-group class="datoscontacto" 
+          aria-label="Selecciona una opción" formControlName="numeroContactoAsociadoAWhatsappCtrl"
+          required>
+          <label>¿Esta línea de contacto está asociada a WhatsApp?*:</label>
+          <div>
+            <mat-radio-button value="si">Si</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+          </div>
+        </mat-radio-group>
+
+
+      </div>
+      
+      <!--
       <div class="margin-top-20">
         <mat-form-field class="datoscontacto">
           <mat-label>Departamento:</mat-label>
@@ -54,6 +81,7 @@
           </mat-select>
         </mat-form-field>
       </div>
+
       <div class="margin-top-20">
         <mat-form-field class="datoscontacto">
           <mat-label>Municipio:</mat-label>
@@ -64,6 +92,27 @@
           </mat-select>
         </mat-form-field>
       </div>
+      -->
+
+      <div class="margin-top-20">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Dónde te encuentras?:</mat-label>
+          <mat-select formControlName="dondeTeEncuentrasCtrl" (selectionChange)="selectDondeTeEncuentras($event)" required>
+            <mat-option *ngFor="let ciudadDepartamentoFrecuente of ciudadesDepartamentosFrecuentes" [value]="ciudadDepartamentoFrecuente.nombre">
+              {{ciudadDepartamentoFrecuente.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="margin-top-20" *ngIf="otroDondeTeEncuentras">
+        <mat-form-field class="datoscontacto">
+          <mat-label>Cuál?</mat-label>
+          <input matInput placeholder="Cuál?" type="text" formControlName="otroDondeTeEncuentrasCtrl"
+                 required>
+        </mat-form-field>
+      </div>
+
       <div class="margin-top-20">
         <button color="primary" mat-raised-button [disabled]="saving || !(reportarLlegadaFormGroup.status == 'VALID')"
                 (click)="enviarInfo()" class="btn-save">

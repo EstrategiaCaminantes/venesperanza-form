@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 //import { requiredFileType } from "./requireFileTypeValidators";
 import {ActualizarDatosService} from '../services/actualizar-datos.service';
@@ -28,11 +28,31 @@ export class ReportarLlegadaComponent implements OnInit {
     {name: 'Otro'}
   ];
 
+  //lista destino final dentro de colombia frecuentes
+  ciudadesDepartamentosFrecuentes = [
+    {'nombre':'Arauca'},
+    {'nombre':'Barranquilla'},
+    {'nombre':'Bogotá'},
+    {'nombre':'Bucaramanga'},
+    {'nombre':'Cali'},
+    {'nombre':'Cartagena'},
+    {'nombre':'Cúcuta'},
+    {'nombre':'Medellín'},
+    {'nombre':'Riohacha'},
+    {'nombre':'Pasto'},
+    {'nombre':'Valledupar'},
+    {'nombre':'Otro'}
+  ];
+
+  otroDondeTeEncuentras = false;
+
   departamentosList = [];
   municipiosList = [];
   municipiosFilter = [];
 
   coordenadas = null;
+
+  numeroContactoAsociadoWA = false;
 
   constructor(private formBuilder: FormBuilder, private elementRef: ElementRef,
               private actualizarDatosService: ActualizarDatosService,
@@ -45,10 +65,15 @@ export class ReportarLlegadaComponent implements OnInit {
     this.reportarLlegadaFormGroup = this.formBuilder.group({
       tipoDocumentoCtrl: ['', Validators.required],
       numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      telefonoCtrl: [''],
-      departamentoCtrl: ['', Validators.required],
-      municipioCtrl: ['', Validators.required]
+      nombreJefeHogarCtrl: ['', [Validators.required]],
+      numeroContactoCtrl: ['', [Validators.min(1000000), Validators.max(9999999999)]],
+      //numeroContactoAsociadoAWhatsappCtrl: ['', [Validators.required]],
+      dondeTeEncuentrasCtrl: ['', Validators.required]
+      //departamentoCtrl: ['', Validators.required],
+      //municipioCtrl: ['', Validators.required]
     });
+
+    /*
 
     this.actualizarDatosService.getDepartamentos()
       .subscribe((data: any[]) => {
@@ -59,7 +84,7 @@ export class ReportarLlegadaComponent implements OnInit {
       .subscribe((data: any[]) => {
         this.municipiosList = data;
         this.municipiosFilter = this.municipiosList;
-      });
+      });*/
 
     navigator.geolocation.getCurrentPosition((position) => {
       const coords = {latitud: position.coords.latitude, longitud: position.coords.longitude};
@@ -82,6 +107,39 @@ export class ReportarLlegadaComponent implements OnInit {
   selectMunicipio($event: any): void {
   }
 
+  numeroContacto($event: any): void{
+    console.log('$EVENTO:: ', this.reportarLlegadaFormGroup.controls['numeroContactoCtrl']);
+    
+    if(this.reportarLlegadaFormGroup.controls['numeroContactoCtrl'].status === 'VALID' && this.reportarLlegadaFormGroup.controls['numeroContactoCtrl'].value != null){
+      
+      this.reportarLlegadaFormGroup.addControl('numeroContactoAsociadoAWhatsappCtrl', new FormControl('',Validators.required));
+      this.numeroContactoAsociadoWA = true;
+
+    }else if(( this.reportarLlegadaFormGroup.controls['numeroContactoCtrl'].status === 'INVALID' 
+    || this.reportarLlegadaFormGroup.controls['numeroContactoCtrl'].value == null ) 
+    && this.reportarLlegadaFormGroup.contains('numeroContactoAsociadoAWhatsappCtrl')){
+      
+      this.reportarLlegadaFormGroup.removeControl('numeroContactoAsociadoAWhatsappCtrl');
+      this.numeroContactoAsociadoWA = false;
+    }
+    //if($event.status != '')
+  }
+
+  selectDondeTeEncuentras($event: any): void{
+    
+    if ($event.value == 'Otro') { // si es Otro agrega el controlador
+     
+      this.otroDondeTeEncuentras = true;
+      this.reportarLlegadaFormGroup.addControl('otroDondeTeEncuentrasCtrl', new FormControl('',Validators.required));
+    
+    } else if ($event.value != 'Otro' && this.reportarLlegadaFormGroup.contains('otroDondeTeEncuentrasCtrl')) {
+      // si es diferente de Otro y ya contien otro, elimina el controlador de Otro
+      this.otroDondeTeEncuentras = false;
+      this.reportarLlegadaFormGroup.removeControl('otroDondeTeEncuentrasCtrl');
+    
+    }
+  }
+
   enviarInfo(): void {
 
     this.saving = true;
@@ -102,7 +160,8 @@ export class ReportarLlegadaComponent implements OnInit {
         this.reportarLlegadaFormGroup = this.formBuilder.group({
           tipoDocumentoCtrl: ['', Validators.required],
           numeroDocumentoCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-          telefonoCtrl: [''],
+          numeroContactoCtrl: [''],
+          numeroWhatsappCtrl: [''],
           departamentoCtrl: ['', Validators.required],
           municipioCtrl: ['', Validators.required]
         });

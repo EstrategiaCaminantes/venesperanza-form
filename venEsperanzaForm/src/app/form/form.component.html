@@ -202,9 +202,13 @@
             <Label>¿Cuál es tu destino final dentro de Colombia?*</Label>
             <mat-select formControlName="llegadaDestinoDepartamentoCtrl"
               (selectionChange)="selectDepartamentoLlegadaDestino($event)" required>
-              <mat-option [value]="'nodefinido'">No sé</mat-option>
+              <!--
+              <mat-option [value]="'nodefinido'">No estoy seguro/a</mat-option>
               <mat-option *ngFor="let departamento of departamentosList" [value]="departamento.id">
                 {{departamento.nombre}}
+              </mat-option>-->
+              <mat-option *ngFor="let destino of destinoFinalPrioridades" [value]="destino.nombre">
+                {{destino.nombre}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -255,9 +259,12 @@
         <div class="margin-bottom-10">
 
           <!--lineaContactoAsociadaAWhatsappCtrl-->
+          <!--
           <mat-radio-group class="cualotrotipodocumento2" fxLayout.xs="column" fxFlex.lt-xs="100"
             aria-label="Selecciona una opción" formControlName="lineaContactoAsociadaAWhatsappCtrl"
-            (change)="lineaContactoPropiaAsociadaWhatsapp($event)" required>
+            (change)="lineaContactoPropiaAsociadaWhatsapp($event)" required>-->
+          <mat-radio-group class="cualotrotipodocumento2" fxLayout.xs="column" fxFlex.lt-xs="100"
+            aria-label="Selecciona una opción" formControlName="lineaContactoAsociadaAWhatsappCtrl" required>
             <label>¿Esta línea de contacto está asociada a WhatsApp?*:</label>
             <div>
               <mat-radio-button value="si">Si</mat-radio-button>
@@ -272,7 +279,7 @@
 
 
           <mat-form-field class="cualotrotipodocumento2" fxLayout.xs="column" fxFlex.lt-xs="100">
-            <label>Escribe un correo electrónico donde te podamos contactar*</label>
+            <mat-label>Escribe un correo electrónico donde te podamos contactar*</mat-label>
             <!--<mat-label>Ejemplo: contacto@contacto.com</mat-label>-->
             <!--correoCtrl-->
             <input matInput formControlName="correoCtrl" type="email"

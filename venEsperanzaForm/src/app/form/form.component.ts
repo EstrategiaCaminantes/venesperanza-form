@@ -205,6 +205,24 @@ export class FormComponent implements OnInit {
 
   coordenadas = null;
 
+  //lista destino final dentro de colombia frecuentes
+  destinoFinalPrioridades = [
+    {'nombre':'Arauca'},
+    {'nombre':'Barranquilla'},
+    {'nombre':'Bogotá'},
+    {'nombre':'Bucaramanga'},
+    {'nombre':'Cali'},
+    {'nombre':'Cartagena'},
+    {'nombre':'Cúcuta'},
+    {'nombre':'Medellín'},
+    {'nombre':'Riohacha'},
+    {'nombre':'Pasto'},
+    {'nombre':'Valledupar'},
+    {'nombre':'No estoy seguro/a'},
+    {'nombre':'Otro'}
+
+  ];
+
   @ViewChild('stepper') stepper: MatStepper;
 
   constructor(private formBuilder: FormBuilder, private formService: FormService,
@@ -284,7 +302,7 @@ export class FormComponent implements OnInit {
       numeroEntregadoVenEsperanzaCtrl: ['', Validators.required],
       lineaContactoPropiaCtrl: ['', Validators.required],
       lineaContactoAsociadaAWhatsappCtrl: ['', Validators.required],
-      correoCtrl: ['', Validators.required]
+      correoCtrl: ['']
 
     });
 
