@@ -72,11 +72,12 @@ export class FormComponent implements OnInit {
 
   opcionesComoLlegoAlFormulario = [
     {name: 'Ví un pendón en un albergue', value: 'vi_un_pendon_en_un_albergue'},
-    {name: 'Recibí un volante en un albergue', value:'recibi_un_volante_en_un_albergue'},
+    {name: 'Recibí un volante en el albergue', value:'recibi_un_volante_en_el_albergue'},
     {name: 'Recibí una foto con la información' ,value:'recibi_una_foto_con_la_informacion'},
     {name: 'Recibí el enlace por chat', value: 'recibi_el_enlace_por_chat'},
     {name: 'Encontré el enlace en Facebook', value: 'encontre_el_enlace_en_facebook'},
     {name: 'Una persona conocida me lo envió para que lo llenara', value:'una_persona_conocida_me_lo_envio_para_que_lo_llenara'},
+    {name: 'Recibí una manilla con el número', value:'recibi_una_manilla_con_el_numero'},
     {name: 'Otro', value: 'otro'}
   ];
 
