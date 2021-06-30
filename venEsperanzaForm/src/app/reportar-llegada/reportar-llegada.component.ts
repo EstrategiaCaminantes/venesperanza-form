@@ -86,12 +86,14 @@ export class ReportarLlegadaComponent implements OnInit {
         this.municipiosFilter = this.municipiosList;
       });*/
 
+    /*
     navigator.geolocation.getCurrentPosition((position) => {
       const coords = {latitud: position.coords.latitude, longitud: position.coords.longitude};
 
       //coordenadas global para guardar en autorizacion
       this.coordenadas = coords;
     });
+    */
   }
 
   selectTipoDocumentoMiembro($event: any): void {
@@ -146,7 +148,7 @@ export class ReportarLlegadaComponent implements OnInit {
 
     let data = {
       'formData': this.reportarLlegadaFormGroup.value,
-      'coordenadas': this.coordenadas
+      //'coordenadas': this.coordenadas
     };
 
     this.actualizarDatosService.reportarLlegada(data).subscribe(res => {
