@@ -224,6 +224,15 @@ export class FormComponent implements OnInit {
 
   ];
 
+  parentescosList = [
+    {'nombre':'Cónyuge'},
+    {'nombre':'Hijo/a'},
+    {'nombre':'Padre/madre'},
+    {'nombre':'Amigo'},
+    {'nombre':'Conocido'},
+    {'nombre':'Otro'}
+  ];
+
   @ViewChild('stepper') stepper: MatStepper;
 
   constructor(private formBuilder: FormBuilder, private formService: FormService,
@@ -299,11 +308,12 @@ export class FormComponent implements OnInit {
       tipoDocumentoCtrl: ['', Validators.required],
       numeroDocumentoCtrl: ['', [Validators.required, Validators.min(100)]],
       //compartirFotoDocumentoEncuestadoCtrl: new FormControl('', Validators.required), 
-      numeroContactoCtrl: ['', Validators.required],
+      numeroContactoCtrl: ['', [Validators.required, Validators.min(1000000), Validators.max(9999999999)]],
       numeroEntregadoVenEsperanzaCtrl: ['', Validators.required],
       lineaContactoPropiaCtrl: ['', Validators.required],
       lineaContactoAsociadaAWhatsappCtrl: ['', Validators.required],
-      correoCtrl: ['']
+      correoCtrl: [''],
+      telefonoConocidoDestinoCtrl: ['', [ Validators.min(1000000), Validators.max(9999999999)]]
 
     });
 
@@ -1206,7 +1216,38 @@ export class FormComponent implements OnInit {
       this.saving = false;
     });
 
-
-
   }
+
+  //ingresa valores al campo telefonoConocidoDestinoCtrl
+  telefonoConocidoDestion($event:any):void{
+    //console.log('TELEFONO CONTACTO CONTROLER', $event);
+    //console.log('CONTROLADOR formulario: ', this.llegadaDestinoFormGroup.controls);
+
+    //valida que el valor sea mayor a 7 digitos y status sea valido, es decir no sobrepase 10 digitos
+    if(this.llegadaDestinoFormGroup.controls.telefonoConocidoDestinoCtrl.value>=1000000 && this.llegadaDestinoFormGroup.controls.telefonoConocidoDestinoCtrl.status === 'VALID'){
+      //crea controlador parentesco conocido destino
+      this.llegadaDestinoFormGroup.addControl('parentescoConocidoDestinoCtrl', new FormControl('', [Validators.required]))
+    }else {
+      //remueve controladores parentesco conocido destino
+      this.llegadaDestinoFormGroup.removeControl('parentescoConocidoDestinoCtrl');
+      this.llegadaDestinoFormGroup.removeControl('otroParentescoConocidoDestinoCtrl');
+
+    }
+  }
+
+  //seleccion de parentesco
+  selectParentescoDestino($event:any):void{
+    //console.log('controlador formulario: ', this.llegadaDestinoFormGroup.controls);
+    //console.log('EVENT::: ', $event.value);
+
+    if($event.value === 'Otro'){
+      //console.log('$EVENT OTRA: ', $event);
+      this.llegadaDestinoFormGroup.addControl('otroParentescoConocidoDestinoCtrl', new FormControl('', [Validators.required]))
+
+    }else{
+      //console.log('ELEGIR RAZON: ', $event);
+      this.llegadaDestinoFormGroup.removeControl('otroParentescoConocidoDestinoCtrl');
+    }
+  }
+  
 }
