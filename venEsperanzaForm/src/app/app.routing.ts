@@ -59,21 +59,15 @@ export const AppRoutes: Routes = [
             }
         ], */
     },
+    /*
     {
         path: 'encuesta',
-        /*data: {
-            breadcrumb: 'Info'
-        },*/
+       
         component: FormComponent,
         //canActivate: [AuthGuardService],
         //canActivateChild: [AuthGuardService],
-        /*children: [
-            {
-                path: '',
-                loadChildren: './forms/forms.module#FormsPageModule'
-            }
-        ], */
-    },
+        
+    },*/
     {
         path: 'actualizar',
         /*data: {
@@ -186,11 +180,11 @@ export const AppRoutes: Routes = [
             loadChildren: './session/session.module#SessionModule'
           }
         ]
-      }
+      }*/
       ,
       {
         path: '**',
         //redirectTo: 'auth/login'
-        redirectTo: 'org'
-      }*/
+        redirectTo: ''
+      }
 ];

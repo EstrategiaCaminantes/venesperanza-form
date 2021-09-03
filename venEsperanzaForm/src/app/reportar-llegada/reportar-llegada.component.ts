@@ -110,7 +110,7 @@ export class ReportarLlegadaComponent implements OnInit {
   }
 
   numeroContacto($event: any): void{
-    console.log('$EVENTO:: ', this.reportarLlegadaFormGroup.controls['numeroContactoCtrl']);
+    //console.log('$EVENTO:: ', this.reportarLlegadaFormGroup.controls['numeroContactoCtrl']);
     
     if(this.reportarLlegadaFormGroup.controls['numeroContactoCtrl'].status === 'VALID' && this.reportarLlegadaFormGroup.controls['numeroContactoCtrl'].value != null){
       
