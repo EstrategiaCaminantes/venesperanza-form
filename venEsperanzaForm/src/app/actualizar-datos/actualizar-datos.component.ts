@@ -17,7 +17,7 @@ export class ActualizarDatosComponent implements OnInit {
 
   tipoDocumentos = [
     {name: 'Acta de Nacimiento'},
-    {name: 'Cédula de Identidad (venezonala)'},
+    {name: 'Cédula de Identidad (Venezolana)'},
     {name: 'Cédula de ciudadania (colombiana)'},
     {name: 'Pasaporte'},
     {name: 'Cédula de Extranjería'},
